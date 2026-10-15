@@ -18,6 +18,7 @@ e puntare il DNS a GitHub Pages. Non è stato aggiunto perché il DNS non è con
 - `index.html` — Home
 - `biografia.html` — Biografia
 - `discografia.html` — Discografia
+- `ascolta.html` — Ascolta
 - `concerti.html` — Concerti
 - `media.html` — Media
 - `fonti.html` — Fonti e metodo
