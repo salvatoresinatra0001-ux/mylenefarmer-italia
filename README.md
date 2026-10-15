@@ -62,3 +62,5 @@ Copertine, foto stampa e fotogrammi di videoclip non sono immagini libere.
 I contenuti sono scritti direttamente nell'HTML: per aggiornare un dato si modifica la riga
 della tabella e, se cambia il livello di verifica, il relativo indicatore di solidità
 (`<span class="sol s-solid|s-one|s-weak">`).
+
+<!-- GitHub Pages: richiesta nuova pubblicazione dal branch main, 2026-10-16. -->
