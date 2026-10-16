@@ -64,3 +64,8 @@ della tabella e, se cambia il livello di verifica, il relativo indicatore di sol
 (`<span class="sol s-solid|s-one|s-weak">`).
 
 <!-- GitHub Pages: richiesta nuova pubblicazione dal branch main, 2026-10-16. -->
+
+
+## Archivio fotografico 2026
+
+Nuova sezione: [galleria documentata](https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/archivio-fotografico.html), 19 scatti con licenza indicata e 19 risorse candidate da controllare o escludere. Il dataset è in `assets/data/catalogo-fotografie-2026.json`; crediti e fonti in `docs/CATALOGO_FOTOGRAFICO_2026.md`. Le anteprime sono servite da Commons: i file binari delle fotografie non sono stati scaricati né incorporati nella repository.
