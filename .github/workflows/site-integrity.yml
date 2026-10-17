@@ -6,10 +6,14 @@ on:
     branches: [main]
 permissions:
   contents: read
+concurrency:
+  group: integrity-${{ github.event.pull_request.head.ref || github.ref }}
+  cancel-in-progress: true
 jobs:
   check:
     name: Build and validate static pages
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -32,6 +36,14 @@ jobs:
           test -s dist/data/gallery-public.json
           test -s dist/site-manifest.json
           test -s dist/build-info.json
+      - name: Probe photographic delivery
+        run: node scripts/probe-photos.mjs
+      - name: Save photographic diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: photo-delivery-probe
+          path: reports/photo-delivery.json
+          retention-days: 7
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
