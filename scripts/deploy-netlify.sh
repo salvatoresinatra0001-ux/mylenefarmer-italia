@@ -28,6 +28,6 @@ if [[ -z "${NETLIFY_AUTH_TOKEN:-}" ]]; then
   "${CLI[@]}" login
  fi
 fi
-"${CLI[@]}" deploy --prod --dir="$TMP_DIR/repo/dist" --site="$SITE_ID" \
+"${CLI[@]}" deploy --prod --no-build --dir="$TMP_DIR/repo/dist" --site="$SITE_ID" \
  --message="Mylene Farmer Italia - GitHub ${BRANCH} unified static release"
 echo "Deploy richiesto. Verificare l'URL e lo stato READY su Netlify."

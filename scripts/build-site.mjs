@@ -43,7 +43,10 @@ function walk(dir) {
     if (ent.isDirectory()) { walk(abs); continue; }
     if (!ent.name.toLowerCase().endsWith('.html')) continue;
     scanned++;
-    const html = readFileSync(abs, 'utf8');
+    const html = readFileSync(abs, 'utf8')
+      // Documentation shows escaped HTML inside code examples; those aren't live links.
+      .replace(/<pre\b[^>]*>[\s\S]*?<\/pre>/gi, '')
+      .replace(/<code\b[^>]*>[\s\S]*?<\/code>/gi, '');
     const links = [...html.matchAll(/\b(?:href|src|poster)\s*=\s*["']([^"']+)["']/gi)];
     for (const [, raw] of links) {
       if (!raw || raw.startsWith('#') || /^(?:https?:|mailto:|tel:|data:|javascript:|\/\/)/i.test(raw) ||
@@ -62,4 +65,4 @@ walk(out);
 console.log('Mylène Farmer Italia | build Netlify');
 console.log('Elementi radice copiati: '+copied+'; pagine HTML: '+scanned+'; collegamenti da verificare: '+issues.length);
 if (issues.length) console.log(issues.slice(0,30).join('\n'));
-if (issues.some(s=>s.includes('unsafe '))) process.exitCode=1;
+if (issues.length) { console.error('Build non valida: collegamenti locali da correggere.'); process.exitCode=1; }
