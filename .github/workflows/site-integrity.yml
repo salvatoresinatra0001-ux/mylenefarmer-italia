@@ -6,10 +6,14 @@ on:
     branches: [main]
 permissions:
   contents: read
+concurrency:
+  group: integrity-${{ github.event.pull_request.head.ref || github.ref }}
+  cancel-in-progress: true
 jobs:
   check:
     name: Build and validate static pages
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -17,27 +21,60 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Check build script syntax
-        run: node --check scripts/build-site.mjs
-      - name: Produce Netlify artifact
+      - name: Check JavaScript syntax
+        run: |
+          node --check scripts/build-site.mjs
+          node --check scripts/audit-live.mjs
+          node --check assets/js/gallery.js
+      - name: Produce the shared public artifact
         run: node scripts/build-site.mjs
       - name: Verify entry points
         run: |
           test -s dist/index.html
-          test -s dist/galleria-hq.html
-          test -s dist/archivio-fotografico.html
-          test -s dist/speciale-egregore-2026.html
-          test -s dist/assets/css/style.css
-          test -s dist/docs/QUALITY_AUDIT.md
-          test -s dist/docs/CATALOGO_FOTOGRAFICO_2026.md
-      - name: Export Netlify-ready ZIP
-        run: |
-          cd dist
-          zip -q -r ../mylenefarmer-italia-netlify-v6.2.zip .
-      - name: Save Netlify deployment artifact
+          test -s dist/archivio-drive.html
+          test -s dist/note-legali.html
+          test -s dist/data/gallery-public.json
+          test -s dist/site-manifest.json
+          test -s dist/build-info.json
+      - name: Probe photographic delivery
+        run: node scripts/probe-photos.mjs
+      - name: Save photographic diagnostics
         uses: actions/upload-artifact@v4
         with:
-          name: mylenefarmer-italia-netlify-v6.2
-          path: mylenefarmer-italia-netlify-v6.2.zip
+          name: photo-delivery-probe
+          path: reports/photo-delivery.json
+          retention-days: 7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser test tools
+        run: |
+          pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Verify rendered pages before publication
+        id: browser
+        continue-on-error: true
+        run: |
+          python -m http.server 8000 --bind 127.0.0.1 --directory dist >/tmp/site-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          python scripts/browser-audit.py --base http://127.0.0.1:8000/
+      - name: Export deployable ZIP
+        run: cd dist && zip -q -r ../mylenefarmer-italia-synchronized.zip .
+      - name: Save deployment artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mylenefarmer-italia-synchronized
+          path: mylenefarmer-italia-synchronized.zip
           retention-days: 30
           if-no-files-found: error
+      - name: Save browser audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-browser-audit
+          path: reports/
+          retention-days: 30
+      - name: Require successful browser checks
+        if: steps.browser.outcome != 'success'
+        run: exit 1
