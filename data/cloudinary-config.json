@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "provider": "cloudinary",
+  "cloudName": "mylene-farmer",
+  "deliveryBase": "https://res.cloudinary.com/mylene-farmer/image/upload/",
+  "folder": "mylene-farmer-italia",
+  "policy": {
+    "publishOnlyApproved": true,
+    "keepOriginalsPrivate": true,
+    "neverCommitImageBinaries": true,
+    "neverCommitCredentials": true
+  },
+  "notes": "Public delivery configuration only. Uploaded Cloudinary assets must be rights-cleared and explicitly approved before inclusion in data/drive-gallery.json."
+}
