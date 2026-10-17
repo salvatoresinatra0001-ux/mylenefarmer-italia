@@ -62,6 +62,15 @@ for(const p of ['index.html','galleria-hq.html','archivio-fotografico.html','arc
 if(problems.length)throw Error(problems.join('\n'));
 let commit=process.env.COMMIT_REF||process.env.GITHUB_SHA||'';
 if(!commit)try{commit=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();}catch{commit='local-preview';}
+// Every HTML response carries the same revision as the manifest. This also gives
+// deployment systems new content hashes after a processing configuration change.
+for(const file of files.filter(p=>p.endsWith('.html'))){
+  const absolute=path.join(out,file);
+  const html=readFileSync(absolute,'utf8');
+  if(!/<\/head>/i.test(html))throw Error('HTML privo di head: '+file);
+  const marker='<meta name="mf-build-commit" content="'+esc(commit)+'">\n';
+  writeFileSync(absolute,html.replace(/<\/head>/i,marker+'</head>'));
+}
 jsonWrite('build-info.json',{schema:1,commit,artifact:'mylene-farmer-italia-static',htmlPages:pages,photos:gallery.counts});
 files.push('build-info.json');
 const infrastructure=new Set(['_headers','_redirects','.nojekyll']);
