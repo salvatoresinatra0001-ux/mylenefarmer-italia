@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/sitemap.xml
+Sitemap: https://mylenefarmer.it/sitemap.xml

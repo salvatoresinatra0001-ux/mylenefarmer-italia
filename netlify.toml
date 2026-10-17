@@ -1,0 +1,7 @@
+# Mylène Farmer Italia — GitHub = source of truth; Netlify = production.
+[build]
+  command = "node scripts/build-site.mjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

@@ -1,0 +1,32 @@
+name: Static site integrity
+on:
+  push:
+    branches: [main, 'preview/**']
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  check:
+    name: Build and validate static pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check build script syntax
+        run: node --check scripts/build-site.mjs
+      - name: Produce Netlify artifact
+        run: node scripts/build-site.mjs
+      - name: Verify entry points
+        run: |
+          test -s dist/index.html
+          test -s dist/galleria-hq.html
+          test -s dist/archivio-fotografico.html
+          test -s dist/speciale-egregore-2026.html
+          test -s dist/assets/css/style.css
+          test -s dist/docs/QUALITY_AUDIT.md
+          test -s dist/docs/CATALOGO_FOTOGRAFICO_2026.md

@@ -1,17 +1,26 @@
 # Mylène Farmer · Italia
 
 Archivio italiano indipendente dedicato all'opera di Mylène Farmer. Sito statico in italiano, senza dipendenze, senza build step.
-Cura editoriale: **Salvatore Sinatra**. Stato dei dati: **16 ottobre 2026**.
+Cura editoriale: **Salvatore Sinatra**. Stato dei dati: **17 ottobre 2026**.
 
 > Progetto editoriale indipendente, non affiliato all'artista, al management o alle etichette.
 
-## Pubblicazione
+## Pubblicazione unificata
 
-Sito statico servito da GitHub Pages dal branch `main`, cartella radice.
-Indirizzo: `https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/`
+La directory di lavoro GitHub (branch `main`, file HTML/CSS/JS in radice) è la
+fonte unica per le due destinazioni:
 
-Per un dominio personalizzato (`mylenefarmer.it`): aggiungere un file `CNAME` con il dominio
-e puntare il DNS a GitHub Pages. Non è stato aggiunto perché il DNS non è configurato.
+- **GitHub Pages**: `https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/`
+- **Netlify**: progetto `mylenefarmer-italia`, dominio primario configurato `https://mylenefarmer.it/`
+
+La build Netlify usa `netlify.toml` e `scripts/build-site.mjs` per generare
+`dist/`. Il **deploy Netlify esistente è indipendente** finché non viene
+eseguito il deploy della nuova build o attivata la sincronizzazione GitHub nel
+pannello Netlify. Guida: [DEPLOY_NETLIFY_GITHUB.md](docs/DEPLOY_NETLIFY_GITHUB.md).
+
+Non impostare `mylenefarmer.it` come dominio personalizzato di GitHub Pages:
+è assegnato alla produzione Netlify. Prima di modificare DNS o redirezioni www,
+confermare le risoluzioni effettive.
 
 ## Struttura
 
@@ -43,10 +52,12 @@ La precisione della data (giorno / mese / anno) è un campo distinto dalla solid
 
 ## Immagini
 
-Nessuna fotografia dell'artista è inclusa in questa versione: gli archivi a licenza libera non
-erano raggiungibili in fase di compilazione. Gli spazi sono predisposti e dichiarati in
-`crediti-foto.html`, che contiene anche le regole di inserimento e il formato della didascalia.
-Copertine, foto stampa e fotogrammi di videoclip non sono immagini libere.
+La sezione fotografica documentata comprende **19 fotografie** collegate alle rispettive
+schede Wikimedia Commons, con autore e licenza riportati, più 19 risorse candidate escluse
+o in ulteriore verifica. I file binari del catalogo non sono ospitati nella repository.
+La galleria HQ è una sezione editoriale distinta: l'audit di provenienza e qualità è in
+[QUALITY_AUDIT.md](docs/QUALITY_AUDIT.md). Copertine, foto stampa e fotogrammi di
+videoclip non sono automaticamente immagini libere.
 
 ## Controlli ancora aperti
 
@@ -69,3 +80,10 @@ della tabella e, se cambia il livello di verifica, il relativo indicatore di sol
 ## Archivio fotografico 2026
 
 Nuova sezione: [galleria documentata](https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/archivio-fotografico.html), 19 scatti con licenza indicata e 19 risorse candidate da controllare o escludere. Il dataset è in `assets/data/catalogo-fotografie-2026.json`; crediti e fonti in `docs/CATALOGO_FOTOGRAFICO_2026.md`. Le anteprime sono servite da Commons: i file binari delle fotografie non sono stati scaricati né incorporati nella repository.
+
+## Edizione editoriale del 17 ottobre 2026
+
+- Dossier [Égrégore: tracklist e autori](speciale-egregore-2026.html), 13 brani e filtri accessibili.
+- Navigazione della homepage aggiornata, archivio fotografico e galleria HQ conservati.
+- Metadati e URL canonici allineati al dominio primario Netlify; favicon corretta.
+- Configurazione di build riproducibile Netlify con report dei collegamenti statici.
