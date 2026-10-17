@@ -1,0 +1,14 @@
+{
+  "version": "1.0-local-preview",
+  "github_repository": "salvatoresinatra0001-ux/mylenefarmer-italia",
+  "netlify_site": "mylenefarmer-italia",
+  "published": false,
+  "original_editorial_files_copied": false,
+  "gallery_local": true,
+  "languages_gallery": [
+    "it",
+    "en",
+    "fr"
+  ],
+  "homepage_full_translation": false
+}

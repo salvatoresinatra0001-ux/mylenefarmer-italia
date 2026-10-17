@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#100d10">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.mylenefarmer.it/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <meta name="description" content="Mylène Farmer Italia — archivio visivo indipendente. Beta preview 1.1 HQ: fotografie autentiche Full HD curate editorialmente, con originali Wikimedia Commons e crediti verificabili.">
+  <meta name="author" content="Salvatore Sinatra">
+  <title>Mylène Farmer Italia — V1.1 HQ · Curated Photo Preview</title>
+  <style>
+    .desktop-nav .editorial-link{color:#f1d3d9;border-bottom:1px solid #8d6670}
+
+    :root{--bg:#0e0b0e;--bg2:#171217;--panel:#1e171c;--paper:#eee7e2;--muted:#a8a0a3;--darkmuted:#71666c;--line:rgba(244,230,228,.15);--accent:#ab424f;--accent-soft:#e09c9f;--serif:Georgia,'Times New Roman',serif;--sans:'Helvetica Neue',Arial,sans-serif;--mono:ui-monospace,Menlo,Consolas,monospace;--max:1520px;--pad:clamp(22px,4.8vw,92px);--radius:2px}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:110px}
+    body{margin:0;background:var(--bg);color:var(--paper);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    body.modal-open{overflow:hidden}
+    a{color:inherit;text-decoration:none}a:hover{color:var(--accent-soft)}
+    button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--accent-soft);outline-offset:5px}
+    ::selection{background:var(--accent);color:#fff}
+    .skip{position:absolute;z-index:999;left:20px;top:-100px;background:white;color:black;padding:12px 18px}.skip:focus{top:8px}
+    .container{max-width:var(--max);margin:0 auto;padding-inline:var(--pad)}
+    .micro,.eyebrow,.serial,.pictag,.caps,.photo-id,.quality,.hero-index,.topbar,.meta-side,.year,.lic,.filter,.section-counter,.stat-label,.footer-mini{font-family:var(--mono);letter-spacing:.11em;text-transform:uppercase;font-size:10px;line-height:1.65}
+    .topbar{background:#080709;border-bottom:1px solid #302229;color:#9f9298;font-size:9px}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:29px}
+    .topbar b{color:var(--accent-soft);font-weight:500}.topbar span:last-child{white-space:nowrap}
+    .masthead{height:85px;position:sticky;top:0;z-index:30;background:rgba(14,11,14,.93);backdrop-filter:blur(19px);border-bottom:1px solid var(--line)}
+    .masthead-inner{display:flex;align-items:center;justify-content:space-between;gap:26px;height:100%}
+    .brand{display:inline-flex;gap:17px;align-items:center;min-width:0}.brand-mark{height:39px;width:1px;background:var(--accent);transform:rotate(17deg)}
+    .brand-main{font-family:var(--serif);font-size:clamp(23px,2.45vw,31px);font-weight:400;line-height:1;white-space:nowrap;letter-spacing:-.055em}
+    .brand-sub{display:block;margin-top:7px;color:var(--muted);font:9px var(--mono);letter-spacing:.29em;text-transform:uppercase}
+    .desktop-nav{display:flex;gap:clamp(13px,2.3vw,37px);align-items:center}.desktop-nav a{color:#d4cbd0;font-size:10px;letter-spacing:.13em;text-transform:uppercase;transition:color .2s}.desktop-nav a:hover{color:#fff}
+    .desktop-nav .nav-cta{border:1px solid #75515c;padding:12px 15px;color:#f7d4d4}.desktop-nav .nav-cta:hover{border-color:#fff}
+    .menu-btn{display:none;border:1px solid var(--line);background:none;color:var(--paper);padding:11px 13px;font-size:12px}
+    .mobile-nav{display:none;background:#171016;border-top:1px solid var(--line);padding:16px var(--pad) 23px}.mobile-nav a{display:block;padding:13px 4px;text-transform:uppercase;font-size:12px;letter-spacing:.1em;border-bottom:1px solid var(--line)}
+    .hero{position:relative;min-height:704px;border-bottom:1px solid var(--line);overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1fr minmax(325px,43%);min-height:704px}
+    .hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:75px 6vw 83px 0;position:relative;z-index:2}
+    .eyebrow{color:var(--accent-soft);display:flex;align-items:center;gap:11px;font-size:11px}.eyebrow:before{content:'';width:26px;height:1px;background:var(--accent)}
+    .hero h1{font-family:var(--serif);font-size:clamp(74px,10.4vw,165px);line-height:.79;font-weight:400;letter-spacing:-.09em;margin:45px 0 32px}
+    .hero h1 i{font-weight:400;display:block;padding:17px 0 8px;color:#dcc5c6;text-indent:.22em}
+    .hero-intro{font-size:clamp(16px,1.35vw,21px);max-width:565px;line-height:1.72;font-weight:300;color:#d8d0ce}
+    .hero-intro strong{font-weight:500;color:#fff}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:37px}
+    .btn{display:inline-flex;align-items:center;justify-content:space-between;gap:33px;border:1px solid #9a5e65;padding:17px 19px;color:#fff;background:#883442;min-height:53px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;transition:background .2s,border-color .2s;min-width:183px}
+    .btn:hover{background:#aa4a56;color:white}.btn-alt{background:transparent;border-color:var(--line)}.btn-alt:hover{background:#251b21;border-color:#fff}
+    .hero-photo{height:100%;min-height:704px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 60% 40%,#4b343c,#171218 75%)}
+    .hero-photo:before{position:absolute;content:'';inset:0;z-index:1;background:linear-gradient(90deg,rgba(14,11,14,.45) 0,transparent 38%),linear-gradient(0deg,rgba(14,11,14,.9),transparent 46%)}
+    .hero-photo img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center center;filter:brightness(.91)}
+    .hero-photo .hero-bottom{position:absolute;left:35px;right:30px;bottom:38px;z-index:2}
+    .hero-bottom .caps{color:#eacbd0}.hero-bottom a{color:#f2d8dd;text-decoration:underline;text-underline-offset:2px}.hero-bottom p{margin:9px 0 0;font-size:12px;color:#e3d8dd}
+    .hero-index{position:absolute;top:32px;right:30px;z-index:2;color:#fff}
+    .hero-vertical{position:absolute;z-index:2;left:19px;top:40%;writing-mode:vertical-rl;transform:rotate(180deg);font:9px var(--mono);letter-spacing:.25em;text-transform:uppercase;color:#f5d8d8}
+    .hero-footline{position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent) 0 30%,transparent 30%)}
+    .intro-band{border-bottom:1px solid var(--line);background:#130f13}.intro-grid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:0;align-items:stretch;min-height:128px}
+    .intro-copy{padding:29px 38px 27px 0;display:flex;align-items:center;color:#cabdc2;line-height:1.6;font-size:13px;max-width:460px}
+    .stat{padding:28px 15px 20px 35px;border-left:1px solid var(--line)}.stat-num{font-family:var(--serif);font-size:38px;line-height:1;letter-spacing:-.05em}.stat-label{display:block;color:#ae9da5;margin-top:10px}
+    .section{padding-block:clamp(70px,9vw,130px)}
+    .section-head{display:grid;grid-template-columns:1fr minmax(190px,.38fr);align-items:end;gap:30px;margin-bottom:49px}
+    .section-title{font-family:var(--serif);font-weight:400;font-size:clamp(54px,6.7vw,102px);line-height:.95;letter-spacing:-.065em;margin:14px 0 0}
+    .section-title em{color:#c9aaaa;font-weight:400}.section-note{line-height:1.8;color:#a99da4;font-size:13px;margin-bottom:5px}
+    .section-counter{color:var(--accent-soft)}
+    .section-lede{font-family:var(--serif);font-size:clamp(26px,3vw,42px);line-height:1.35;max-width:880px;margin:0 0 42px;letter-spacing:-.025em}
+    .section-lede em{color:var(--accent-soft)}
+    .gallery-layout{display:grid;grid-template-columns:225px 1fr;gap:clamp(27px,4vw,66px)}
+    .gallery-aside{border-top:1px solid var(--line);padding-top:20px;align-self:start;position:sticky;top:120px}
+    .gallery-aside h3{font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.15;margin:19px 0 20px}
+    .gallery-aside p{font-size:12px;color:#ac9fa5;line-height:1.85}
+    .aside-line{width:24px;height:1px;background:var(--accent);margin:24px 0}
+    .gallery-aside a{font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--accent-soft);text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+    .filterbar{display:flex;align-items:center;gap:10px 9px;flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+    .filter{border:1px solid #42323c;color:#cabec4;background:transparent;padding:10px 13px;transition:all .15s;font-size:10px}
+    .filter[aria-pressed="true"]{background:#73303b;color:#fff;border-color:#73303b}.filter:hover{border-color:#b7848c}
+    .search{min-width:190px;flex:1;max-width:280px;height:35px;background:transparent;border:0;border-bottom:1px solid #5a4550;padding:6px 7px;color:#fff;font-size:11px;letter-spacing:.03em;outline-offset:4px}
+    .photo-results{margin-left:auto;color:#a99ba3;font-size:10px;font-family:var(--mono);white-space:nowrap}
+    .photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:42px 20px}
+    .photo-card{min-width:0}.photo-trigger{display:block;width:100%;padding:0;border:0;background:transparent;text-align:left;color:inherit}
+    .photo-img{aspect-ratio:3/2;position:relative;overflow:hidden;background:#17131a;border:1px solid #332730}
+    .photo-img:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 65%,rgba(14,11,14,.6));pointer-events:none}
+    .photo-img img{width:100%;height:100%;object-fit:contain;display:block;filter:none;transition:opacity .25s}
+    .photo-trigger:hover img,.photo-trigger:focus-visible img{opacity:.9}
+    .photo-hover{position:absolute;z-index:2;right:15px;bottom:15px;background:rgba(20,15,20,.76);backdrop-filter:blur(6px);font:10px var(--mono);padding:10px 12px;letter-spacing:.1em;color:white}
+    .img-fail{display:none;position:absolute;inset:0;align-items:center;justify-content:center;padding:20px;text-align:center;line-height:1.65;color:#bcb0b5;font-size:12px}
+    .photo-img.failed img,.cover-image.failed img{display:none}.photo-img.failed .img-fail,.cover-image.failed .img-fail{display:flex}
+    .photo-caption{padding:14px 0 4px;border-top:1px solid var(--line);margin-top:12px}
+    .photo-meta{display:flex;align-items:center;justify-content:space-between;gap:8px}.photo-id{font-size:9px;color:#b9a5ac}.year{font-size:10px;color:var(--accent-soft)}
+    .photo-caption h3{font-weight:400;font-size:14px;margin:7px 0 5px;line-height:1.45}.photo-caption p{font-size:11px;color:#a99aa0;line-height:1.6;margin:0}.inline-source{color:#e3bec4;text-decoration:underline;text-underline-offset:3px}
+    .empty{border:1px solid var(--line);padding:35px;text-align:center;color:var(--muted)}[hidden]{display:none!important}
+    .divider-fine{height:1px;background:var(--line)}
+    .feature-banner{position:relative;background:linear-gradient(115deg,#2a1a22,#151014 70%);border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden}
+    .feature-grid{display:grid;grid-template-columns:1.15fr .8fr;align-items:center;gap:55px;min-height:360px;padding-block:60px}
+    .feature-grid h2{font-family:var(--serif);font-weight:400;line-height:1.1;font-size:clamp(38px,5vw,76px);letter-spacing:-.05em;margin:15px 0}.feature-grid h2 em{color:#d2a0a5}
+    .feature-grid p{line-height:1.9;color:#b5a9ae;font-size:13px;max-width:440px;margin:15px 0}
+    .feature-quote{font-family:var(--serif);font-size:clamp(23px,3vw,38px);font-style:italic;line-height:1.35;color:#d6c1c6;border-left:1px solid #824753;padding-left:30px}
+    .covers-section{background:#151014}
+    .covers-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 18px}
+    .cover{min-width:0}.cover-image{position:relative;aspect-ratio:1/1;background:linear-gradient(140deg,#28151e,#161016 78%);overflow:hidden;border:1px solid #4b363f;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px}
+    .cover-letter{color:#98737c;font:400 clamp(45px,7vw,95px)/1 var(--serif);letter-spacing:-.13em}.cover-type{font:9px/1.5 var(--mono);color:#c49da6;letter-spacing:.15em;text-transform:uppercase;text-align:center;padding:0 7px}.cover:nth-child(even) .cover-image{background:linear-gradient(140deg,#271b24,#17181d 78%)}
+    .cover h3{font-size:13px;line-height:1.5;font-weight:500;margin:12px 0 2px;word-break:break-word}.cover .year{color:#9e8e97}
+    .cover-note{border-left:2px solid var(--accent);padding:15px 20px;background:#221820;color:#baacb2;font-size:12px;line-height:1.75;margin-top:38px;max-width:800px}
+    .timeline-grid{border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin-top:50px}
+    .milestone{position:relative;padding:26px 18px 0 0;margin-right:15px;min-height:180px;border-top:1px solid transparent}.milestone:before{content:'';position:absolute;width:7px;height:7px;border:1px solid var(--accent-soft);background:var(--bg);border-radius:50%;top:-4px;left:0}
+    .milestone .when{font-family:var(--serif);font-size:35px;letter-spacing:-.04em}.milestone h3{font-size:13px;font-weight:500;line-height:1.6;margin:12px 0 5px}.milestone p{font-size:11px;line-height:1.7;color:#a69aa0;margin:0}
+    .method{background:#181218;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,7vw,105px)}
+    .method-grid h2{font-family:var(--serif);font-size:clamp(40px,4vw,65px);line-height:1.15;font-weight:400;letter-spacing:-.045em;margin:15px 0 25px}
+    .method-grid p{font-size:13px;line-height:1.95;color:#bcb0b4;margin:0 0 18px}
+    .method-rows{border-top:1px solid var(--line)}.method-row{padding:16px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:90px 1fr;gap:20px;font-size:12px;line-height:1.6}
+    .method-row span{color:var(--accent-soft);font:10px var(--mono);text-transform:uppercase;letter-spacing:.07em}
+    .method-row a{color:#dfc2c7;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+    .site-footer{padding:48px 0 24px}.footer-head{display:grid;grid-template-columns:1fr 1fr;gap:30px;border-bottom:1px solid var(--line);padding-bottom:50px}
+    .footer-head h2{font:400 clamp(35px,4vw,64px)/1.1 var(--serif);margin:0}.footer-head p{font-size:12px;color:#b1a4ab;line-height:1.8;max-width:420px;justify-self:end}
+    .footer-bottom{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;padding-top:25px;color:#a69ba0;font-size:10px;line-height:1.9}
+    .footer-bottom a{text-decoration:underline;text-underline-offset:2px}
+    dialog{color:var(--paper)}.lightbox{border:0;max-width:none;max-height:none;width:100vw;height:100dvh;margin:0;padding:0;background:#080608;overflow:hidden}
+    .lightbox::backdrop{background:#080608}.lb-inner{display:grid;grid-template-columns:1fr minmax(240px,330px);width:100%;height:100%}
+    .lb-stage{position:relative;min-width:0;display:grid;place-items:center;background:#070507;padding:65px 68px}
+    .lb-stage img{width:100%;height:100%;max-height:calc(100dvh - 125px);object-fit:contain;filter:none}
+    .lb-top{position:absolute;top:23px;left:31px;right:30px;display:flex;justify-content:space-between;align-items:center;font:10px var(--mono);letter-spacing:.12em;color:#c9b8bf}
+    .lb-nav{position:absolute;top:50%;transform:translateY(-50%);border:1px solid #52404a;background:rgba(16,10,14,.78);color:white;font-size:24px;width:43px;height:50px;z-index:2}
+    .lb-prev{left:14px}.lb-next{right:14px}.lb-nav:hover{border-color:#fff}
+    .lb-side{background:#161016;padding:27px 25px 32px;border-left:1px solid var(--line);display:flex;flex-direction:column;overflow-y:auto}
+    .lb-close{align-self:flex-end;border:1px solid var(--line);background:none;color:white;font:10px var(--mono);padding:11px 14px;letter-spacing:.1em}
+    .lb-info{margin:auto 0}.lb-side h2{font:400 40px/1.09 var(--serif);letter-spacing:-.04em;margin:18px 0 15px}
+    .lb-side p{color:#b7a9b0;font-size:12px;line-height:1.8}.lb-side dl{display:grid;grid-template-columns:95px 1fr;gap:13px 14px;margin:30px 0;font-size:11px;line-height:1.5}
+    .lb-side dt{color:#a4979e}.lb-side dd{margin:0;overflow-wrap:anywhere}.lb-side a{text-decoration:underline;text-underline-offset:3px;color:#e0bcc3}.lb-help{font:9px/1.8 var(--mono);color:#877b83;margin-top:35px}
+    .side-rail{position:fixed;bottom:22%;right:10px;writing-mode:vertical-rl;font:9px var(--mono);letter-spacing:.15em;color:#6f626a;text-transform:uppercase;z-index:3;pointer-events:none}
+    @media(min-width:1600px){.hero h1{font-size:165px}}
+    @media(max-width:1170px){.desktop-nav{gap:14px}.desktop-nav a{font-size:9px}.hero h1{font-size:clamp(70px,10vw,125px)}.covers-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-layout{grid-template-columns:190px 1fr}.side-rail{display:none}}
+    @media(max-width:840px){.topbar-inner span:last-child{display:none}.masthead{height:68px}.desktop-nav{display:none}.menu-btn{display:block}.mobile-nav.is-open{display:block}.hero,.hero-grid{min-height:0}.hero-grid{grid-template-columns:1fr}.hero-copy{padding:68px 0 60px}.hero h1{font-size:clamp(74px,15vw,140px);margin:38px 0 27px}.hero-photo{min-height:510px;height:510px}.intro-grid{grid-template-columns:repeat(3,1fr)}.intro-copy{grid-column:1/-1;padding:25px 0 8px}.stat{padding-left:15px;margin-bottom:15px}.gallery-layout{grid-template-columns:1fr}.gallery-aside{position:static;display:none}.section-head{grid-template-columns:1fr}.section-note{max-width:420px}.feature-grid{grid-template-columns:1fr;min-height:0;gap:30px}.covers-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.timeline-grid{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:25px}.method-grid{grid-template-columns:1fr}.lightbox .lb-inner{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto}.lb-stage{padding:54px 52px 25px}.lb-stage img{max-height:55dvh}.lb-side{border-left:0;border-top:1px solid var(--line);padding:12px 20px 16px;max-height:35dvh}.lb-side h2{font-size:27px;margin:5px 0}.lb-info{margin:0}.lb-side dl,.lb-help,.lb-side p{display:none}.lb-close{position:absolute;top:17px;right:20px;z-index:4}.lb-side .eyebrow{font-size:8px}.lb-stage .lb-top{top:23px;left:20px}}
+    @media(max-width:560px){.brand-main{font-size:23px}.brand-sub{letter-spacing:.18em}.topbar{font-size:8px}.hero h1{font-size:clamp(69px,15vw,94px)}.hero-copy{padding:58px 0}.hero-photo{height:430px;min-height:430px}.hero-vertical{display:none}.hero-photo .hero-bottom{left:22px;bottom:26px}.hero-index{right:20px}.section{padding-block:65px}.section-title{font-size:57px}.section-head{margin-bottom:31px}.photo-grid{grid-template-columns:1fr;gap:28px}.photo-img{aspect-ratio:3/2}.filterbar{gap:8px}.search{min-width:100%;max-width:100%;order:1}.photo-results{order:2;margin-left:0}.covers-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.timeline-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.intro-grid{grid-template-columns:repeat(3,1fr)}.stat-num{font-size:30px}.stat-label{font-size:9px}.stat{padding:20px 8px 16px}.footer-head{grid-template-columns:1fr}.footer-head p{justify-self:start}.lb-stage{padding:60px 44px 20px}.lb-stage img{max-height:55dvh}.lb-prev{left:2px}.lb-next{right:2px}.lb-nav{width:35px}.lb-top{font-size:9px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+<a href="#contenuto" class="skip">Vai al contenuto</a>
+<div class="topbar"><div class="container topbar-inner"><span>Archivio editoriale indipendente · Unofficial Italian Archive</span><span><b>Beta preview 1.1 · HQ edit</b> &nbsp; / &nbsp; 17.10.2026</span></div></div>
+<header class="masthead">
+  <div class="container masthead-inner">
+    <a href="#inizio" class="brand" aria-label="Mylène Farmer Italia, torna all'inizio"><span class="brand-mark" aria-hidden="true"></span><span><span class="brand-main">Mylène Farmer</span><span class="brand-sub">Italia · Archivio Visivo</span></span></a>
+    <nav class="desktop-nav" aria-label="Navigazione principale"><a href="#inizio">Home</a><a href="#fotografie">Fotografie</a><a href="#discografia">Discografia</a><a href="#percorso">Percorso</a><a href="#metodo">Fonti e crediti</a><a href="approfondimento.html" class="editorial-link">Approfondimento</a><a class="nav-cta" href="#fotografie">Esplora l'archivio ↗</a></nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" id="menuBtn">Menu ☰</button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Navigazione mobile"><a href="#inizio">Home</a><a href="#fotografie">Fotografie</a><a href="#discografia">Discografia</a><a href="#percorso">Percorso</a><a href="#metodo">Fonti e crediti</a><a href="approfondimento.html">Approfondimento</a></nav>
+</header>
+<main id="contenuto">
+  <section class="hero" id="inizio" aria-labelledby="heroHeading"><div class="container hero-grid">
+    <div class="hero-copy"><span class="eyebrow">La voix. L'image. La mémoire.</span><h1 id="heroHeading">Mylène<i>Farmer</i></h1><div class="hero-intro"><strong>Un universo, molte forme.</strong><br>Un archivio italiano dedicato alla musica, alla fotografia e alla dimensione scenica di un'artista che ha trasformato ogni immagine in una narrazione.</div><div class="hero-actions"><a href="#fotografie" class="btn">Archivio fotografico <span aria-hidden="true">↗</span></a><a href="#discografia" class="btn btn-alt">Discografia visiva <span aria-hidden="true">→</span></a><a href="approfondimento.html" class="btn btn-alt">Dossier editoriale <span aria-hidden="true">→</span></a></div></div>
+    <div class="hero-photo" id="hero-photo"><img alt="Mylène Farmer durante Timeless 2013, Paris-Bercy; fotografia di Clicsouris, CC BY-SA 3.0" src="https://upload.wikimedia.org/wikipedia/commons/8/80/Myl%C3%A8ne_Farmer_-_Timeless_2013_-_10.09.2013_-_01.jpg" width="1920" height="1394" fetchpriority="high" decoding="async"><div class="hero-index">01 — Timeless / 2013</div><div class="hero-vertical">Mylène Farmer — Archive Italia</div><div class="hero-bottom"><span class="caps">Photography / Clicsouris · CC BY-SA 3.0</span><p>Timeless 2013 · Paris-Bercy — originale 1.920 × 1.394 px · <a href="https://commons.wikimedia.org/wiki/File:Myl%C3%A8ne_Farmer_-_Timeless_2013_-_10.09.2013_-_01.jpg" target="_blank" rel="noopener noreferrer">Fonte ↗</a></p></div></div>
+  </div><div class="hero-footline" aria-hidden="true"></div></section>
+  <div class="intro-band"><div class="container intro-grid"><div class="intro-copy">Cinque fotografie autentiche selezionate per resa visiva e composizione, servite dai file originali Full HD. Le copertine non verificate vengono sostituite da schede tipografiche. Nessuna immagine generata artificialmente.</div><div class="stat"><div class="stat-num">05</div><span class="stat-label">Fotografie HQ selezionate</span></div><div class="stat"><div class="stat-num">12</div><span class="stat-label">Schede discografiche</span></div><div class="stat"><div class="stat-num">1920</div><span class="stat-label">Pixel larghezza originali</span></div></div></div>
+  <section class="section" id="fotografie" aria-labelledby="gallery-title"><div class="container">
+    <div class="section-head"><div><span class="section-counter">01 / Archivio fotografico · HQ selection</span><h2 class="section-title" id="gallery-title">La presenza.<br><em>La scena.</em></h2></div><p class="section-note">Solo scatti selezionati · file originali 1.920 px · nessuna miniatura da 960 px · navigazione Full HD.</p></div>
+    <div class="gallery-layout"><aside class="gallery-aside"><span class="caps" style="color:#cc929a">Photo index / 2026</span><h3>Una selezione. Nessun riempitivo.</h3><p>Scatti del tour Timeless 2013 controllati a livello compositivo. File con resa insufficiente, soggetti troppo distanti o qualità non valutata restano esclusi dalla galleria.</p><div class="aside-line" aria-hidden="true"></div><p>Le cinque fotografie sono caricate direttamente dai file originali di Wikimedia Commons, senza upscaling o generazione. Per vederle serve Internet; la galleria HTML rimane un singolo file.</p><a href="docs/QUALITY_AUDIT.md" target="_blank" rel="noopener noreferrer">Registro fotografico ↗</a></aside>
+      <div><div class="filterbar" aria-label="Filtri fotografici"><button class="filter" data-year="all" aria-pressed="true">Tutte</button><button class="filter" data-year="10" aria-pressed="false">10 settembre</button><button class="filter" data-year="17" aria-pressed="false">17 settembre</button><input class="search" type="search" id="photoSearch" placeholder="Cerca evento o identificativo…" aria-label="Cerca fotografie"><span class="photo-results" id="photoResults" role="status" aria-live="polite">5 fotografie</span></div><div class="photo-grid" id="photoGrid"></div><div id="photoEmpty" class="empty" hidden>Nessun risultato per i filtri selezionati. Modifica la ricerca.</div></div>
+    </div>
+  </div></section>
+  <section class="feature-banner" aria-labelledby="vision-title"><div class="container feature-grid"><div><span class="section-counter">02 / Direzione editoriale</span><h2 id="vision-title">Non soltanto canzoni.<br><em>Un linguaggio visivo.</em></h2><p>Immagine, suono, costume e spazio scenico dialogano in un repertorio estetico riconoscibile. Questa edizione distingue le opere, le fotografie documentarie e le fonti senza confonderne la natura.</p></div><div class="feature-quote">«Meglio cinque fotografie nitide e leggibili che decine di immagini incapaci di sostenere lo sguardo.»</div></div></section>
+  <section class="section covers-section" id="discografia" aria-labelledby="albums-title"><div class="container"><div class="section-head"><div><span class="section-counter">03 / Discografia visiva</span><h2 class="section-title" id="albums-title">I dischi.<br><em>Le epoche.</em></h2></div><p class="section-note">Discografia presentata con schede tipografiche. Le copertine sono temporaneamente ritirate: risoluzione effettiva, qualità visiva e diritti di pubblicazione non sono ancora stati convalidati.</p></div><div class="covers-grid" id="coversGrid"></div><div class="cover-note">Nessuna copertina a risoluzione insufficiente o non verificata viene caricata in questa versione. I riquadri sono elementi tipografici originali del sito, non riproduzioni delle copertine discografiche. Le immagini ufficiali potranno essere ripristinate solo dopo controllo della qualità e dei diritti.</div></div></section>
+  <section class="section" id="percorso" aria-labelledby="timeline-title"><div class="container"><div class="section-head"><div><span class="section-counter">04 / Coordinate temporali</span><h2 class="section-title" id="timeline-title">Un percorso.<br><em>Una visione.</em></h2></div><p class="section-note">Una cronologia introduttiva, volutamente essenziale. Le schede approfondite appartengono alla successiva fase di integrazione dell'archivio completo.</p></div><div class="timeline-grid"><article class="milestone"><div class="when">1984</div><h3>Maman a tort</h3><p>L'inizio del percorso discografico.</p></article><article class="milestone"><div class="when">1988</div><h3>Ainsi soit je...</h3><p>Affermarsi di un immaginario personale.</p></article><article class="milestone"><div class="when">1991</div><h3>L'Autre...</h3><p>Una nuova dimensione pop.</p></article><article class="milestone"><div class="when">1999</div><h3>Innamoramento</h3><p>Fotografia, introspezione, narrazione.</p></article><article class="milestone"><div class="when">2019</div><h3>Live 2019</h3><p>La scena come architettura immersiva.</p></article><article class="milestone"><div class="when">2023–24</div><h3>Nevermore</h3><p>Il linguaggio dello spettacolo monumentale.</p></article></div></div></section>
+  <section class="section method" id="metodo" aria-labelledby="method-title"><div class="container method-grid"><div><span class="section-counter">05 / Metodo e responsabilità</span><h2 id="method-title">L'immagine ha valore.<br><em>La fonte ha un nome.</em></h2><p>Questa edizione mostra soltanto cinque immagini preselezionate dopo una verifica visiva di composizione e leggibilità. Tutte provengono dalla serie Timeless 2013 e hanno 1.920 pixel di larghezza nei file originali: ciò non equivale a una certificazione professionale 4K. Ogni scatto conserva credito, licenza e collegamento alla fonte.</p><p>Le anteprime caricano direttamente i file fotografici originali: nessuna miniatura a 960 px, nessun upscaling AI, nessun dettaglio inventato. L'immagine è mostrata senza zoom CSS nella griglia; il pannello di apertura visualizza lo stesso file originale. Il ritaglio del solo hero è di presentazione e non modifica i pixel del file.</p></div><div><div class="method-rows"><div class="method-row"><span>Fotografie</span><div><a href="https://commons.wikimedia.org/wiki/Category:Myl%C3%A8ne_Farmer" target="_blank" rel="noopener noreferrer">Wikimedia Commons ↗</a><br>Cinque scatti di Clicsouris · CC BY-SA 3.0. Attribuzione, licenza e collegamento individuale in ogni scheda.</div></div><div class="method-row"><span>Dataset</span><div><a href="docs/QUALITY_AUDIT.md" target="_blank" rel="noopener noreferrer">Catalogo fotografico 2026 ↗</a><br>Audit originale: cinque scatti esposti. Altre immagini archiviate nelle revisioni precedenti non sono pubblicate senza nuova valutazione.</div></div><div class="method-row"><span>Copertine</span><div><a href="docs/QUALITY_AUDIT.md" target="_blank" rel="noopener noreferrer">Verifica e selezione copertine ↗</a><br>Copertine non caricate: qualità effettiva e autorizzazioni non ancora controllate.</div></div><div class="method-row"><span>Contatto</span><div>Progetto editoriale indipendente, non ufficiale e non affiliato a Mylène Farmer, management o etichette discografiche.</div></div><div class="method-row"><span>Realizzazione</span><div><strong>Salvatore Sinatra</strong> · cura editoriale, direzione visiva, concept e realizzazione della galleria.</div></div></div></div></div></section>
+</main>
+<footer class="site-footer"><div class="container"><div class="footer-head"><h2>Mylène Farmer<br><i style="color:#c59b9f;font-weight:400">Italia.</i></h2><p>Un luogo di consultazione e ricerca visiva dedicato all'opera di Mylène Farmer. Progettato per diventare un archivio coerente, leggibile, attribuito, rispettoso delle fonti e delle immagini.</p></div><div class="footer-bottom"><span>© 2026 Salvatore Sinatra · Progetto e realizzazione<br>Versione 1.1 HQ · integrata con il dossier editoriale 2.1</span><span>Non ufficiale · Non affiliato · Diritti delle fotografie ai rispettivi autori<br><a href="#inizio">Torna all'inizio ↑</a> &nbsp;·&nbsp; <a href="approfondimento.html">Archivio editoriale 2.1 →</a> &nbsp;·&nbsp; <a href="#metodo">Crediti e responsabilità</a></span></div></div></footer>
+<div class="side-rail" aria-hidden="true">Mylène Farmer Italia / Independent Archive / 2026</div>
+<dialog class="lightbox" id="lightbox" aria-modal="true" aria-labelledby="lbTitle"><div class="lb-inner"><div class="lb-stage"><div class="lb-top"><span id="lbNumber">01 / 05</span><span>Archivio fotografico</span></div><button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Fotografia precedente">‹</button><img id="lbImage" alt=""><button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Fotografia successiva">›</button></div><div class="lb-side"><button class="lb-close" id="lbClose" type="button" aria-label="Chiudi fotografia">✕ &nbsp; Chiudi</button><div class="lb-info"><span class="eyebrow" id="lbCode">Photography / 2026</span><h2 id="lbTitle">Fotografia</h2><p id="lbEvent"></p><dl><dt>Fotografo</dt><dd id="lbAuthor"></dd><dt>Dimensioni</dt><dd id="lbDimensions"></dd><dt>Licenza</dt><dd><a id="lbLicense" href="#" target="_blank" rel="noopener noreferrer"></a></dd><dt>Originale</dt><dd><a id="lbSource" href="#" target="_blank" rel="noopener noreferrer">Scheda Wikimedia Commons ↗</a></dd></dl><div class="lb-help">Navigazione: ← → &nbsp; · &nbsp; Esci: ESC<br>Fotografia originale via Wikimedia Commons · nessun upscaling.</div></div></div></div></dialog>
+<script>
+(function(){'use strict';
+  const photoRaw=[
+    ["MF-2026-001", 2013, "Timeless 2013 · Paris-Bercy (10 settembre)", 1920, 1394, "Clicsouris", "CC BY-SA 3.0", "Mylène Farmer - Timeless 2013 - 10.09.2013 - 01.jpg", "https://upload.wikimedia.org/wikipedia/commons/8/80/Myl%C3%A8ne_Farmer_-_Timeless_2013_-_10.09.2013_-_01.jpg"],
+    ["MF-2026-006", 2013, "Timeless 2013 · Paris-Bercy (17 settembre)", 1920, 1328, "Clicsouris", "CC BY-SA 3.0", "Mylène Farmer - Timeless 2013 - 17.09.2013 - 02.jpg", "https://upload.wikimedia.org/wikipedia/commons/f/f4/Myl%C3%A8ne_Farmer_-_Timeless_2013_-_17.09.2013_-_02.jpg"],
+    ["MF-2026-009", 2013, "Timeless 2013 · Paris-Bercy (17 settembre)", 1920, 1450, "Clicsouris", "CC BY-SA 3.0", "Mylène Farmer - Timeless 2013 - 17.09.2013 - 05.jpg", "https://upload.wikimedia.org/wikipedia/commons/d/d5/Myl%C3%A8ne_Farmer_-_Timeless_2013_-_17.09.2013_-_05.jpg"],
+    ["MF-2026-012", 2013, "Timeless 2013 · Paris-Bercy (17 settembre)", 1920, 1185, "Clicsouris", "CC BY-SA 3.0", "Mylène Farmer - Timeless 2013 - 17.09.2013 - 08.jpg", "https://upload.wikimedia.org/wikipedia/commons/b/bc/Myl%C3%A8ne_Farmer_-_Timeless_2013_-_17.09.2013_-_08.jpg"],
+    ["MF-2026-013", 2013, "Timeless 2013 · Paris-Bercy (17 settembre)", 1920, 1274, "Clicsouris", "CC BY-SA 3.0", "Mylène Farmer - Timeless 2013 - 17.09.2013 - 09.jpg", "https://upload.wikimedia.org/wikipedia/commons/2/2f/Myl%C3%A8ne_Farmer_-_Timeless_2013_-_17.09.2013_-_09.jpg"]
+  ];
+  const photos=photoRaw.map(([id,year,event,width,height,author,license,file,original_url])=>({id,year,event,width,height,author,license,file,original_url,date:file.includes('10.09.2013')?'10':'17'}));
+  // Selezione editoriale verificata; solo originali a 1920 px, senza anteprime ridotte.
+  const featured=['MF-2026-001','MF-2026-012','MF-2026-009','MF-2026-006','MF-2026-013'];
+  photos.sort((a,b)=>featured.indexOf(a.id)-featured.indexOf(b.id));
+  // Le immagini di copertina sono sospese finche' qualita' e diritti non saranno verificati.
+  const albumRaw=[
+    ['Cendres de lune',1986],['Ainsi soit je...',1988],["L'Autre...",1991],['Anamorphosée',1995],
+    ['Innamoramento',1999],["Avant que l'ombre...",2005],['Point de suture',2008],['Bleu noir',2010],
+    ['Monkey Me',2012],['Interstellaires',2015],['Désobéissance',2018],["L'Emprise",2022]
+  ];
+  const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const pagePath=file=>'https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(file).replace(/%20/g,'_');
+  const licensePath=lic=>lic==='CC BY 2.0'?'https://creativecommons.org/licenses/by/2.0/':lic==='CC BY-SA 3.0'?'https://creativecommons.org/licenses/by-sa/3.0/':'https://creativecommons.org/licenses/by-sa/4.0/';
+  const niceTitle=p=>p.year===2012?'Portrait · MIDEM, Cannes':p.year===2019?'Live 2019 · Paris':p.year===2023?'Nevermore · '+(p.event.includes('Nantes')?'Nantes':'Lione'):'Timeless 2013 · '+(p.file.includes('10.09')?'10':'17')+' settembre · '+p.file.slice(-6,-4);
+  const byId=id=>document.getElementById(id);
+  const photoGrid=byId('photoGrid'), coversGrid=byId('coversGrid'), search=byId('photoSearch'), results=byId('photoResults'), empty=byId('photoEmpty');
+  const lb=byId('lightbox');let year='all',visible=[],active=0,priorFocus=null;
+  function renderPhotos(){
+    const query=search.value.trim().toLocaleLowerCase('it');
+    visible=photos.filter(p=>(year==='all'||p.date===year)&&(!query||[p.year,p.event,p.author,p.file,p.id].join(' ').toLocaleLowerCase('it').includes(query)));
+    photoGrid.innerHTML=visible.map(p=>`<article class="photo-card"><button type="button" class="photo-trigger" data-id="${p.id}" aria-label="Apri ${esc(niceTitle(p))}, fotografia di ${esc(p.author)}"><div class="photo-img"><img loading="lazy" decoding="async" alt="Mylène Farmer — ${esc(p.event)}; fotografia di ${esc(p.author)}" src="${p.original_url}" width="${p.width}" height="${p.height}"><span class="img-fail">Originale non raggiungibile.<br>Apri la scheda della fonte.</span><span class="photo-hover" aria-hidden="true">↗ &nbsp; Full HD</span></div></button><div class="photo-caption"><div class="photo-meta"><span class="photo-id">${p.id} · Originale</span><span class="year">${p.width} × ${p.height} px</span></div><h3>${esc(niceTitle(p))}</h3><p>${esc(p.author)} · ${esc(p.license)} · <a class="inline-source" href="${pagePath(p.file)}" target="_blank" rel="noopener noreferrer">Fonte e licenza ↗</a></p></div></article>`).join('');
+    results.textContent=visible.length+' '+(visible.length===1?'fotografia HQ':'fotografie HQ');
+    empty.hidden=visible.length>0;
+    photoGrid.querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>img.parentElement.classList.add('failed'),{once:true}));
+  }
+  function renderCovers(){coversGrid.innerHTML=albumRaw.map(([title,year],index)=>`<article class="cover"><div class="cover-image" aria-label="Scheda tipografica, copertina non esposta"><span class="cover-letter" aria-hidden="true">MF</span><span class="cover-type">Discografia · ${String(index+1).padStart(2,'0')} / 12</span></div><h3>${esc(title)}</h3><span class="year">${year}</span></article>`).join('');}
+  function updateLightbox(){const p=visible[active];if(!p)return;byId('lbNumber').textContent=String(active+1).padStart(2,'0')+' / '+visible.length;byId('lbCode').textContent=p.id+' / '+p.year;byId('lbTitle').textContent=niceTitle(p);byId('lbEvent').textContent=p.event;byId('lbAuthor').textContent=p.author;byId('lbDimensions').textContent=p.width+' × '+p.height+' px';byId('lbLicense').textContent=p.license;byId('lbLicense').href=licensePath(p.license);byId('lbSource').href=pagePath(p.file);const img=byId('lbImage');img.alt='Mylène Farmer — '+p.event+'; fotografia di '+p.author;img.src=p.original_url;}
+  function openLightbox(id){const i=visible.findIndex(p=>p.id===id);if(i<0)return;active=i;priorFocus=document.activeElement;updateLightbox();lb.showModal();document.body.classList.add('modal-open');byId('lbClose').focus();}
+  function closeLightbox(){if(lb.open)lb.close();document.body.classList.remove('modal-open');if(priorFocus&&priorFocus.isConnected)priorFocus.focus();}
+  function move(delta){active=(active+delta+visible.length)%visible.length;updateLightbox();}
+  photoGrid.addEventListener('click',e=>{const btn=e.target.closest('button.photo-trigger');if(btn)openLightbox(btn.dataset.id);});
+  document.querySelectorAll('[data-year]').forEach(b=>b.addEventListener('click',()=>{year=b.dataset.year;document.querySelectorAll('[data-year]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderPhotos();}));
+  search.addEventListener('input',renderPhotos);byId('lbClose').addEventListener('click',closeLightbox);byId('lbPrev').addEventListener('click',()=>move(-1));byId('lbNext').addEventListener('click',()=>move(1));
+  lb.addEventListener('cancel',e=>{e.preventDefault();closeLightbox();});lb.addEventListener('click',e=>{if(e.target===lb)closeLightbox();});
+  document.addEventListener('keydown',e=>{if(!lb.open)return;if(e.key==='ArrowLeft'){e.preventDefault();move(-1)}else if(e.key==='ArrowRight'){e.preventDefault();move(1)}});
+  const menuBtn=byId('menuBtn'),mobileNav=byId('mobile-nav');menuBtn.addEventListener('click',()=>{const opened=mobileNav.classList.toggle('is-open');menuBtn.setAttribute('aria-expanded',String(opened));});mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mobileNav.classList.remove('is-open');menuBtn.setAttribute('aria-expanded','false')}));
+  const hero=byId('hero-photo');const heroImg=hero.querySelector('img');heroImg.addEventListener('error',()=>{heroImg.hidden=true;hero.querySelector('.hero-bottom p').textContent='Immagine dalla fonte temporaneamente non raggiungibile.'},{once:true});
+  renderPhotos();renderCovers();
+})();
+</script>
+</body>
+</html>

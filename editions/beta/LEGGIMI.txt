@@ -1,0 +1,42 @@
+MYLENE FARMER ITALIA - VERSIONE 1.0 BETA PREVIEW
+================================================
+Data: 17 ottobre 2026
+Realizzazione e cura editoriale: Salvatore Sinatra
+
+ISTRUZIONI
+1. Estrai il file ZIP, se stai leggendo questo documento all'interno del pacchetto.
+2. Apri index.html con un browser moderno (Chrome, Safari, Firefox, Brave).
+3. La pagina e l'interattivita funzionano localmente: non serve installare nulla.
+4. E NECESSARIA LA CONNESSIONE INTERNET PER MOSTRARE LE FOTOGRAFIE E LE COPERTINE:
+   le immagini non sono incorporate nel file HTML. Le prime sono richiamate
+   da Wikimedia Commons; le copertine dalla repository GitHub del progetto.
+
+CONTENUTI
+- Homepage immersiva + UI editoriale responsive.
+- Galleria di 19 fotografie catalogate con filtri 2012 / 2013 / 2019 / 2023.
+- Ricerca libera per autore, anno, evento.
+- Lightbox con originali della fonte, navigazione con tasti freccia ed ESC.
+- Selezione di 12 copertine su 18 catalogate in repository.
+- Cronologia editoriale essenziale.
+- Fonti, attribuzioni, licenze e disclaimer.
+
+PROVENIENZA
+Dati fotografici: repository salvatoresinatra0001-ux/mylenefarmer-italia,
+assets/data/catalogo-fotografie-2026.json (stato al 16 ottobre 2026).
+Originali e licenze: pagine individuali di Wikimedia Commons.
+Copertine: gallerie/copertine-medium/assets/covers/ nella repository.
+
+USO E DIRITTI
+Progetto non ufficiale, non affiliato all'artista o al management.
+Il layout/codice di questa anteprima e la cura editoriale sono attribuiti
+al progetto di Salvatore Sinatra. Fotografie e copertine conservano i diritti
+indicati dalle rispettive fonti/titolari. Le licenze CC richiedono adeguata
+attribuzione; ove previsto, le condizioni Share-Alike. La preview NON concede
+nuovi diritti sulle immagini. Prima della pubblicazione ufficiale, verificare
+specificamente i diritti delle copertine e di ogni asset non CC.
+
+STATO
+- Preview non pubblicata, nessuna modifica DNS o repository.
+- Nessun tracciamento, cookie analitico, framework o build step.
+- Per una versione integralmente offline servono le immagini autorizzate
+  memorizzate localmente e la riconfigurazione dei relativi percorsi.

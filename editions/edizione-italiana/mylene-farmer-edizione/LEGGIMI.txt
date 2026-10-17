@@ -1,0 +1,23 @@
+Mylène Farmer — edizione italiana
+Archivio di esportazione, 14 ottobre 2026
+
+CONTENUTO
+- html/     pagine HTML da aprire nel browser (senza installare nulla)
+- sorgente/ progetto dell'app, da avviare in locale
+
+HTML
+Apri html/index.html nel browser.
+I link tra le pagine funzionano da file.
+Le immagini viaggiano con la cartella.
+L'audio non è incluso: Ascolta porta alle piattaforme, che chiedono la rete.
+Il menu a tutto schermo, i filtri e il modulo sono nella versione dell'app.
+Nell'HTML, su telefono, le voci di navigazione restano visibili.
+
+SORGENTE
+Serve Node 22.
+  cd sorgente
+  npm install
+  npm run dev
+Poi apri l'indirizzo che indica il terminale.
+
+Questa edizione non è il sito ufficiale di Mylène Farmer.

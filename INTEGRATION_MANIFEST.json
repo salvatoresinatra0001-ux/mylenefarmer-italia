@@ -1,0 +1,16 @@
+{
+  "version": "1.0-unified",
+  "mode": "local-preview",
+  "published": false,
+  "sources": [
+    "edizione-italiana",
+    "total-preview",
+    "github-v2-1",
+    "netlify-v1-1",
+    "beta",
+    "hq"
+  ],
+  "primary": "index.html",
+  "archive": "archivio/index.html",
+  "gallery": "galerie/index.html"
+}
