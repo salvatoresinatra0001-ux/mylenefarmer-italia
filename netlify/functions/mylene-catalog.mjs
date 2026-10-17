@@ -1,9 +1,9 @@
-import { config, seal, unseal, metadata, insideRoot, listChildren, rightsManifest, isApproved, jsonResponse, errorResponse, FOLDER_MIME } from './_shared/drive.mjs';
+import { config as driveRoots, seal, unseal, metadata, insideRoot, listChildren, rightsManifest, isApproved, jsonResponse, errorResponse, FOLDER_MIME } from './_shared/drive.mjs';
 
 export default async function handler(request) {
   if (request.method !== 'GET') return jsonResponse({ ok: false }, 405);
   try {
-    const configRoots = config();
+    const configRoots = driveRoots();
     const url = new URL(request.url);
     const folderToken = url.searchParams.get('folder');
     const pageToken = url.searchParams.get('page');
