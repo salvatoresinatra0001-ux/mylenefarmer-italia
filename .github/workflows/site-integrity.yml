@@ -30,3 +30,14 @@ jobs:
           test -s dist/assets/css/style.css
           test -s dist/docs/QUALITY_AUDIT.md
           test -s dist/docs/CATALOGO_FOTOGRAFICO_2026.md
+      - name: Export Netlify-ready ZIP
+        run: |
+          cd dist
+          zip -q -r ../mylenefarmer-italia-netlify-v6.2.zip .
+      - name: Save Netlify deployment artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mylenefarmer-italia-netlify-v6.2
+          path: mylenefarmer-italia-netlify-v6.2.zip
+          retention-days: 30
+          if-no-files-found: error
