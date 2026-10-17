@@ -10,7 +10,7 @@ args=parser.parse_args()
 root=pathlib.Path('dist'); output=pathlib.Path('reports'); output.mkdir(exist_ok=True)
 manifest=json.loads((root/'site-manifest.json').read_text())
 paths=[r['path'] for r in manifest['files'] if r['path'].endswith('.html')]
-report={'base':args.base,'mode':'offline-fixtures' if args.offline else 'live','pages':[], 'gallery':{}, 'limitations':['Video/audio playback and third-party iframe interactions are excluded.']}
+report={'base':args.base,'mode':'offline-fixtures' if args.offline else 'live','pages':[], 'gallery':{}, 'limitations':['Video/audio playback and third-party iframe interactions are excluded.','Full-resolution third-party source availability can vary; the internal viewer retains a verified thumbnail when an original cannot be loaded.']}
 fixture='<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800"><rect width="600" height="800" fill="#29262b"/><text x="30" y="400" fill="white" font-size="20">OFFLINE IMAGE FIXTURE</text></svg>'
 def route_handler(route):
     request=route.request
@@ -47,7 +47,11 @@ with sync_playwright() as p:
                 record['brokenImages']=page.evaluate("[...document.images].filter(i=>i.getAttribute('src')&&!(i.closest('dialog:not([open])'))&&(!i.complete||!i.naturalWidth)).map(i=>({src:i.currentSrc||i.src,alt:i.alt}))")
                 record['missingAlt']=page.locator('img:not([alt])').count()
                 if name in ['index.html','archivio-drive.html','crediti-foto.html']:
-                    page.evaluate('window.scrollTo(0,document.body.scrollHeight)'); page.wait_for_timeout(500)
+                    for photo in page.locator('img').all():
+                        if photo.is_visible():
+                            photo.scroll_into_view_if_needed()
+                            photo.evaluate("async im=>{try{await im.decode()}catch{}}")
+                            page.wait_for_timeout(100)
                     page.evaluate('window.scrollTo(0,0)'); page.wait_for_timeout(500)
                     page.screenshot(path=str(output/(mode+'-'+name.replace('.html','')+'.png')),full_page=True)
             except Exception as exc: record['errors'].append(str(exc))
@@ -68,16 +72,18 @@ with sync_playwright() as p:
         assert page.locator('#mf-viewer').evaluate('(d)=>d.open'), 'Lightbox did not open'
         before=page.locator('#mf-position').inner_text(); page.keyboard.press('ArrowRight')
         assert page.locator('#mf-position').inner_text()!=before, 'Keyboard navigation failed'
-        failures=[]
+        failures=[]; shown=[]
         for n in range(expected):
-            try: page.wait_for_function("document.querySelector('#mf-large').naturalWidth>200 && !document.querySelector('#mf-large').hidden",timeout=10000)
+            try:
+                page.wait_for_function("document.querySelector('#mf-large').naturalWidth>200 && !document.querySelector('#mf-large').hidden",timeout=10000)
+                shown.append({'position':page.locator('#mf-position').inner_text(),'dimensions':page.locator('#mf-large').evaluate('(im)=>[im.naturalWidth,im.naturalHeight]')})
             except PlaywrightTimeout: failures.append({'position':page.locator('#mf-position').inner_text(),'src':page.locator('#mf-large').get_attribute('src')})
             page.keyboard.press('ArrowRight')
         page.keyboard.press('Escape')
         assert not page.locator('#mf-viewer').evaluate('(d)=>d.open'), 'Escape did not close'
         assert page.locator('[download]').count()==0, 'Download button exposed'
         assert page.locator('a[href*="drive.google.com"]').count()==0, 'Drive link exposed'
-        report['gallery']={'ok':not failures,'renderedPhotos':expected,'search':True,'reset':True,'lightbox':True,'keyboard':True,'noDriveLinks':True,'noDownloadButtons':True,'lightboxImagesFailed':failures}
+        report['gallery']={'ok':not failures,'renderedPhotos':expected,'search':True,'reset':True,'lightbox':True,'keyboard':True,'noDriveLinks':True,'noDownloadButtons':True,'lightboxImagesFailed':failures,'lightboxImagesShown':shown}
     except Exception as exc: report['gallery']={'ok':False,'error':str(exc)}
     context.close(); browser.close()
 report['ok']=report['gallery'].get('ok',False) and all(r.get('status')==200 and not r['errors'] and not r.get('horizontalOverflow') and not r.get('brokenImages') for r in report['pages'])
