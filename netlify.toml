@@ -1,7 +1,11 @@
-# Mylène Farmer Italia — GitHub = source of truth; Netlify = production.
+# GitHub and Netlify publish the same deterministic static artifact.
 [build]
   command = "node scripts/build-site.mjs"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Preserve generated HTML bytes, links and source integrity hashes.
+[build.processing]
+  skip_processing = true

@@ -1,0 +1,28 @@
+name: Public host diagnostics
+on:
+  push:
+    branches: ['preview/byte-sync-20261017']
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Inspect public delivery and Pages configuration
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/diagnose-hosts.mjs
+      - name: Save public diagnostic responses
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-diagnostics
+          path: reports/
+          retention-days: 7
