@@ -24,10 +24,12 @@ for (const entry of readdirSync(root, { withFileTypes: true })) {
   copied++;
 }
 // The HQ gallery links to the public photographic quality audit.
-const quality = path.join(root, 'docs', 'QUALITY_AUDIT.md');
-if (existsSync(quality)) {
-  mkdirSync(path.join(out, 'docs'), { recursive: true });
-  copyFileSync(quality, path.join(out, 'docs', 'QUALITY_AUDIT.md'));
+for (const doc of ['QUALITY_AUDIT.md', 'CATALOGO_FOTOGRAFICO_2026.md']) {
+  const source = path.join(root, 'docs', doc);
+  if (existsSync(source)) {
+    mkdirSync(path.join(out, 'docs'), { recursive: true });
+    copyFileSync(source, path.join(out, 'docs', doc));
+  }
 }
 for (const page of ['index.html','galleria-hq.html','archivio-fotografico.html',
                     'speciale-egregore-2026.html','404.html']) {
