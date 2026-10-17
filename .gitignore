@@ -1,0 +1,8 @@
+# Build artifacts, local credentials, macOS metadata
+dist/
+.netlify/
+node_modules/
+.DS_Store
+.env
+.env.*
+*.log
