@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, 'dist');
 const excluded = new Set(['.git', '.github', '.gitignore', '.DS_Store',
-  '.netlify', '.env', '.env.local', 'node_modules', 'dist', 'scripts', 'research',
+  '.netlify', '.env', '.env.local', 'node_modules', 'dist', 'scripts', 'netlify', 'research',
   'docs', 'README.md', 'README_NETLIFY.md', 'netlify.toml', 'package-lock.json']);
 if (!existsSync(path.join(root, 'index.html'))) throw new Error('index.html mancante');
 rmSync(out, { recursive: true, force: true });
