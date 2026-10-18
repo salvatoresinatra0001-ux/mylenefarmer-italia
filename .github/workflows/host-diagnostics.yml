@@ -23,6 +23,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/diagnose-hosts.mjs
+      - name: Inspect Cloudinary folder years and periods
+        continue-on-error: true
+        run: node scripts/check-cloudinary-periods.mjs
       - name: Save public diagnostic responses
         if: always()
         uses: actions/upload-artifact@v4
