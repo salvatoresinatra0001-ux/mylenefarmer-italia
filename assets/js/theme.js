@@ -6,10 +6,20 @@ function apply(){root.dataset.themeMode=mode;root.dataset.theme=mode==='system'?
 apply();
 function setup(){
  let box=document.querySelector('.mf-theme-switcher');
- if(!box){box=document.createElement('div');box.className='mf-theme-switcher';document.body.append(box)}
+ if(!box){box=document.createElement('div');box.className='mf-theme-switcher';}
+ box.setAttribute('aria-label','Modalità visiva del sito');
  let select=box.querySelector('select');
- if(!select){box.innerHTML='<label for="mf-theme-mode">Tema</label><select id="mf-theme-mode" aria-label="Modalità colore"><option value="system">Sistema</option><option value="light">Chiaro</option><option value="dark">Scuro</option></select>';select=box.querySelector('select')}
+ if(!select){box.innerHTML='<span class="mf-theme-mark" aria-hidden="true">◐</span><label for="mf-theme-select">Aspetto</label><select id="mf-theme-select" aria-label="Seleziona tema visivo" title="Seleziona tema visivo"><option value="system">Sistema</option><option value="light">Chiaro</option><option value="dark">Scuro</option></select>';select=box.querySelector('select')}
  if(!select.dataset.mfBound){select.dataset.mfBound='true';select.value=mode;select.addEventListener('change',()=>{mode=select.value;try{localStorage.setItem(key,mode)}catch{}apply()})}
+ const slot=document.querySelector('.site-head .head-row,.vg-top-inner,.top-inner,header.top');
+ if(slot){
+  box.classList.add('mf-theme-switcher--header');
+  const nav=slot.querySelector(':scope > nav');
+  if(nav)nav.insertAdjacentElement('afterend',box);else slot.append(box);
+ }else{
+  box.classList.remove('mf-theme-switcher--header');
+  document.body.append(box);
+ }
  if(!document.querySelector('.mf-reference-bar')){
   const platforms=[['Spotify','S','mf-spotify','https://open.spotify.com/search/Mylene%20Farmer'],['Apple Music','♪','mf-apple','https://music.apple.com/it/search?term=Myl%C3%A8ne%20Farmer'],['Qobuz','Q','mf-qobuz','https://www.qobuz.com/it-it/search?q=Myl%C3%A8ne%20Farmer'],['Deezer','D','mf-deezer','https://www.deezer.com/search/Mylene%20Farmer'],['YouTube Music','▶','mf-youtube','https://music.youtube.com/search?q=Myl%C3%A8ne%20Farmer']];
   const bar=document.createElement('div');bar.className='mf-reference-bar';bar.setAttribute('role','navigation');bar.setAttribute('aria-label','Riferimenti musicali');
