@@ -104,3 +104,7 @@ body.vg-page{margin:0;background:var(--vg-bg);color:var(--vg-ink);font-family:sy
 
 .vg-period-public-preview{margin-top:56px;padding-top:42px;border-top:1px solid var(--vg-line)}
 .vg-period-public-preview h3{font-weight:400;font-size:clamp(1.6rem,3vw,2.4rem);margin:0}
+
+/* Prevent unbroken Cloudinary public IDs from widening narrow screens. */
+.vg-card-info h4{overflow-wrap:anywhere;word-break:break-word;min-width:0}
+.vg-card-info{min-width:0}
