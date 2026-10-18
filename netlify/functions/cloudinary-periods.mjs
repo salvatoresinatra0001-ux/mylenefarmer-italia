@@ -65,7 +65,7 @@ export default async function handler(request){
     const unique=[...new Map(folders.map(x=>[x.label+'|'+x.year+'|'+x.period,x])).values()];
     let sourceMode='folder-tree', assetsScanned=0, inferredFromFilenames=false;
     // Some Cloudinary accounts use dynamic folders or a flat MYLENE_FARMER folder.
-    // When there are no subfolders, derive a chronology from asset metadata only;
+    // When there are no subfolders, derive a chronology from verified asset metadata only;
     // never expose private IDs, file names, CDN URLs, tags or raw context values.
     if(!unique.length){
       sourceMode='resource-metadata';
@@ -85,14 +85,12 @@ export default async function handler(request){
           const folder=String(asset.asset_folder||id.split('/').slice(0,-1).join('/'));
           const folderYear=detectYear(folder);
           const contextYear=detectYear(asset.context?.custom?.year);
-          const fileYear=detectYear(id.split('/').at(-1));
-          const year=contextYear||folderYear||fileYear;
-          const inferred=!folderYear&&!contextYear&&!!fileYear;
-          if(inferred)inferredFromFilenames=true;
+          // Numeric fragments in uploaded filenames are NOT reliable historical dates.
+          const year=contextYear||folderYear;
           const period=detectPeriod(folder,year);
           const label=year||'Non datato';
           const k=label+'|'+period;
-          if(!periods.has(k))periods.set(k,{label,year,period,depth:1,source:inferred?'filename':folderYear?'folder':contextYear?'context':'undated'});
+          if(!periods.has(k))periods.set(k,{label,year,period,depth:1,source:folderYear?'folder':contextYear?'context':'undated'});
         }
         cursor=payload.next_cursor;
         rounds++;
