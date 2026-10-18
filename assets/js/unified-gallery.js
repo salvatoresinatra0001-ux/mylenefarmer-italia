@@ -44,7 +44,7 @@
   const cloudinaryPublicList=data=>(Array.isArray(data.resources)?data.resources:[]).filter(p=>p&&p.type==='upload'&&p.public_id&&Math.max(Number(p.width)||0,Number(p.height)||0)>=1280&&Math.min(Number(p.width)||0,Number(p.height)||0)>=720).map(p=>{
     const year=validYear(p.year),publicId=String(p.public_id),format=String(p.format||'jpg');
     const delivery=(width)=>String(p['delivery_'+width]||'');
-    return {id:'cloudinary-public:'+p.asset_id,title:publicId.split('/').pop(),year,period:decade(year),decade:decade(year),category:'visual',author:'Cloudinary · archivio pubblico',license:'Verifica editoriale in corso',source:'Cloudinary · MYLENE_FARMER',sourceUrl:'https://console.cloudinary.com/app/c-59f776cc3edb265311a3ac475b525f6/assets/media_library/search?q=&view_mode=grid&sortDirection=asc&sortField=publicId',licenseUrl:null,thumb:delivery(900),large:delivery(2200),fallback:null,alt:'Mylène Farmer · archivio Cloudinary pubblico',width:p.width,height:p.height,origin:'cloudinary'};
+    return {id:'cloudinary-public:'+p.asset_id,title:publicId.split('/').pop(),year,period:decade(year),decade:decade(year),category:'fotografie-hd',author:'Autore non indicato nei metadati pubblici',license:'Diritti e licenza non specificati nei metadati pubblici',source:'Cloudinary · MYLENE_FARMER',sourceUrl:'https://console.cloudinary.com/app/c-59f776cc3edb265311a3ac475b525f6/assets/media_library/search?q=&view_mode=grid&sortDirection=asc&sortField=publicId',licenseUrl:null,thumb:delivery(900),large:delivery(2200),fallback:null,alt:'Mylène Farmer · archivio Cloudinary pubblico',width:p.width,height:p.height,origin:'cloudinary'};
   });
   function options(select,values,firstLabel){
     const old=select.value;select.replaceChildren();
@@ -59,7 +59,7 @@
     const p=[...new Set([...editorialPeriods,...all.map(x=>x.period),...folderData.map(f=>String(f.period||''))].filter(Boolean))].sort((a,b)=>b.localeCompare(a,'it'));
     options(periods,p,'Tutti i periodi');
     const cats=[...new Set(all.map(p=>p.category))].sort();
-    const labels={documentary:'Documentazione',portraits:'Ritratti',live:'Live e tournée',discography:'Discografia',visual:'Universo visivo',appearances:'Apparizioni'};
+    const labels={documentary:'Documentazione',portraits:'Ritratti',live:'Live e tournée',discography:'Discografia',visual:'Universo visivo',appearances:'Apparizioni','fotografie-hd':'Fotografie HD'};
     const old=category.value;category.replaceChildren();const first=node('option','','Tutte le categorie');first.value='';category.append(first);
     for(const cat of cats){const opt=node('option','',labels[cat]||cat);opt.value=cat;category.append(opt)}
     if(cats.includes(old))category.value=old;
@@ -122,6 +122,12 @@
     result.sort((a,b)=>sort.value==='title'?a.title.localeCompare(b.title,'it'):sort.value==='old'?Number(a.year||0)-Number(b.year||0)||a.title.localeCompare(b.title,'it'):Number(b.year||0)-Number(a.year||0)||a.title.localeCompare(b.title,'it'));
     return result;
   }
+  function photoDisclaimer(p){
+    const date=p.year?'Anno catalogato: '+p.year+'.':'Data di scatto non indicata.';
+    const author=p.author||'Autore non indicato';
+    const rights=p.origin==='cloudinary'?'Immagine presente tra gli asset pubblici Cloudinary; la pubblicazione sul sito non certifica titolarità o licenza.':'Attribuzione e licenza secondo la fonte collegata.';
+    return 'Scheda foto: '+date+' Autore: '+author+'. '+rights+' Per le serie, il periodo è editoriale e non prova la data di scatto; diritti dei rispettivi autori e aventi diritto.';
+  }
   function render(){
     filtered=filteredItems();
     renderPublicPreview();
@@ -142,7 +148,7 @@
         img.addEventListener('error',()=>{if(p.fallback&&img.src!==p.fallback){img.src=p.fallback;return}const placeholder=node('div','vg-notice','Immagine temporaneamente non disponibile');img.replaceWith(placeholder)});
         open.append(img);open.addEventListener('click',()=>show(i,open));
         const info=node('div','vg-card-info');
-        info.append(node('div','vg-meta',[p.year||'Data non indicata',p.period].filter(Boolean).join(' / ')),node('h4','',p.title),node('p','',p.author+' · '+p.license));
+        info.append(node('div','vg-meta',[p.origin==='cloudinary'?'Public HD':null,p.year||'Data non indicata',p.period].filter(Boolean).join(' / ')),node('h4','',p.title),node('p','vg-photo-disclaimer',photoDisclaimer(p)));
         if(p.sourceUrl){const a=node('a','', 'Fonte e attribuzione ↗');a.href=p.sourceUrl;a.target='_blank';a.rel='noopener noreferrer';info.append(a)}
         card.append(open,info);grid.append(card);
       }
@@ -167,7 +173,7 @@
     large.onerror=()=>{if(ticket===imageSerial){imageStatus.textContent='Immagine temporaneamente non disponibile';if(p.fallback&&large.src!==p.fallback)large.src=p.fallback}};
     large.src=p.large||p.thumb;
     $('vg-title').textContent=p.title;
-    caption.textContent=[p.year,p.period,p.author,p.license,p.source].filter(Boolean).join(' · ');
+    caption.textContent=photoDisclaimer(p)+' Fonte: '+p.source+'.';
     position.textContent=(i+1)+' / '+filtered.length;
     source.hidden=!p.sourceUrl;if(p.sourceUrl)source.href=p.sourceUrl;
     licenseLink.hidden=!p.licenseUrl;if(p.licenseUrl)licenseLink.href=p.licenseUrl;
