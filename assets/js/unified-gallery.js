@@ -8,6 +8,9 @@
   const close=$('vg-close'),prev=$('vg-prev'),next=$('vg-next'),position=$('vg-position'),imageStatus=$('vg-image-status');
   const folderGrid=$('vg-folders'),folderStatus=$('vg-folder-status');
   const limitPerPage=48;
+  // Editorial chronology: these are navigational eras, NOT Cloudinary folder claims.
+  const editorialPeriods=['1984–1989','1990–1999','2000–2009','2010–2019','2020–2026'];
+  const editorialDecades=['1980–1989','1990–1999','2000–2009','2010–2019','2020–2029'];
   let all=[],filtered=[],folderData=[],taxonomyMode='folder-tree',taxonomyScanned=0,taxonomyInferred=false,limit=limitPerPage,active=-1,returnFocus=null,selectedDecade='all',imageSerial=0;
   const normalize=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('it');
   const validYear=v=>/^(?:19|20)\d{2}$/.test(String(v||''))?String(v):'';
@@ -47,7 +50,7 @@
   function updateSelectors(){
     const y=[...new Set([...all.map(p=>p.year),...folderData.map(f=>validYear(f.year))].filter(Boolean))].sort((a,b)=>Number(b)-Number(a));
     options(years,y,'Tutti gli anni');
-    const p=[...new Set([...all.map(x=>x.period),...folderData.map(f=>String(f.period||''))].filter(Boolean))].sort((a,b)=>b.localeCompare(a,'it'));
+    const p=[...new Set([...editorialPeriods,...all.map(x=>x.period),...folderData.map(f=>String(f.period||''))].filter(Boolean))].sort((a,b)=>b.localeCompare(a,'it'));
     options(periods,p,'Tutti i periodi');
     const cats=[...new Set(all.map(p=>p.category))].sort();
     const labels={documentary:'Documentazione',portraits:'Ritratti',live:'Live e tournée',discography:'Discografia',visual:'Universo visivo',appearances:'Apparizioni'};
@@ -59,7 +62,7 @@
   function renderTimeline(){
     timeline.replaceChildren();
     const yearsInArchive=[...all.map(p=>p.year),...folderData.map(f=>validYear(f.year))].filter(Boolean);
-    const decades=[...new Set(yearsInArchive.map(decade))].sort((a,b)=>Number(b.slice(0,4))-Number(a.slice(0,4)));
+    const decades=[...new Set([...editorialDecades,...yearsInArchive.map(decade)])].sort((a,b)=>Number(b.slice(0,4))-Number(a.slice(0,4)));
     if(selectedDecade!=='all'&&!decades.includes(selectedDecade))selectedDecade='all';
     for(const d of ['all',...decades]){
       const b=node('button','',d==='all'?'Tutti i decenni':d);
