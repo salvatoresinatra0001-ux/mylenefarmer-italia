@@ -6,6 +6,7 @@ body.vg-page{margin:0;background:var(--vg-bg);color:var(--vg-ink);font-family:sy
 .vg-page a{color:inherit}
 .vg-page button,.vg-page input,.vg-page select{font:inherit}
 .vg-page button{cursor:pointer}
+.vg-page [hidden]{display:none!important}
 .vg-page :is(a,button,input,select,summary):focus-visible{outline:3px solid #ffb6c9;outline-offset:3px}
 .vg-skip{position:absolute;left:10px;top:-100px;background:white;color:black;padding:10px;z-index:99}
 .vg-skip:focus{top:8px}
@@ -55,7 +56,7 @@ body.vg-page{margin:0;background:var(--vg-bg);color:var(--vg-ink);font-family:sy
 .vg-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .vg-card{border:1px solid var(--vg-line);background:var(--vg-panel);min-width:0;display:flex;flex-direction:column}
 .vg-open{display:block;width:100%;border:0;background:#231c25;color:inherit;padding:0;position:relative;overflow:hidden}
-.vg-open img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform .4s;filter:saturate(.8)}
+.vg-open img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;transition:transform .4s;filter:saturate(.8)}
 .vg-open:hover img{transform:scale(1.035)}
 .vg-open:after{content:"Ingrandisci ↗";position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,#0b080bd9);text-align:left;padding:30px 14px 12px;color:white;font-size:12px;opacity:0;transition:opacity .2s}
 .vg-open:hover:after,.vg-open:focus-visible:after{opacity:1}
