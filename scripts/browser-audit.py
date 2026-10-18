@@ -44,9 +44,10 @@ with sync_playwright() as p:
                 page.wait_for_timeout(200)
                 record['title']=page.title()
                 record['horizontalOverflow']=page.evaluate('document.documentElement.scrollWidth>innerWidth+1')
+                record['horizontalMetrics']=page.evaluate("({innerWidth,documentScrollWidth:document.documentElement.scrollWidth,documentClientWidth:document.documentElement.clientWidth,bodyScrollWidth:document.body.scrollWidth,bodyClientWidth:document.body.clientWidth})")
                 record['images']=page.evaluate('document.images.length')
                 record['imageDetails']=page.evaluate("[...document.images].filter(i=>i.getAttribute('src')).map(i=>({src:i.currentSrc||i.src,width:i.naturalWidth,height:i.naturalHeight,complete:i.complete,visible:!!(i.offsetWidth||i.offsetHeight)}))")
-                record['overflowElements']=page.evaluate("[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(0,8).map(e=>({tag:e.tagName,cls:e.className,width:e.getBoundingClientRect().width}))")
+                record['overflowElements']=page.evaluate("[...document.querySelectorAll('body *')].map(e=>{const r=e.getBoundingClientRect();return{tag:e.tagName,cls:typeof e.className==='string'?e.className:'',left:r.left,right:r.right,width:r.width,scrollWidth:e.scrollWidth,clientWidth:e.clientWidth,overflowX:getComputedStyle(e).overflowX}}).filter(e=>e.right>innerWidth+1||e.left< -1||(e.scrollWidth>e.clientWidth+1&&e.scrollWidth>innerWidth+1)).slice(0,16)")
                 record['brokenImages']=page.evaluate("""[...document.images].filter(i=>{
                     if(!i.getAttribute('src')||i.closest('dialog:not([open])'))return false;
                     const r=i.getBoundingClientRect();
