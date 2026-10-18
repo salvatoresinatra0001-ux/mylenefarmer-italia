@@ -6,6 +6,10 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Serve byte-identical static artifacts; disable post-processing rewrites and snippet injection where supported.
+[build.processing]
+  skip_processing = true
+
 # Explicit current Netlify setting: do not rewrite relative HTML links.
 [build.processing.html]
   pretty_urls = false
