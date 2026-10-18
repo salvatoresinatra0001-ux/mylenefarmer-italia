@@ -1,5 +1,6 @@
 # Build artifacts, local credentials, macOS metadata
 dist/
+reports/
 .netlify/
 node_modules/
 .DS_Store

@@ -22,9 +22,14 @@ Non impostare `mylenefarmer.it` come dominio personalizzato di GitHub Pages:
 è assegnato alla produzione Netlify. Prima di modificare DNS o redirezioni www,
 confermare le risoluzioni effettive.
 
+## Stato Master V.20
+
+Il rapporto operativo con gli stati verificati e i prerequisiti aperti è in [MASTER_V20_COMPLETION.md](docs/MASTER_V20_COMPLETION.md). La ricerca globale dell’archivio è disponibile in [Cerca](cerca.html).
+
 ## Struttura
 
 - `index.html` — Home
+- `cerca.html` — Ricerca locale nell’indice editoriale
 - `biografia.html` — Biografia
 - `discografia.html` — Discografia
 - `ascolta.html` — Ascolta

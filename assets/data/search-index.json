@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "language": "it",
+  "updated": "2026-10-18",
+  "items": [
+    {
+      "title": "Mylène Farmer · Italia",
+      "type": "Progetto",
+      "summary": "Archivio italiano indipendente, metodo editoriale e novità documentate.",
+      "url": "index.html",
+      "keywords": "home progetto archivio fonti"
+    },
+    {
+      "title": "Biografia",
+      "type": "Artista",
+      "summary": "Percorso biografico e artistico organizzato per fasi cronologiche.",
+      "url": "biografia.html",
+      "keywords": "artista carriera identità origini storia"
+    },
+    {
+      "title": "Discografia",
+      "type": "Musica",
+      "summary": "Album e pubblicazioni con livelli di verifica e fonti dichiarate.",
+      "url": "discografia.html",
+      "keywords": "album singoli ep edizioni musica"
+    },
+    {
+      "title": "Ascolta",
+      "type": "Musica",
+      "summary": "Riferimenti alle piattaforme musicali e percorsi d’ascolto.",
+      "url": "ascolta.html",
+      "keywords": "spotify apple music qobuz deezer youtube"
+    },
+    {
+      "title": "Concerti e tournée",
+      "type": "Scena",
+      "summary": "Cronologia degli spettacoli e delle tournée documentate.",
+      "url": "concerti.html",
+      "keywords": "tour live nevermore timeless mylenium"
+    },
+    {
+      "title": "Media e videografia",
+      "type": "Audiovisivo",
+      "summary": "Videoclip e opere audiovisive con riferimenti editoriali.",
+      "url": "media.html",
+      "keywords": "video videoclip film documentari"
+    },
+    {
+      "title": "Fotografie per anno e periodo",
+      "type": "Fotografia",
+      "summary": "Archivio fotografico con ricerca, filtri cronologici, attribuzioni e licenze.",
+      "url": "fotografie.html",
+      "keywords": "foto fotografo licenza archivio 2012 2013 2019 2023"
+    },
+    {
+      "title": "Archivio visivo",
+      "type": "Fotografia",
+      "summary": "Galleria unificata e catalogo fotografico pubblicato secondo le autorizzazioni registrate.",
+      "url": "archivio-visivo.html",
+      "keywords": "galleria cloudinary fotografie archivio"
+    },
+    {
+      "title": "Galleria HQ",
+      "type": "Fotografia",
+      "summary": "Percorso visivo editoriale con galleria, ricerca e crediti.",
+      "url": "galleria-hq.html",
+      "keywords": "foto immagini galleria"
+    },
+    {
+      "title": "Égrégore · dossier editoriale",
+      "type": "Musica",
+      "summary": "Dossier sulle informazioni annunciate per l’album, con fonti e stato editoriale.",
+      "url": "speciale-egregore-2026.html",
+      "keywords": "egregore tracklist album 2026"
+    },
+    {
+      "title": "Approfondimento",
+      "type": "Ricerca",
+      "summary": "Cronologie, analisi e percorsi di consultazione.",
+      "url": "approfondimento.html",
+      "keywords": "ricerca cronologia analisi"
+    },
+    {
+      "title": "Edizione visiva",
+      "type": "Ricerca",
+      "summary": "Indice interattivo dei percorsi editoriali e documentali.",
+      "url": "edizione-visiva.html",
+      "keywords": "atlante indice percorsi"
+    },
+    {
+      "title": "Fonti e metodo",
+      "type": "Documentazione",
+      "summary": "Fonti, livelli di solidità e criteri di verifica adottati nell’archivio.",
+      "url": "fonti.html",
+      "keywords": "fonti solidità verifica metodo bibliografia"
+    },
+    {
+      "title": "Crediti fotografici",
+      "type": "Documentazione",
+      "summary": "Attribuzioni, provenienza e criteri di pubblicazione delle immagini.",
+      "url": "crediti-foto.html",
+      "keywords": "crediti autore licenza copyright"
+    },
+    {
+      "title": "Note legali",
+      "type": "Documentazione",
+      "summary": "Natura indipendente del progetto e informazioni legali.",
+      "url": "note-legali.html",
+      "keywords": "privacy diritti disclaimer legale"
+    }
+  ]
+}
