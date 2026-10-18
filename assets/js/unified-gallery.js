@@ -195,3 +195,5 @@
   }
   init().catch(()=>{notice.hidden=false;notice.textContent='Errore temporaneo di caricamento della galleria.'});
 })();
+/* Adaptive visual system: loaded on every legacy page without changing page content. */
+(function(){var css='../assets/css/theme.css';if(!document.querySelector('link[data-mf-theme]')){var l=document.createElement('link');l.rel='stylesheet';l.href=css;l.dataset.mfTheme='true';document.head.appendChild(l)}if(!document.querySelector('script[data-mf-theme]')){var s=document.createElement('script');s.src='../assets/js/theme.js';s.defer=true;s.dataset.mfTheme='true';document.head.appendChild(s)}})();
