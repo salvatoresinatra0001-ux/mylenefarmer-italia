@@ -1,7 +1,7 @@
 name: Public host diagnostics
 on:
   push:
-    branches: ['preview/byte-sync-20261017']
+    branches: [main, 'preview/byte-sync-20261017']
   workflow_dispatch:
 permissions:
   contents: read
@@ -9,12 +9,16 @@ permissions:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Build deterministic reference artifact
+        run: node scripts/build-site.mjs
+      - name: Diagnose HTML byte differences across hosts
+        run: node scripts/diagnose-html-diff.mjs
       - name: Inspect public delivery and Pages configuration
         env:
           GH_TOKEN: ${{ github.token }}
