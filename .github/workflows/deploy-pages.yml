@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 concurrency:
@@ -12,6 +13,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   deploy:
+    timeout-minutes: 15
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -31,6 +33,35 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+      - name: Wait for any legacy Pages publisher for this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node --input-type=module <<'JS'
+          const sha=process.env.GITHUB_SHA;
+          const repository=process.env.GITHUB_REPOSITORY;
+          const own=String(process.env.GITHUB_RUN_ID);
+          const deadline=Date.now()+300000;
+          const pause=ms=>new Promise(r=>setTimeout(r,ms));
+          let emptyChecks=0,settled=false;
+          while(Date.now()<deadline){
+            const url=new URL('https://api.github.com/repos/'+repository+'/actions/runs');
+            url.search=new URLSearchParams({head_sha:sha,per_page:'100'});
+            const response=await fetch(url,{headers:{Authorization:'Bearer '+process.env.GH_TOKEN,Accept:'application/vnd.github+json'},signal:AbortSignal.timeout(15000)});
+            if(!response.ok)throw Error('Cannot verify competing Pages publishers: HTTP '+response.status);
+            const data=await response.json();
+            const legacy=(data.workflow_runs||[]).filter(r=>r.head_sha===sha&&String(r.id)!==own&&(r.name==='pages build and deployment'||r.path==='dynamic/pages/pages-build-deployment'));
+            if(legacy.length){
+              emptyChecks=0;
+              const pending=legacy.filter(r=>r.status!=='completed');
+              console.log('Legacy Pages runs:',legacy.map(r=>({id:r.id,status:r.status}))); 
+              if(!pending.length){settled=true;break;}
+            }else if(++emptyChecks>=3){settled=true;break;}
+            await pause(10000);
+          }
+          if(!settled)throw Error('A legacy Pages deployment is still active; refusing to race it.');
+          console.log('Safe to publish the deterministic dist artifact.');
+          JS
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
