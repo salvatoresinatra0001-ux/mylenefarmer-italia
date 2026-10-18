@@ -123,3 +123,12 @@
     }
   }
 })();
+
+/* Sistema visivo comune: progressione editoriale e galleria Claude Gassian */
+(function(){
+  var link=document.createElement('link');link.rel='stylesheet';link.href='assets/css/approfondimento-system.css';link.dataset.mfEditorial='true';document.head.appendChild(link);
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('mf-visible');io.unobserve(e.target)}})},{threshold:.08});
+    document.querySelectorAll('main section').forEach(function(s){io.observe(s)});
+  } else {document.querySelectorAll('main section').forEach(function(s){s.classList.add('mf-visible')})}
+})();
