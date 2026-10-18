@@ -9,7 +9,7 @@ function setup(){
  if(!box){box=document.createElement('div');box.className='mf-theme-switcher';}
  box.setAttribute('aria-label','Modalità visiva del sito');
  let select=box.querySelector('select');
- if(!select){box.innerHTML='<span class="mf-theme-mark" aria-hidden="true">◐</span><label for="mf-theme-select">Aspetto</label><select id="mf-theme-select" aria-label="Seleziona tema visivo" title="Seleziona tema visivo"><option value="system">Sistema</option><option value="light">Chiaro</option><option value="dark">Scuro</option></select>';select=box.querySelector('select')}
+ if(!select){box.innerHTML='<label for="mf-theme-select">Tema</label><select id="mf-theme-select" aria-label="Seleziona tema visivo" title="Seleziona tema visivo"><option value="light">Modern Light</option><option value="dark">Modern Dark</option><option value="system">Sistema</option></select>';select=box.querySelector('select')}
  if(!select.dataset.mfBound){select.dataset.mfBound='true';select.value=mode;select.addEventListener('change',()=>{mode=select.value;try{localStorage.setItem(key,mode)}catch{}apply()})}
  const slot=document.querySelector('.site-head .head-row,.vg-top-inner,.top-inner,header.top');
  if(slot){
