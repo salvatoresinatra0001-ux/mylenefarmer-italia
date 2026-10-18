@@ -27,7 +27,6 @@ export const handler=async(event)=>{
   }catch{}
   if(!original)publicId=decoded;
   if(!original&&(!publicId||publicId.length>255||publicId.includes('..')||publicId.includes('\\')||/[\\u0000-\\u001f]/.test(publicId)))return jsonError(404,'Not found');
-  if(!publicId||publicId.length>255||publicId.includes('..')||publicId.includes('\\')||/[\\u0000-\\u001f]/.test(publicId))return jsonError(404,'Not found');
   const mode=event.queryStringParameters?.size==='large'?'large':'thumb';
   try{
     if(!original){
