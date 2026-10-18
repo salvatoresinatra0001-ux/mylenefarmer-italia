@@ -33,7 +33,7 @@
       sourceUrl:https(p.sourceUrl),licenseUrl:https(p.licenseUrl),thumb:https(p.src),large:https(p.original)||https(p.src),
       fallback:https(p.fallback),alt:String(p.alt||p.title||'Mylène Farmer'),width:p.width,height:p.height,origin:'commons'};
   });
-  const cloudinary=data=>(Array.isArray(data.images)?data.images:[]).filter(p=>p&&p.publish===true&&p.rights_verified===true&&/^[a-f0-9]{24}$/.test(p.image_id||'')).map(p=>{
+  const cloudinary=data=>(Array.isArray(data.images)?data.images:[]).filter(p=>{const publicAsset=p&&(p.public===true||p.visibility==='public'||p.access_mode==='public'||p.type==='upload');const hd=p&&(String(p.quality||p.resolution||'').toLowerCase().match(/hd|uhd|4k|high/)||((Number(p.width)||0)>=1280&&(Number(p.height)||0)>=720));return p&&p.publish===true&&p.rights_verified===true&&publicAsset&&hd&&/^[a-f0-9]{24}$/.test(p.image_id||'')}).map(p=>{
     const year=validYear(p.year),id=String(p.image_id);
     return {id:'cloudinary:'+id,title:String(p.title||'Fotografia'),year,period:String(p.period||decade(year)),
       decade:decade(year),category:String(p.category||'visual'),author:String(p.photographer||'Autore non indicato'),
