@@ -1,6 +1,7 @@
 (()=>{'use strict';
 if(window.__mfSiteFinish)return;window.__mfSiteFinish=true;
 const root=document.documentElement,key='mf-theme',media=window.matchMedia('(prefers-color-scheme: light)');
+const icon=document.querySelector('link[rel~="icon"]');if(icon&&!icon.href.includes('v=mf-photo-20261018'))icon.href+=(icon.href.includes('?')?'&':'?')+'v=mf-photo-20261018';
 let mode='system';try{const v=localStorage.getItem(key);if(['system','light','dark'].includes(v))mode=v}catch{}
 function apply(){root.dataset.themeMode=mode;root.dataset.theme=mode==='system'?(media.matches?'light':'dark'):mode}
 apply();
