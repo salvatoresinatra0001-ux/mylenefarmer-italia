@@ -20,7 +20,7 @@ rmSync(out,{recursive:true,force:true});mkdirSync(out,{recursive:true});
 for(const ent of readdirSync(root,{withFileTypes:true})){
   if(ent.isSymbolicLink())continue;
   if(!(ent.isDirectory()?publicDirs.has(ent.name):publicFiles.has(ent.name)||/\.html$/i.test(ent.name)))continue;
-  cpSync(path.join(root,ent.name),path.join(out,ent.name),{recursive:true,filter:src=>!lstatSync(src).isSymbolicLink()&&!blocked.test(path.relative(root,src).split(path.sep).join('/'))});
+  cpSync(path.join(root,ent.name),path.join(out,ent.name),{recursive:true,filter:src=>!lstatSync(src).isSymbolicLink()&&!blocked.test(path.relative(root,src).split(path.sep).join('/'))&&path.relative(root,src).split(path.sep).join('/')!=='data/cloudinary-approved.json'});
 }
 for(const name of ['QUALITY_AUDIT.md','CATALOGO_FOTOGRAFICO_2026.md']){
   const src=path.join(root,'docs',name);if(existsSync(src)){mkdirSync(path.join(out,'docs'),{recursive:true});copyFileSync(src,path.join(out,'docs',name));}
