@@ -26,9 +26,13 @@ export const handler=async(event)=>{
     const resources=data.resources.filter(p=>p&&p.resource_type==='image'&&p.type==='upload'&&typeof p.public_id==='string'&&Math.max(Number(p.width)||0,Number(p.height)||0)>=1280&&Math.min(Number(p.width)||0,Number(p.height)||0)>=720).map(p=>{
       const custom=p.context?.custom||{},year=/^(?:19|20)\d{2}$/.test(String(custom.year||''))?String(custom.year):'';
       const safeTitle=String(custom.title||'').slice(0,120);
-      return {id:tokenFor(p.public_id,cloud,secret),title:safeTitle||'Fotografia HD',year,width:Number(p.width)||0,height:Number(p.height)||0,format:String(p.format||'jpg')};
+      const secureUrl=String(p.secure_url||'');
+      let validUrl=false;try{const u=new URL(secureUrl);validUrl=u.protocol==='https:'&&u.hostname==='res.cloudinary.com'&&u.pathname.startsWith('/'+cloud+'/image/upload/')}catch{}
+      if(!validUrl)return null;
+      return {id:tokenFor(secureUrl,cloud,secret),title:safeTitle||'Fotografia HD',year,width:Number(p.width)||0,height:Number(p.height)||0,format:String(p.format||'jpg')};
     });
-    const body=JSON.stringify({resources,next_cursor:typeof data.next_cursor==='string'?data.next_cursor:null});
+    const safeResources=resources.filter(Boolean);
+    const body=JSON.stringify({resources:safeResources,next_cursor:typeof data.next_cursor==='string'?data.next_cursor:null});
     if(body.length>2*1024*1024)return json(502,{error:'Image catalog page too large'});
     return {statusCode:200,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'public, max-age=120, s-maxage=600','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Robots-Tag':'noindex, nofollow'},body:event.httpMethod==='HEAD'?'':body};
   }catch{return json(502,{error:'Image catalog unavailable'})}
