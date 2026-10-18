@@ -157,6 +157,12 @@
     all=[...unique.values()];
     folderData=results[2].status==='fulfilled'&&Array.isArray(results[2].value.folders)?results[2].value.folders.filter(f=>f&&typeof f.label==='string'):[];
     updateSelectors();renderFolders();render();
+    // Preserve historical deep links from the documentary gallery (e.g. #MF-2026-001).
+    const hash=decodeURIComponent(location.hash.slice(1));
+    if(hash && !['main','vg-gallery-section','vg-period-section'].includes(hash)){
+      const i=filtered.findIndex(p=>p.id===hash||p.id.endsWith(':'+hash));
+      if(i>=0)show(i,document.querySelector('.vg-brand'));
+    }
     if(results[0].status==='rejected'&&results[1].status==='rejected'){notice.hidden=false;notice.textContent='Impossibile caricare i cataloghi fotografici. Riprova più tardi.'}
     else if(results[1].status==='rejected'){$('vg-catalog-status').textContent='Catalogo Cloudinary temporaneamente non disponibile; la selezione documentata rimane consultabile.'}
     else if(!newer.length){$('vg-catalog-status').textContent='Le fotografie dell’archivio Cloudinary sono in revisione dei diritti: nessun file viene pubblicato automaticamente.'}
