@@ -79,6 +79,16 @@
   }
   function renderFolders(){
     folderGrid.replaceChildren();
+    const publicPreview=document.getElementById('vg-public-period-preview');
+    if(publicPreview) publicPreview.remove();
+    const publicItems=all.filter(p=>p.origin==='cloudinary');
+    if(publicItems.length){
+      const preview=document.createElement('section');preview.id='vg-public-period-preview';preview.className='vg-period-public-preview';
+      const h=document.createElement('div');h.className='vg-section-head';h.innerHTML='<div><p class="vg-eyebrow">03 / Public HD</p><h3>Fotografie pubbliche nel fondo.</h3></div><p>Questi asset Cloudinary sono pubblici e HD, ma il loro identificativo non contiene un anno verificabile. Restano visualizzati senza attribuzione cronologica automatica.</p>';
+      const grid=document.createElement('div');grid.className='vg-grid';
+      publicItems.slice(0,24).forEach(p=>{const i=filtered.indexOf(p);const card=document.createElement('article');card.className='vg-card';const b=document.createElement('button');b.type='button';b.className='vg-open';b.setAttribute('aria-label','Apri fotografia pubblica Cloudinary');const img=document.createElement('img');img.src=p.thumb;img.alt=p.alt;img.loading='lazy';img.decoding='async';b.append(img);b.addEventListener('click',()=>{if(i>=0)show(i,b)});const info=document.createElement('div');info.className='vg-card-info';info.innerHTML='<div class="vg-meta">Public HD · anno non indicato</div><h4>'+p.title+'</h4><p>Cloudinary · classificazione temporale in corso</p>';card.append(b,info);grid.append(card)});
+      preview.append(h,grid);document.querySelector('.vg-periods .vg-container').append(preview);
+    }
     if(!folderData.length){folderStatus.textContent='La struttura delle cartelle Cloudinary non è al momento disponibile. Gli anni delle fotografie pubblicate rimangono consultabili.';return;}
     folderStatus.textContent=taxonomyMode==='import-ledger'
       ?folderData.length+' anni di catalogazione recuperati dai registri del Full Sync 7.1: '+taxonomyUnique.toLocaleString('it-IT')+' contenuti binari distinti, '+taxonomyScanned.toLocaleString('it-IT')+' asset e '+taxonomyUndated+' contenuti senza anno. Istantanea: '+taxonomySnapshot+'. Sono conteggi dell’archivio, non delle fotografie pubblicate; gli anni delle cartelle non certificano le date di scatto.'
