@@ -6,12 +6,14 @@ This repository contains the **public gallery implementation**, not a public cop
 - Cloudinary Media Library stores images, including content not cleared for publication.
 - `data/cloudinary-approved.json` is an explicit, human-reviewed allowlist. Empty means **publish none**.
 - `scripts/sync_cloudinary_catalog.py` uses the Cloudinary Admin API to enumerate **MYLENE_FARMER/**, validates approved public IDs and produces `assets/data/cloudinary-gallery.json`.
-- `archivio-visivo.html` displays the JSON catalog with sections, search and enlarged images.
+- `archivio-visivo.html` is the **single public photographic archive**, merging the verified Wikimedia/Drive public manifest with individually approved Cloudinary photos; it provides years, periods, categories, search, sorting and an accessible lightbox.
+- `netlify/functions/cloudinary-periods.mjs` reads only folder labels and year/period metadata under `MYLENE_FARMER/` through the Cloudinary Admin API, without exposing credentials, private public IDs or original image URLs.
+- Legacy photo pages remain available for historical bookmarks but link and canonicalize to the unified gallery.
 - GitHub Pages serves committed files; Netlify serves the `dist/` build from `main`.
 
 ## One-time setup
 1. In GitHub repository Settings → Secrets and variables → Actions, configure **CLOUDINARY_CLOUD_NAME**, **CLOUDINARY_API_KEY**, **CLOUDINARY_API_SECRET**. Never enter these in HTML, JSON, commits or chat.
-2. Populate `data/cloudinary-approved.json` ONLY with photograph identifiers and documented author, rights holder/license, reliable source URL and evidence URL. Valid categories: `portraits`, `live`, `discography`, `visual`, `appearances`.
+2. Populate `data/cloudinary-approved.json` ONLY with photograph identifiers and documented author, rights holder/license, reliable source URL and evidence URL. Year and period are inferred from the actual Cloudinary asset folder where possible; the curator may supply a verified year/period. Valid categories: `portraits`, `live`, `discography`, `visual`, `appearances`.
 3. GitHub Actions → **Cloudinary gallery catalog sync** → Run workflow. The script reads the archive but does **not** upload, overwrite or delete assets.
 4. Verify successful build and the resulting `assets/data/cloudinary-gallery.json` changes in `main`.
 5. In Netlify verify that **mylenefarmer-italia** deploys automatically from the same GitHub repo and `main`. Build command: `node scripts/build-site.mjs`; publish dir: `dist`.
@@ -24,6 +26,7 @@ This repository contains the **public gallery implementation**, not a public cop
   "title": "Verified title",
   "category": "live",
   "year": "2013",
+  "period": "Timeless 2013",
   "photographer": "Verified credit",
   "license": "Documented license / explicit permission",
   "source_url": "https://example.org/source",
@@ -44,3 +47,13 @@ The public website build excludes `data/cloudinary-approved.json`. **However, th
 Configure `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET` in the **Netlify site environment** with Functions/runtime scope, as well as GitHub Actions secrets for inventory generation. Never commit any secret.
 The proxy URL itself remains retrievable by visitors and images can be saved or captured. It hides the Cloudinary delivery URL from the rendered page but **does not provide DRM, prevent copying, or revoke an existing publicly accessible Cloudinary origin URL**. Strong origin restrictions require moving selected assets to Cloudinary authenticated delivery, carefully testing signed delivery first; do not change existing asset access control in bulk.
 Netlify automatically bundles `netlify/functions/cloudinary-photo.mjs` during a successful deploy from `main`. Verify the function, actual image output, build and displayed gallery on both destinations before marking synchronization complete.
+
+## Unified chronology (18 October 2026)
+
+- Main public gallery: `/archivio-visivo.html`. It includes the existing 19 rights-documented Wikimedia photos (2012, 2013, 2019, 2023) and **zero** Cloudinary photos until explicit rights approval is recorded.
+- Cloudinary taxonomy endpoint: `/.netlify/functions/cloudinary-periods`. The function lists folders and periods but **never** publishes images by itself. Folder discovery can be incomplete when the API is unavailable or a folder is outside the supported depth.
+- Year/period labels in the public Cloudinary photo catalog are derived from `asset_folder` (or its public ID folder fallback) only for individually approved photos.
+- `rights_evidence` is required for approval validation but is intentionally **excluded** from the public gallery JSON. The approval file itself remains in the public GitHub source and should not contain private tokens, passwords, internal URLs or confidential evidence.
+- The gallery's chronological filters also show years available in the folder taxonomy, even if those folders contain no public photos. This is a cataloguing view, not a grant of publication rights.
+- The prior `archivio-drive.html`, `galleria-hq.html`, `archivio-fotografico.html` and ALFA previews are retained for backwards compatibility and source documentation. The homepage, visual edition, footer and primary navigation link to the single `archivio-visivo.html` gallery.
+- Netlify may inject its own HUD script after the HTML. The synchronization audit preserves raw SHA-256 hashes and separately reports exact content equality after stripping **only** the known HUD suffix; it never treats unrelated differences as equivalent.
