@@ -52,16 +52,14 @@ def main():
     for pid,meta in sorted(approved.items()):
         if pid not in found: fail("Approved asset missing in Cloudinary: "+pid)
         a=found[pid]
-        url=a.get("secure_url","")
-        u=urllib.parse.urlsplit(url)
-        if u.scheme!="https" or not u.hostname or not u.hostname.endswith(".cloudinary.com"): fail("Unexpected delivery URL: "+pid)
+        import hashlib
+        image_id=hashlib.sha256(pid.encode("utf-8")).hexdigest()[:24]
         images.append({
-            "public_id":pid,"title":meta["title"],"category":meta["category"],
+            "image_id":image_id,"title":meta["title"],"category":meta["category"],
             "year":meta.get("year",""),"photographer":meta["photographer"],
             "description":meta.get("description",""),"alt":meta.get("alt",meta["title"]),
             "license":meta["license"],"source_url":meta["source_url"],"rights_evidence":meta["rights_evidence"],
-            "rights_verified":True,"publish":True,"secure_url":url,
-            "thumbnail_url":url,"width":a.get("width"),"height":a.get("height")
+            "rights_verified":True,"publish":True,"width":a.get("width"),"height":a.get("height")
         })
     doc={"version":"8.1","source":"Cloudinary MYLENE_FARMER/","cloudinary_assets_scanned":len(found),"published_count":len(images),"images":images}
     OUTPUT.parent.mkdir(parents=True,exist_ok=True)
