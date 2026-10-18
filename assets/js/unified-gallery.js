@@ -152,15 +152,13 @@
   for(const el of [query,years,periods,category,sort])el.addEventListener(el===query?'input':'change',()=>{limit=limitPerPage;if(el===years&&years.value)selectedDecade='all';renderTimeline();render()});
   async function init(){
     const periodUrl=(location.hostname.endsWith('github.io')?'https://mylenefarmer.it':'')+'/.netlify/functions/cloudinary-periods';
-    const results=await Promise.allSettled([fetchJson('./data/gallery-public.json'),fetchJson('./assets/data/cloudinary-gallery.json'),fetchJson(periodUrl)]);
+    const results=await Promise.allSettled([fetchJson('./data/gallery-public.json'),fetchJson('./assets/data/cloudinary-gallery.json')]);
     const old=results[0].status==='fulfilled'?commons(results[0].value):[];
     const newer=results[1].status==='fulfilled'?cloudinary(results[1].value):[];
     const unique=new Map();for(const p of [...old,...newer])if(!unique.has(p.id))unique.set(p.id,p);
     all=[...unique.values()];
-    const taxonomy=results[2].status==='fulfilled'?results[2].value:{};
-    folderData=Array.isArray(taxonomy.folders)?taxonomy.folders.filter(f=>f&&typeof f.label==='string'):[];
-    taxonomyMode=taxonomy.sourceMode||'folder-tree';taxonomyScanned=Number(taxonomy.assetsScanned||0);taxonomyInferred=!!taxonomy.inferredFromFilenames;
-    updateSelectors();renderFolders();render();
+    // Render approved photographs immediately; folder inventory may take longer.
+    updateSelectors();render();
     // Preserve historical deep links from the documentary gallery (e.g. #MF-2026-001).
     const hash=decodeURIComponent(location.hash.slice(1));
     if(hash && !['main','vg-gallery-section','vg-period-section'].includes(hash)){
@@ -171,6 +169,12 @@
     else if(results[1].status==='rejected'){$('vg-catalog-status').textContent='Catalogo Cloudinary temporaneamente non disponibile; la selezione documentata rimane consultabile.'}
     else if(!newer.length){$('vg-catalog-status').textContent='Le fotografie dell’archivio Cloudinary sono in revisione dei diritti: nessun file viene pubblicato automaticamente.'}
     else {$('vg-catalog-status').textContent='Selezione Cloudinary autorizzata integrata nella galleria.'}
+    try{
+      const taxonomy=await fetchJson(periodUrl);
+      folderData=Array.isArray(taxonomy.folders)?taxonomy.folders.filter(f=>f&&typeof f.label==='string'):[];
+      taxonomyMode=taxonomy.sourceMode||'folder-tree';taxonomyScanned=Number(taxonomy.assetsScanned||0);taxonomyInferred=!!taxonomy.inferredFromFilenames;
+      updateSelectors();renderFolders();render();
+    }catch{renderFolders()}
   }
   init().catch(()=>{notice.hidden=false;notice.textContent='Errore temporaneo di caricamento della galleria.'});
 })();
