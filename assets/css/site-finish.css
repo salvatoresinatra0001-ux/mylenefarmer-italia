@@ -1,0 +1,38 @@
+/* Mylène Farmer Italia — shared monochrome design system */
+:root{color-scheme:dark;--mf-bg:#080808;--mf-panel:#111;--mf-panel-2:#191919;--mf-ink:#f1f1f1;--mf-muted:#a4a4a4;--mf-line:#353535;--mf-accent:#c5c5c5;--mf-wrap:1480px}
+html[data-theme="light"]{color-scheme:light;--mf-bg:#f6f5f2;--mf-panel:#fff;--mf-panel-2:#ecebe8;--mf-ink:#171717;--mf-muted:#666;--mf-line:#d5d4d0;--mf-accent:#383838}
+@media(prefers-color-scheme:light){html:not([data-theme]){color-scheme:light;--mf-bg:#f6f5f2;--mf-panel:#fff;--mf-panel-2:#ecebe8;--mf-ink:#171717;--mf-muted:#666;--mf-line:#d5d4d0;--mf-accent:#383838}}
+html{background:var(--mf-bg);scroll-behavior:smooth}
+body{background-color:var(--mf-bg)!important;color:var(--mf-ink)}
+body,button,input,select,textarea{accent-color:#777}
+:where(h1,h2,h3,h4,p,li,dt,dd,th,td,label,small,summary){text-decoration-color:var(--mf-line)}
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid var(--mf-accent)!important;outline-offset:3px}
+img,video,.mf-header-slide img,.cover img,.vg-card img{filter:grayscale(1) contrast(1.035)}
+a{color:inherit}
+a:hover{color:var(--mf-ink)}
+:where(button,.btn,.vg-button,.pill,.mf-reference-bar a,.mf-theme-switcher){transition:background-color .2s,color .2s,border-color .2s,transform .2s}
+:where(button,.btn,.vg-button,.pill){border-color:var(--mf-line)}
+:where(button,.btn,.vg-button,.pill):hover{border-color:var(--mf-ink)}
+:where(.site-head,.vg-top,header.top){background:color-mix(in srgb,var(--mf-bg) 91%,transparent)!important;border-color:var(--mf-line)!important}
+:where(.site-foot,.vg-foot,footer){background:var(--mf-panel);border-color:var(--mf-line)!important;color:var(--mf-muted)}
+:where(.card,.alert,.facts,.dl,.tbl-wrap,.embed,.plat,.slot,.embed-card,details){background-color:var(--mf-panel);border-color:var(--mf-line)}
+:where(.mf-reference-bar,.mf-reference-bar .mf-ref-inner){background:var(--mf-panel-2)}
+.mf-reference-bar{border-bottom:1px solid var(--mf-line);font:12px/1.3 system-ui,sans-serif}
+.mf-reference-bar .mf-ref-inner{max-width:var(--mf-wrap);margin:auto;padding:8px clamp(16px,4vw,48px);display:flex;align-items:center;gap:14px;overflow:auto}
+.mf-ref-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mf-muted);white-space:nowrap}
+.mf-ref-links{display:flex;gap:7px;align-items:center;list-style:none;margin:0;padding:0}
+.mf-ref-links a{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--mf-line);border-radius:999px;padding:6px 10px;color:var(--mf-ink);text-decoration:none;white-space:nowrap}
+.mf-ref-icon{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;font-size:9px;font-weight:700;color:#fff}
+.mf-spotify{background:#555}.mf-apple{background:#444}.mf-qobuz{background:#111;border:1px solid #888}.mf-deezer{background:#666}.mf-youtube{background:#222}
+.mf-reference-bar a::after{content:"↗";font-size:10px;color:var(--mf-muted)}
+.mf-theme-switcher{position:fixed;right:18px;bottom:18px;z-index:1200;display:flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid var(--mf-line);border-radius:999px;background:color-mix(in srgb,var(--mf-panel) 94%,transparent);color:var(--mf-ink);box-shadow:0 8px 30px #0003;font:600 11px/1 system-ui,sans-serif;letter-spacing:.08em}
+.mf-theme-switcher label{color:var(--mf-muted)}
+.mf-theme-switcher select{border:0;background:transparent;color:var(--mf-ink);font:inherit;cursor:pointer}
+.mf-theme-switcher option{background:var(--mf-panel);color:var(--mf-ink)}
+.mf-global-credit{margin:18px auto 0;max-width:var(--mf-wrap);padding:12px clamp(16px,4vw,48px);border-top:1px solid var(--mf-line);font:12px/1.6 system-ui,sans-serif;color:var(--mf-muted)}
+/* Responsive reading canvas and UHD scaling */
+.wrap,.vg-container{max-width:min(var(--mf-wrap),calc(100% - 2*clamp(16px,4vw,48px)))}
+@media(min-width:1920px){:root{--mf-wrap:1640px}body{font-size:clamp(17px,1vw,20px)}}
+@media(min-width:3200px){:root{--mf-wrap:1840px}body{font-size:22px}}
+@media(max-width:700px){.mf-reference-bar .mf-ref-inner{padding-block:7px}.mf-ref-label{display:none}.mf-theme-switcher{right:10px;bottom:10px;font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
