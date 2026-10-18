@@ -87,3 +87,8 @@ Nuova sezione: [galleria documentata](https://salvatoresinatra0001-ux.github.io/
 - Navigazione della homepage aggiornata, archivio fotografico e galleria HQ conservati.
 - Metadati e URL canonici allineati al dominio primario Netlify; favicon corretta.
 - Configurazione di build riproducibile Netlify con report dei collegamenti statici.
+
+
+## Adaptive visual system
+
+The production site includes a persistent accessible light/dark theme toggle, responsive editorial layouts, interactive photographic archive navigation, and Cloudinary delivery through the existing rights-reviewed proxy.
