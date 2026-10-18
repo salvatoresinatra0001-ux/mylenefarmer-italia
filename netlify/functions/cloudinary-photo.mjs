@@ -17,11 +17,11 @@ export const handler=async(event)=>{
   const cloud=String(process.env.CLOUDINARY_CLOUD_NAME||''),key=String(process.env.CLOUDINARY_API_KEY||''),secret=String(process.env.CLOUDINARY_API_SECRET||'');
   if(!/^[a-z0-9-]{2,80}$/i.test(cloud)||!key||!secret)return jsonError(503,'Image service unavailable');
   const publicId=decryptId(String(event.queryStringParameters?.id||''),cloud,secret);
-  if(!publicId||!publicId.startsWith('MYLENE_FARMER/')||publicId.includes('..')||publicId.includes('\\'))return jsonError(404,'Not found');
+  if(!publicId||publicId.length>255||publicId.includes('..')||publicId.includes('\\')||/[\\u0000-\\u001f]/.test(publicId))return jsonError(404,'Not found');
   const mode=event.queryStringParameters?.size==='large'?'large':'thumb';
   try{
     const encoded=publicId.split('/').map(encodeURIComponent).join('/');
-    const api='https://api.cloudinary.com/v1_1/'+encodeURIComponent(cloud)+'/resources/image/upload/'+encoded;
+    const api='https://api.cloudinary.com/v1_1/'+encodeURIComponent(cloud)+'/resources/image/upload/'+encoded+'?tags=true';
     const auth=Buffer.from(key+':'+secret).toString('base64');
     const metaResp=await fetch(api,{headers:{Authorization:'Basic '+auth,Accept:'application/json'},signal:AbortSignal.timeout(10000)});
     if(!metaResp.ok)return jsonError(404,'Not found');
