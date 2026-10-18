@@ -1,9 +1,84 @@
 <!doctype html>
-<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><meta name="description" content="Mylène Farmer Italia — archivio fotografico Cloudinary per sezioni, con ricerca e crediti."><title>Archivio visivo | Mylène Farmer Italia</title><link rel="canonical" href="https://mylenefarmer.it/archivio-visivo.html"><link rel="stylesheet" href="./assets/css/style.css"><style>
-:root{color-scheme:dark}body{background:#0f0c10;color:#eee6e6}.visual-main{max-width:1440px;margin:auto;padding:5vw 4vw 8vw}.visual-label{font:11px monospace;letter-spacing:.19em;text-transform:uppercase;color:#d5a2ae}.visual-main h1{font:400 clamp(3.1rem,9vw,8rem)/.95 Georgia,serif;letter-spacing:-.06em;margin:24px 0}.visual-main .lead{max-width:780px;color:#c7b6bd;line-height:1.8}.visual-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:40px 0 30px}.visual-controls input,.visual-controls select{background:#211920;color:#fff;border:1px solid #72545f;padding:13px;font:inherit}.visual-controls input{flex:1;min-width:220px}.visual-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}.visual-card{background:#1b151b;border:1px solid #3c2d35;overflow:hidden}.visual-card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}.visual-card .details{padding:15px}.visual-card h2{font:400 1.3rem Georgia,serif;margin:5px 0 12px}.visual-card p{color:#c9bec2;font-size:.8rem;line-height:1.6;margin:5px 0}.visual-card a{color:#f1c8d1}.visual-state{padding:26px;border:1px solid #67434f;background:#21161d;color:#eadde1}.visual-info{color:#c4b7bd;font-size:.9rem;margin-bottom:20px}.visual-card img{cursor:pointer}.visual-modal{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.96);display:none;align-items:center;justify-content:center;flex-direction:column;padding:4vw}.visual-modal[open]{display:flex}.visual-modal img{max-width:95vw;max-height:78vh;object-fit:contain}.visual-modal button{position:absolute;right:20px;top:15px;background:#32212a;color:white;border:1px solid #b58c9c;padding:12px}.visual-modal p{font-size:.85rem;color:#e6d2da;text-align:center}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #edb2c2;outline-offset:3px}</style></head>
-<body><a href="#main" class="skip">Salta al contenuto</a><main id="main" class="visual-main"><p class="visual-label">Mylène Farmer Italia · Archivio indipendente</p><h1>Archivio<br><em>visivo.</em></h1><p class="lead">Ritratti, tournée, discografia, immaginario cinematografico e apparizioni pubbliche. Le immagini sono pubblicate solo quando provenienza e diritti d'uso sono documentati.</p><p><a href="./index.html">← Home</a> &nbsp; / &nbsp; <a href="./galleria-hq.html">Galleria HQ</a> &nbsp; / &nbsp; <a href="./crediti-foto.html">Crediti fotografici</a></p>
-<div class="visual-controls"><label for="cat">Sezione <select id="cat"><option value="">Tutte le sezioni</option><option value="portraits">Portraits</option><option value="live">Live & Tours</option><option value="discography">Discography</option><option value="visual">Visual Universe</option><option value="appearances">Appearances</option></select></label><label for="search">Ricerca <input id="search" type="search" placeholder="Titolo, anno, autore…"></label><label for="sort">Ordina <select id="sort"><option value="new">Anno decrescente</option><option value="old">Anno crescente</option><option value="title">Titolo</option></select></label></div><p class="visual-info" id="count" aria-live="polite"></p><div id="notice" class="visual-state" role="status">Caricamento del catalogo fotografico…</div><section id="gallery" class="visual-grid" aria-label="Galleria fotografica"></section><p class="visual-info" style="margin-top:42px">Progetto editoriale indipendente, non ufficiale. A cura di Salvatore Sinatra. L'archiviazione privata su Cloudinary non costituisce autorizzazione alla pubblicazione.</p></main>
-<div id="modal" class="visual-modal" role="dialog" aria-modal="true" aria-label="Fotografia ingrandita"><button id="close" type="button">Chiudi ×</button><img id="modalimg" alt=""><p id="modalcaption"></p></div>
-<script>
-(()=>{'use strict';const $=id=>document.getElementById(id),g=$('gallery'),n=$('notice'),count=$('count'),cat=$('cat'),search=$('search'),sort=$('sort');let items=[];const proxy=(id,size='thumb')=>{if(!/^[a-f0-9]{24}$/.test(id||''))return null;const origin=location.hostname.endsWith('github.io')?'https://mylenefarmer.it':'';return origin+'/.netlify/functions/cloudinary-photo?id='+id+'&size='+size};const safeUrl=v=>{try{const u=new URL(v);return u.protocol==='https:'?u.href:null}catch{return null}};const el=(tag,cls,txt)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(txt!==undefined)x.textContent=txt;return x};function render(){const q=search.value.toLocaleLowerCase('it');let arr=items.filter(x=>(!cat.value||x.category===cat.value)&&[x.title,x.year,x.photographer,x.description].join(' ').toLocaleLowerCase('it').includes(q));arr.sort((a,b)=>sort.value==='title'?a.title.localeCompare(b.title,'it'):sort.value==='old'?Number(a.year||0)-Number(b.year||0):Number(b.year||0)-Number(a.year||0));count.textContent=arr.length+' fotografie visualizzate';g.replaceChildren();for(const item of arr){const article=el('article','visual-card'),img=el('img');img.src=proxy(item.image_id)||'';img.alt=item.alt||item.title;img.loading='lazy';img.decoding='async';img.addEventListener('click',()=>show(item));article.append(img);const d=el('div','details');d.append(el('h2','',item.title),el('p','',[(item.year||'Data non disponibile'),item.photographer||'Autore non indicato'].join(' · ')));if(item.license)d.append(el('p','',item.license));if(safeUrl(item.source_url)){const a=el('a','', 'Fonte e attribuzione ↗');a.href=item.source_url;a.target='_blank';a.rel='noopener noreferrer';d.append(a)}article.append(d);g.append(article)}n.hidden=arr.length>0;n.textContent=arr.length?'':'Nessuna fotografia pubblicabile per questa selezione. Consulta la Galleria HQ già disponibile.'}function show(i){const url=proxy(i.image_id,'large');if(!url)return;$('modalimg').src=url;$('modalimg').alt=i.alt||i.title;$('modalcaption').textContent=i.title+' · '+(i.photographer||'')+' · '+(i.license||'');$('modal').setAttribute('open','');$('close').focus()}function close(){$('modal').removeAttribute('open');$('modalimg').removeAttribute('src')}$('close').onclick=close;$('modal').addEventListener('click',e=>{if(e.target===$('modal'))close()});document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});[cat,search,sort].forEach(x=>x.addEventListener('input',render));fetch('./assets/data/cloudinary-gallery.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('catalogo non disponibile');return r.json()}).then(data=>{const entries=Array.isArray(data)?data:data.images||[];items=entries.filter(x=>x&&x.publish===true&&x.rights_verified===true&&/^[a-f0-9]{24}$/.test(x.image_id||'')).map(x=>({...x,title:String(x.title||'Senza titolo'),year:String(x.year||''),photographer:String(x.photographer||'')}));render()}).catch(()=>{n.textContent='Il catalogo Cloudinary non è ancora disponibile. La Galleria HQ esistente rimane consultabile.';count.textContent='Catalogo in preparazione'})})();
-</script></body></html>
+<html lang="it"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0d0a0e">
+<meta name="description" content="Mylène Farmer Italia — unico archivio fotografico interattivo, organizzato per anni, periodi e categorie, con fotografie documentate e selezioni Cloudinary autorizzate.">
+<meta name="author" content="Salvatore Sinatra">
+<meta property="og:type" content="website"><meta property="og:title" content="Archivio fotografico | Mylène Farmer Italia">
+<meta property="og:description" content="Fotografie, anni, periodi, concerti e ritratti in un unico archivio visivo indipendente.">
+<title>Archivio fotografico per anni e periodi | Mylène Farmer Italia</title>
+<link rel="canonical" href="https://mylenefarmer.it/archivio-visivo.html">
+<link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./assets/css/unified-gallery.css">
+<script src="./assets/js/unified-gallery.js" defer></script>
+</head>
+<body class="vg-page">
+<a class="vg-skip" href="#main">Salta al contenuto</a>
+<header class="vg-top"><div class="vg-top-inner">
+<a class="vg-brand" href="./index.html">Mylène Farmer <span>Italia</span></a>
+<nav class="vg-nav" aria-label="Navigazione principale">
+<a href="./index.html">Home</a>
+<a href="./edizione-visiva.html">Edizione visiva</a>
+<a href="./discografia.html">Discografia</a>
+<a href="./concerti.html">Concerti</a>
+<a href="./archivio-visivo.html" aria-current="page">Fotografie</a>
+<a href="./fonti.html">Fonti</a>
+</nav></div></header>
+<main id="main">
+<section class="vg-hero" aria-labelledby="vg-title-hero"><div class="vg-hero-inner">
+<p class="vg-eyebrow">Mylène Farmer Italia · Archivio editoriale indipendente · Edizione unificata</p>
+<h1 id="vg-title-hero">Archivio<br><em>fotografico.</em></h1>
+<p class="vg-lead">Un unico percorso per attraversare le immagini: anni, periodi, ritratti, scena e memoria visiva. Dalle fotografie documentate alle selezioni autorizzate dell’archivio Cloudinary.</p>
+<div class="vg-actions"><a class="vg-button" href="#vg-gallery-section">Esplora le fotografie ↓</a><a class="vg-button" href="#vg-period-section">Anni e periodi ↗</a></div>
+<p class="vg-hero-credit">Fotografia di copertina: Mylène Farmer durante Timeless 2013 · Clicsouris ·
+<a href="https://commons.wikimedia.org/wiki/File:Myl%C3%A8ne_Farmer_-_Timeless_2013_-_10.09.2013_-_01.jpg" target="_blank" rel="noopener noreferrer">Wikimedia Commons, CC BY-SA 3.0 ↗</a></p>
+</div></section>
+<section class="vg-container" id="vg-gallery-section" aria-labelledby="vg-gallery-heading">
+<div class="vg-section-head"><div><p class="vg-eyebrow">01 / Collezione</p><h2 id="vg-gallery-heading">Le immagini.<br>Nel tempo.</h2></div><p>Una sola galleria per le fotografie già documentate e le risorse di <strong>MYLENE_FARMER/</strong> abilitate alla pubblicazione. Ogni immagine conserva titolo, data, autore, provenienza e licenza.</p></div>
+<div class="vg-stats" aria-label="Statistiche del catalogo pubblicato">
+<div class="vg-stat"><strong id="vg-total">—</strong><span>Fotografie pubblicate</span></div>
+<div class="vg-stat"><strong id="vg-year-count">—</strong><span>Anni rappresentati</span></div>
+<div class="vg-stat"><strong id="vg-cloudinary-count">—</strong><span>Foto Cloudinary autorizzate</span></div>
+</div>
+<p class="vg-status" id="vg-catalog-status" role="status" aria-live="polite">Caricamento dei cataloghi fotografici…</p>
+<h3 class="vg-eyebrow" style="margin-top:50px">Navigazione cronologica / decenni</h3>
+<div id="vg-timeline" class="vg-timeline" role="group" aria-label="Filtra per decennio"></div>
+<form class="vg-filters" role="search" onsubmit="return false">
+<label for="vg-query">Ricerca fotografica<input id="vg-query" type="search" placeholder="Titolo, concerto, autore…" autocomplete="off"></label>
+<label for="vg-year">Anno<select id="vg-year"><option value="">Tutti gli anni</option></select></label>
+<label for="vg-period">Periodo / cartella Cloudinary<select id="vg-period"><option value="">Tutti i periodi</option></select></label>
+<label for="vg-category">Categoria<select id="vg-category"><option value="">Tutte le categorie</option></select></label>
+</form>
+<div class="vg-filter-footer"><label for="vg-sort">Ordina <select id="vg-sort" style="background:#231923;color:#f4e9e9;border:1px solid #60424f;padding:9px">
+<option value="new">Anno più recente</option><option value="old">Anno meno recente</option><option value="title">Titolo A–Z</option></select></label>
+<button id="vg-reset" class="vg-reset" type="button">Azzera filtri</button>
+<p id="vg-count" class="vg-status" role="status" aria-live="polite">Caricamento…</p></div>
+<p id="vg-notice" class="vg-notice" role="status">Preparazione della galleria…</p>
+<div id="vg-gallery" aria-label="Fotografie ordinate per anno"></div>
+<button id="vg-more" class="vg-button vg-more" type="button" hidden>Carica altre fotografie ↓</button>
+<noscript><p class="vg-notice">Abilita JavaScript per consultare la galleria unificata. Le fotografie e le relative fonti sono consultabili anche nell’<a href="./archivio-drive.html">archivio documentale</a>.</p></noscript>
+</section>
+<section class="vg-periods" id="vg-period-section" aria-labelledby="vg-period-heading"><div class="vg-container">
+<div class="vg-section-head"><div><p class="vg-eyebrow">02 / Struttura Cloudinary</p><h2 id="vg-period-heading">Anni e periodi.</h2></div>
+<p>La tassonomia delle cartelle <strong>MYLENE_FARMER/</strong> è letta dal servizio Cloudinary senza rendere pubblici identificativi privati o credenziali. Le cartelle possono includere immagini ancora non autorizzate.</p></div>
+<details><summary>Esplora la struttura cronologica dell’archivio</summary>
+<p id="vg-folder-status" class="vg-status" role="status">Rilevamento delle cartelle in corso…</p>
+<div id="vg-folders" class="vg-folder-grid" aria-label="Periodi Cloudinary"></div>
+</details>
+<p class="vg-notice">La presenza di un file su Cloudinary o Google Drive non costituisce autorizzazione alla ripubblicazione. Le fotografie dell’archivio privato entrano nella galleria soltanto dopo verifica individuale dei diritti. Le immagini già disponibili da Wikimedia Commons mantengono i rispettivi crediti e condizioni di licenza.</p>
+</div></section>
+</main>
+<dialog id="vg-dialog" class="vg-dialog" aria-labelledby="vg-title">
+<div class="vg-dialog-inner">
+<div class="vg-stage"><div><img id="vg-large" alt=""><p id="vg-image-status" role="status" style="text-align:center"></p></div></div>
+<div class="vg-caption"><div class="vg-view-controls"><button id="vg-prev" type="button" aria-label="Fotografia precedente">←</button><button id="vg-next" type="button" aria-label="Fotografia successiva">→</button><button id="vg-close" class="vg-close" type="button" aria-label="Chiudi il visualizzatore">Chiudi ×</button></div>
+<p id="vg-position" class="vg-eyebrow"></p><h2 id="vg-title">Fotografia</h2><p id="vg-caption"></p>
+<p><a id="vg-source" target="_blank" rel="noopener noreferrer" hidden>Fonte e attribuzione ↗</a></p>
+<p><a id="vg-license" target="_blank" rel="noopener noreferrer" hidden>Condizioni della licenza ↗</a></p>
+<p style="font-size:12px">I diritti sulle fotografie restano ai rispettivi autori e aventi diritto. Nessun comando di download è fornito dal sito.</p></div>
+</div></dialog>
+<footer class="vg-foot"><div class="vg-foot-inner"><div><strong>Mylène Farmer — Archivio Italia</strong>
+<p>Archivio indipendente, non ufficiale e non affiliato all’artista, al management o alle etichette.</p>
+<p>Ideazione e curatela editoriale: Salvatore Sinatra · © 2026 per i contenuti originali.</p></div>
+<div><a href="./crediti-foto.html">Crediti fotografici</a> · <a href="./fonti.html">Fonti e metodo</a> · <a href="./note-legali.html">Note legali</a></div></div></footer>
+</body></html>
