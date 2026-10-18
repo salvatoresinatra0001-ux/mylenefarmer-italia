@@ -9,3 +9,6 @@
 # Explicit current Netlify setting: do not rewrite relative HTML links.
 [build.processing.html]
   pretty_urls = false
+
+[functions]
+  directory = "netlify/functions"
