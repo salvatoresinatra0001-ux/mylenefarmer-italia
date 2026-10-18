@@ -84,3 +84,42 @@
 
 /* Adaptive visual system: loaded on every legacy page without changing page content. */
 (function(){var css='assets/css/theme.css';if(!document.querySelector('link[data-mf-theme]')){var l=document.createElement('link');l.rel='stylesheet';l.href=css;l.dataset.mfTheme='true';document.head.appendChild(l)}if(!document.querySelector('script[data-mf-theme]')){var s=document.createElement('script');s.src='assets/js/theme.js';s.defer=true;s.dataset.mfTheme='true';document.head.appendChild(s)}})();
+
+/* Riferimenti musicali e blocco crediti globale */
+(function () {
+  'use strict';
+  var platforms = [
+    {name:'Spotify', cls:'mf-spotify', mark:'S', url:'https://open.spotify.com/search/Mylene%20Farmer'},
+    {name:'Apple Music', cls:'mf-apple', mark:'♪', url:'https://music.apple.com/it/search?term=Myl%C3%A8ne%20Farmer'},
+    {name:'Qobuz', cls:'mf-qobuz', mark:'Q', url:'https://www.qobuz.com/it-it/search?q=Myl%C3%A8ne%20Farmer'},
+    {name:'Deezer', cls:'mf-deezer', mark:'D', url:'https://www.deezer.com/search/Mylene%20Farmer'},
+    {name:'YouTube Music', cls:'mf-youtube', mark:'▶', url:'https://music.youtube.com/search?q=Myl%C3%A8ne%20Farmer'}
+  ];
+  if (!document.querySelector('link[data-mf-reference-bar]')) {
+    var link = document.createElement('link');
+    link.rel = 'stylesheet'; link.href = 'assets/css/reference-bar.css'; link.dataset.mfReferenceBar = 'true';
+    document.head.appendChild(link);
+  }
+  if (!document.querySelector('.mf-reference-bar')) {
+    var bar = document.createElement('div');
+    bar.className = 'mf-reference-bar';
+    bar.setAttribute('aria-label', 'Riferimenti musicali esterni');
+    var links = platforms.map(function (p) {
+      return '<li><a href="' + p.url + '" target="_blank" rel="noopener noreferrer" title="Cerca Mylène Farmer su ' + p.name + '"><span class="mf-ref-icon ' + p.cls + '" aria-hidden="true">' + p.mark + '</span><span>' + p.name + '</span></a></li>';
+    }).join('');
+    bar.innerHTML = '<div class="mf-ref-inner"><span class="mf-ref-label">Riferimenti musicali</span><ul class="mf-ref-links">' + links + '</ul></div>';
+    var header = document.querySelector('.site-head');
+    if (header) header.parentNode.insertBefore(bar, header);
+  }
+  var foot = document.querySelector('.site-foot');
+  if (foot && !foot.querySelector('.mf-foot-meta')) {
+    var wrap = foot.querySelector('.wrap');
+    if (wrap) {
+      var meta = document.createElement('div');
+      meta.className = 'mf-foot-meta';
+      meta.innerHTML = '<div><strong>Progetto editoriale:</strong> Mylène Farmer · Italia — archivio italiano indipendente.</div><div class="mf-foot-legal"><strong>Disclaimer:</strong> sito non ufficiale, non affiliato a Mylène Farmer, al management, alle case discografiche o alle piattaforme musicali citate. I nomi, i marchi, le fotografie, le copertine e le registrazioni appartengono ai rispettivi titolari.</div><div><strong>Crediti e direzione:</strong> ideazione, redazione, direzione visiva e sviluppo a cura di Salvatore Sinatra · <strong>Anno:</strong> 2026.</div>';
+      var bottom = wrap.querySelector('.foot-bottom');
+      if (bottom) wrap.insertBefore(meta, bottom); else wrap.appendChild(meta);
+    }
+  }
+})();
