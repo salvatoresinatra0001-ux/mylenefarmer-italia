@@ -35,7 +35,10 @@ with sync_playwright() as p:
                 response=page.goto(urllib.parse.urljoin(args.base,name),wait_until='domcontentloaded',timeout=45000)
                 record['status']=response.status if response else None
                 page.locator('body').wait_for()
-                page.evaluate("document.querySelectorAll('img').forEach(i=>i.loading='eager')")
+                # Respect native lazy loading in the new chronological gallery.
+                # Forcing all 19 remote thumbnails to eager at once can trigger Wikimedia throttling.
+                if name!='archivio-visivo.html':
+                    page.evaluate("document.querySelectorAll('img').forEach(i=>i.loading='eager')")
                 try: page.wait_for_function("[...document.images].every(i=>i.complete)",timeout=20000)
                 except PlaywrightTimeout: pass
                 page.wait_for_timeout(200)
@@ -44,7 +47,12 @@ with sync_playwright() as p:
                 record['images']=page.evaluate('document.images.length')
                 record['imageDetails']=page.evaluate("[...document.images].filter(i=>i.getAttribute('src')).map(i=>({src:i.currentSrc||i.src,width:i.naturalWidth,height:i.naturalHeight,complete:i.complete,visible:!!(i.offsetWidth||i.offsetHeight)}))")
                 record['overflowElements']=page.evaluate("[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(0,8).map(e=>({tag:e.tagName,cls:e.className,width:e.getBoundingClientRect().width}))")
-                record['brokenImages']=page.evaluate("[...document.images].filter(i=>i.getAttribute('src')&&!(i.closest('dialog:not([open])'))&&(!i.complete||!i.naturalWidth)).map(i=>({src:i.currentSrc||i.src,alt:i.alt}))")
+                record['brokenImages']=page.evaluate("""[...document.images].filter(i=>{
+                    if(!i.getAttribute('src')||i.closest('dialog:not([open])'))return false;
+                    const r=i.getBoundingClientRect();
+                    if(i.loading==='lazy'&&(r.top>innerHeight+200||r.bottom<0))return false;
+                    return !i.complete||!i.naturalWidth;
+                }).map(i=>({src:i.currentSrc||i.src,alt:i.alt}))""")
                 record['missingAlt']=page.locator('img:not([alt])').count()
                 if name in ['index.html','archivio-drive.html','crediti-foto.html']:
                     for photo in page.locator('img').all():
@@ -97,6 +105,8 @@ with sync_playwright() as p:
         assert page.locator('.vg-card').count()==0, 'Unified search did not filter'
         page.locator('#vg-reset').click()
         assert page.locator('.vg-card').count()>=expected, 'Unified reset lost photographs'
+        page.locator('#vg-year').select_option('2013')
+        assert page.locator('.vg-card').count()>0, 'Unified year filter empty for documented 2013 images'
         page.locator('.vg-open').first.click()
         assert page.locator('#vg-dialog').evaluate('(d)=>d.open'), 'Unified lightbox did not open'
         initial=page.locator('#vg-position').inner_text()
