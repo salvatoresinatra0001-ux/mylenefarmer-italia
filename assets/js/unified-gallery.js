@@ -8,7 +8,7 @@
   const close=$('vg-close'),prev=$('vg-prev'),next=$('vg-next'),position=$('vg-position'),imageStatus=$('vg-image-status');
   const folderGrid=$('vg-folders'),folderStatus=$('vg-folder-status');
   const limitPerPage=48;
-  let all=[],filtered=[],folderData=[],limit=limitPerPage,active=-1,returnFocus=null,selectedDecade='all',imageSerial=0;
+  let all=[],filtered=[],folderData=[],taxonomyMode='folder-tree',taxonomyScanned=0,taxonomyInferred=false,limit=limitPerPage,active=-1,returnFocus=null,selectedDecade='all',imageSerial=0;
   const normalize=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('it');
   const validYear=v=>/^(?:19|20)\d{2}$/.test(String(v||''))?String(v):'';
   const decade=v=>{const y=validYear(v);return y?String(Math.floor(Number(y)/10)*10)+'–'+String(Math.floor(Number(y)/10)*10+9):'Non datato'};
@@ -71,7 +71,9 @@
   function renderFolders(){
     folderGrid.replaceChildren();
     if(!folderData.length){folderStatus.textContent='La struttura delle cartelle Cloudinary non è al momento disponibile. Gli anni delle fotografie pubblicate rimangono consultabili.';return;}
-    folderStatus.textContent=folderData.length+' cartelle o sottocartelle rilevate in MYLENE_FARMER/. I nomi indicano la catalogazione, non un’autorizzazione a pubblicare tutte le immagini.';
+    folderStatus.textContent=taxonomyMode==='resource-metadata'
+      ?folderData.length+' periodi ricavati dai metadati di '+taxonomyScanned+' risorse Cloudinary. '+(taxonomyInferred?'Alcuni anni sono inferiti dai nomi dei file e richiedono verifica. ':'')+'Questi non sono necessariamente nomi di sottocartelle.'
+      :folderData.length+' cartelle o sottocartelle rilevate in MYLENE_FARMER/. La catalogazione non autorizza automaticamente la pubblicazione delle immagini.';
     for(const f of folderData.slice(0,120)){
       const b=node('button','',String(f.label||f.period||'Cartella'));
       b.type='button';b.title='Filtra le fotografie pubblicate per questo periodo';
@@ -155,7 +157,9 @@
     const newer=results[1].status==='fulfilled'?cloudinary(results[1].value):[];
     const unique=new Map();for(const p of [...old,...newer])if(!unique.has(p.id))unique.set(p.id,p);
     all=[...unique.values()];
-    folderData=results[2].status==='fulfilled'&&Array.isArray(results[2].value.folders)?results[2].value.folders.filter(f=>f&&typeof f.label==='string'):[];
+    const taxonomy=results[2].status==='fulfilled'?results[2].value:{};
+    folderData=Array.isArray(taxonomy.folders)?taxonomy.folders.filter(f=>f&&typeof f.label==='string'):[];
+    taxonomyMode=taxonomy.sourceMode||'folder-tree';taxonomyScanned=Number(taxonomy.assetsScanned||0);taxonomyInferred=!!taxonomy.inferredFromFilenames;
     updateSelectors();renderFolders();render();
     // Preserve historical deep links from the documentary gallery (e.g. #MF-2026-001).
     const hash=decodeURIComponent(location.hash.slice(1));
