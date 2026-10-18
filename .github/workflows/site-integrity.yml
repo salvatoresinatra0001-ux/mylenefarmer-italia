@@ -26,12 +26,18 @@ jobs:
           node --check scripts/build-site.mjs
           node --check scripts/audit-live.mjs
           node --check assets/js/gallery.js
+          node --check assets/js/unified-gallery.js
+          node --check netlify/functions/cloudinary-periods.mjs
+      - name: Check Cloudinary catalog generator syntax
+        run: python3 -m py_compile scripts/sync_cloudinary_catalog.py
       - name: Produce the shared public artifact
         run: node scripts/build-site.mjs
       - name: Verify entry points
         run: |
           test -s dist/index.html
           test -s dist/archivio-drive.html
+          test -s dist/archivio-visivo.html
+          test -s dist/assets/js/unified-gallery.js
           test -s dist/note-legali.html
           test -s dist/data/gallery-public.json
           test -s dist/site-manifest.json
