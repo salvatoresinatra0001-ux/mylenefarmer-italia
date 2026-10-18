@@ -20,3 +20,17 @@ section.mf-visible{opacity:1;transform:none}
 .mf-gassian-note{margin-top:18px;color:var(--muted);font-size:13px}
 @media(max-width:850px){.mf-gassian-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.mf-gassian-grid{grid-template-columns:1fr 1fr;gap:8px}}
+
+/* Final monochrome direction */
+:root{--accent:#b8b8b8;--accent-soft:#dedede;--accent-2:#a6a6a6}
+html[data-theme="light"]{--accent:#383838;--accent-soft:#1b1b1b;--accent-2:#5a5a5a}
+body,.site-head,.site-foot,.mf-reference-bar,.card,.alert,.facts,.dl,.slot,.embed-card{filter:none}
+img,.mf-header-slide img,.cover img,.vg-card img{filter:grayscale(1) contrast(1.05)}
+a{color:var(--ink)}
+a:hover{color:#fff}
+html[data-theme="light"] a:hover{color:#000}
+.btn,.mf-reference-bar a{border-color:var(--line);color:var(--ink)}
+.btn:hover,.mf-reference-bar a:hover{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.kicker,.alert-label,.slot-kind{color:var(--muted)}
+.sol,.st,.pill{filter:grayscale(1)}
+.mf-gassian-card:hover img{filter:grayscale(1) contrast(1.1)}
