@@ -11,7 +11,7 @@
   // Editorial chronology: these are navigational eras, NOT Cloudinary folder claims.
   const editorialPeriods=['1984–1989','1990–1999','2000–2009','2010–2019','2020–2026'];
   const editorialDecades=['1980–1989','1990–1999','2000–2009','2010–2019','2020–2029'];
-  let all=[],filtered=[],folderData=[],taxonomyMode='folder-tree',taxonomyScanned=0,taxonomyInferred=false,taxonomyUnique=0,limit=limitPerPage,active=-1,returnFocus=null,selectedDecade='all',imageSerial=0;
+  let all=[],filtered=[],folderData=[],taxonomyMode='folder-tree',taxonomyScanned=0,taxonomyInferred=false,taxonomyUnique=0,taxonomyUndated=0,taxonomySnapshot='',limit=limitPerPage,active=-1,returnFocus=null,selectedDecade='all',imageSerial=0;
   const normalize=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('it');
   const validYear=v=>/^(?:19|20)\d{2}$/.test(String(v||''))?String(v):'';
   const decade=v=>{const y=validYear(v);return y?String(Math.floor(Number(y)/10)*10)+'–'+String(Math.floor(Number(y)/10)*10+9):'Non datato'};
@@ -44,11 +44,12 @@
   function options(select,values,firstLabel){
     const old=select.value;select.replaceChildren();
     const first=node('option','',firstLabel);first.value='';select.append(first);
-    for(const value of values){const o=node('option','',value);o.value=value;select.append(o)}
+    for(const value of values){const o=node('option','',value==='undated'?'Senza anno':value);o.value=value;select.append(o)}
     if(values.includes(old))select.value=old;
   }
   function updateSelectors(){
     const y=[...new Set([...all.map(p=>p.year),...folderData.map(f=>validYear(f.year))].filter(Boolean))].sort((a,b)=>Number(b)-Number(a));
+    if(taxonomyUndated>0||all.some(p=>!p.year))y.push('undated');
     options(years,y,'Tutti gli anni');
     const p=[...new Set([...editorialPeriods,...all.map(x=>x.period),...folderData.map(f=>String(f.period||''))].filter(Boolean))].sort((a,b)=>b.localeCompare(a,'it'));
     options(periods,p,'Tutti i periodi');
@@ -75,7 +76,7 @@
     folderGrid.replaceChildren();
     if(!folderData.length){folderStatus.textContent='La struttura delle cartelle Cloudinary non è al momento disponibile. Gli anni delle fotografie pubblicate rimangono consultabili.';return;}
     folderStatus.textContent=taxonomyMode==='import-ledger'
-      ?folderData.length+' anni recuperati dalle cartelle sorgenti tramite i registri di importazione: '+taxonomyUnique+' contenuti binari distinti nell’Audit 6.0 del 18 ottobre 2026. Conteggi di archivio, non di fotografie pubblicate; i caricamenti successivi non sono inclusi.'
+      ?folderData.length+' anni di catalogazione recuperati dai registri del Full Sync 7.1: '+taxonomyUnique.toLocaleString('it-IT')+' contenuti binari distinti, '+taxonomyScanned.toLocaleString('it-IT')+' asset e '+taxonomyUndated+' contenuti senza anno. Istantanea: '+taxonomySnapshot+'. Sono conteggi dell’archivio, non delle fotografie pubblicate; gli anni delle cartelle non certificano le date di scatto.'
       :taxonomyMode==='resource-metadata'
       ?folderData.length+' periodi ricavati dai metadati di '+taxonomyScanned+' risorse Cloudinary. '+(taxonomyInferred?'Alcuni anni sono inferiti dai nomi dei file e richiedono verifica. ':'')+'Questi non sono necessariamente nomi di sottocartelle.'
       :folderData.length+' cartelle o sottocartelle rilevate in MYLENE_FARMER/. La catalogazione non autorizza automaticamente la pubblicazione delle immagini.';
@@ -87,11 +88,20 @@
       b.addEventListener('click',()=>{selectedDecade='all';years.value=validYear(f.year)||'';periods.value=[...periods.options].some(o=>o.value===f.period)?f.period:'';limit=limitPerPage;renderTimeline();render();$('vg-gallery-section').scrollIntoView({behavior:'smooth',block:'start'})});
       folderGrid.append(b);
     }
+    if(taxonomyUndated>0){
+      const b=node('button','','Senza anno');b.type='button';
+      b.append(node('small','',taxonomyUndated+' contenuti non datati nei registri'));
+      b.addEventListener('click',()=>{selectedDecade='all';years.value='undated';periods.value='';limit=limitPerPage;renderTimeline();render();$('vg-gallery-section').scrollIntoView({behavior:'smooth',block:'start'})});
+      folderGrid.append(b);
+    }
+    for(const [id,value] of [['vg-archive-total',taxonomyUnique],['vg-archive-assets',taxonomyScanned],['vg-archive-undated',taxonomyUndated]]){
+      if($(id))$(id).textContent=value.toLocaleString('it-IT');
+    }
     if(folderData.length>120)folderGrid.append(node('p','',String(folderData.length-120)+' ulteriori cartelle censite; usa i filtri per periodo.'));
   }
   function filteredItems(){
     const q=normalize(query.value.trim()),y=years.value,p=periods.value,c=category.value;
-    const result=all.filter(x=>(!y||x.year===y)&&(selectedDecade==='all'||x.decade===selectedDecade)&&periodMatch(x,p)&&(!c||x.category===c)&&(!q||normalize([x.title,x.year,x.period,x.author,x.source,x.category].join(' ')).includes(q)));
+    const result=all.filter(x=>(!y||(y==='undated'?!x.year:x.year===y))&&(selectedDecade==='all'||x.decade===selectedDecade)&&periodMatch(x,p)&&(!c||x.category===c)&&(!q||normalize([x.title,x.year,x.period,x.author,x.source,x.category].join(' ')).includes(q)));
     result.sort((a,b)=>sort.value==='title'?a.title.localeCompare(b.title,'it'):sort.value==='old'?Number(a.year||0)-Number(b.year||0)||a.title.localeCompare(b.title,'it'):Number(b.year||0)-Number(a.year||0)||a.title.localeCompare(b.title,'it'));
     return result;
   }
@@ -165,7 +175,7 @@
     // Render approved photographs immediately; folder inventory may take longer.
     updateSelectors();render();
     // Preserve historical deep links from the documentary gallery (e.g. #MF-2026-001).
-    const hash=decodeURIComponent(location.hash.slice(1));
+    let hash='';try{hash=decodeURIComponent(location.hash.slice(1))}catch{hash=''}
     if(hash && !['main','vg-gallery-section','vg-period-section'].includes(hash)){
       const i=filtered.findIndex(p=>p.id===hash||p.id.endsWith(':'+hash));
       if(i>=0)show(i,document.querySelector('.vg-brand'));
@@ -177,7 +187,9 @@
     try{
       const taxonomy=await fetchJson(periodUrl);
       folderData=Array.isArray(taxonomy.folders)?taxonomy.folders.filter(f=>f&&typeof f.label==='string'):[];
-      taxonomyMode=taxonomy.sourceMode||'folder-tree';taxonomyScanned=Number(taxonomy.assetsScanned||0);taxonomyInferred=!!taxonomy.inferredFromFilenames;taxonomyUnique=Number(taxonomy.unique_contents||0);
+      taxonomyMode=taxonomy.sourceMode||'folder-tree';taxonomyScanned=Number(taxonomy.assetsScanned||0);taxonomyInferred=!!taxonomy.inferredFromFilenames;taxonomyUnique=Number(taxonomy.unique_contents||0);taxonomyUndated=Number(taxonomy.undated_contents||0);
+      const snapshot=new Date(taxonomy.snapshot_utc||'');
+      taxonomySnapshot=Number.isNaN(snapshot.getTime())?'data non disponibile':snapshot.toLocaleString('it-IT',{timeZone:'Europe/Rome'})+' (ora italiana)';
       updateSelectors();renderFolders();if(!dialog.open)render();
     }catch{renderFolders()}
   }

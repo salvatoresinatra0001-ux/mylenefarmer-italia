@@ -1,19 +1,31 @@
-# Cronologia recuperata dell'archivio MYLENE_FARMER
+# Cronologia dell'archivio MYLENE_FARMER - Full Sync 7.1
 
-## Origine dei dati
+## Istantanea e perimetro
 
-La cronologia proviene dai nomi delle cartelle originali presenti nei registri di importazione `upload_state.json` e `recovery_state_v4.json`. I record sono stati collegati al `catalogo_completo.csv` dell'Audit 6.0 tramite identificativo dell'asset e poi raggruppati per SHA-256. Tutti i 3794 asset dell'audit hanno una corrispondenza; nessun gruppo binario presenta anni discordanti.
+Il catalogo finale del **18 ottobre 2026 alle 13:04:54 UTC** sostituisce l'istantanea parziale dell'Audit 6.0. Il report registra 7599 asset Cloudinary e zero errori nel perimetro censito dall'esecuzione. I registri riconciliati contengono 5711 SHA-256 distinti e 1888 copie binarie ridondanti. Nessuna copia e' stata eliminata.
 
-Il risultato riguarda il campione verificato il **18 ottobre 2026 alle 10:24:58 UTC**: 3794 asset, 1906 contenuti binari distinti, 1888 copie ridondanti, 25 anni di catalogazione dal 1984 al 2008. Non sono date di scatto certificate. I decenni sono raggruppamenti di navigazione, non nomi di tournée o album inventati.
+`final_report.json`, `catalog.csv` e `sync_state.json` del Full Sync 7.1 sono stati confrontati con il catalogo dell'Audit 6.0. I 5712 record di immagini Drive e i 5712 record di immagini dello ZIP rappresentano gli stessi insiemi di hash: non sono due fondi diversi. Questa riconciliazione confronta i registri; non esegue un nuovo download con ricalcolo degli hash delle immagini remote.
 
-## Pubblicazione
+## Cronologia
 
-`assets/data/archive-periods.json` contiene esclusivamente conteggi aggregati e anni. Non contiene URL Cloudinary, public ID, asset ID, hash individuali, credenziali, nomi di file o percorsi privati. La galleria legge lo stesso file statico su GitHub Pages e Netlify, senza chiamate Admin API ad ogni visita.
+Le cartelle originali, conservate nei registri di importazione, consentono di attribuire un anno di catalogazione a 5701 contenuti, distribuiti in 25 anni dal 1984 al 2008. Dieci contenuti restano senza anno. I nomi dei file e la data del nome ZIP non sono utilizzati per inventare date fotografiche.
 
-La funzione `cloudinary-periods` conserva un endpoint compatibile che restituisce la stessa istantanea aggregata. Non è più presentata come scansione in tempo reale delle sottocartelle Cloudinary: l'importazione originale le aveva appiattite.
+| Periodo delle cartelle | Contenuti binari distinti |
+|---|---:|
+| 1984-1989 | 1528 |
+| 1990-1999 | 2110 |
+| 2000-2008 | 2063 |
+| Senza anno | 10 |
+| Totale | 5711 |
 
-La fotografia pubblicata e il contenuto archiviato restano distinti. Questi dati non modificano il registro delle autorizzazioni, non creano upload e non eliminano duplicati. La galleria continua a richiedere l'approvazione delle singole fotografie Cloudinary.
+Gli anni di cartella non certificano la data di scatto. I decenni sono raggruppamenti di navigazione, non nomi di album, eventi o tour attribuiti automaticamente.
 
-## Limiti
+## Integrazione e riservatezza
 
-Il checkpoint Full Sync 7.1 consultato successivamente contiene trasferimenti aggiuntivi, ma non è un report finale. Tali trasferimenti non sono inclusi nei conteggi di questa istantanea. Il completamento dell'intero archivio Drive e la pubblicazione delle sue fotografie non sono certificati da questo documento.
+`assets/data/archive-periods.json` contiene esclusivamente conteggi aggregati, anni e informazioni sul metodo. Non contiene URL di singole immagini, public ID, asset ID, hash individuali, credenziali, nomi di file o percorsi privati. Il frontend legge lo stesso file su GitHub Pages e Netlify; la funzione `cloudinary-periods` ne restituisce la medesima istantanea senza enumerare l'Admin API a ogni visita.
+
+L'archivio fotografico unico mostra separatamente consistenza del fondo e fotografie pubblicate. La navigazione include una voce "Senza anno" per i contenuti non datati. Il proxy delle fotografie non viene modificato da questo aggiornamento.
+
+## Pubblicazione delle immagini
+
+Questo aggiornamento non cambia `data/cloudinary-approved.json` o `assets/data/cloudinary-gallery.json`, non certifica nuove licenze e non abilita automaticamente immagini alla distribuzione pubblica. Le fotografie gia' pubblicate restano disponibili. L'importazione e la pubblicazione sono operazioni distinte; il numero di asset non deve essere presentato come numero di fotografie visibili sul sito.

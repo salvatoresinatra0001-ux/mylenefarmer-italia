@@ -46,7 +46,7 @@
 <form class="vg-filters" role="search" onsubmit="return false">
 <label for="vg-query">Ricerca fotografica<input id="vg-query" type="search" placeholder="Titolo, concerto, autore…" autocomplete="off"></label>
 <label for="vg-year">Anno<select id="vg-year"><option value="">Tutti gli anni</option></select></label>
-<label for="vg-period">Periodo / cartella Cloudinary<select id="vg-period"><option value="">Tutti i periodi</option></select></label>
+<label for="vg-period">Periodo di catalogazione<select id="vg-period"><option value="">Tutti i periodi</option></select></label>
 <label for="vg-category">Categoria<select id="vg-category"><option value="">Tutte le categorie</option></select></label>
 </form>
 <div class="vg-filter-footer"><label for="vg-sort">Ordina <select id="vg-sort" style="background:#231923;color:#f4e9e9;border:1px solid #60424f;padding:9px">
@@ -59,10 +59,15 @@
 <noscript><p class="vg-notice">Abilita JavaScript per consultare la galleria unificata. Le fotografie e le relative fonti sono consultabili anche nell’<a href="./archivio-drive.html">archivio documentale</a>.</p></noscript>
 </section>
 <section class="vg-periods" id="vg-period-section" aria-labelledby="vg-period-heading"><div class="vg-container">
-<div class="vg-section-head"><div><p class="vg-eyebrow">02 / Struttura Cloudinary</p><h2 id="vg-period-heading">Anni e periodi.</h2></div>
-<p>La cronologia di <strong>MYLENE_FARMER/</strong> viene ricavata dalle sottocartelle effettive, quando presenti, oppure dai metadati delle risorse. I nomi dei file contenenti cifre non vengono trattati automaticamente come date storiche. Non vengono esposti identificativi privati o credenziali.</p></div>
-<details><summary>Esplora gli anni e i periodi rilevati</summary>
-<p id="vg-folder-status" class="vg-status" role="status">Rilevamento delle cartelle in corso…</p>
+<div class="vg-section-head"><div><p class="vg-eyebrow">02 / Cronologia del fondo</p><h2 id="vg-period-heading">Anni e periodi.</h2></div>
+<p>La cronologia di <strong>MYLENE_FARMER/</strong> proviene dalle cartelle sorgenti conservate nei registri del <strong>Full Sync 7.1</strong>, riconciliati con il catalogo finale del 18 ottobre 2026. Sono anni di catalogazione, non date di scatto certificate. I dieci contenuti senza anno restano separati. Questa istantanea non è una nuova verifica dei byte remoti.</p></div>
+<div class="vg-stats" aria-label="Consistenza del fondo archiviato, distinta dalle fotografie pubblicate">
+<div class="vg-stat"><strong id="vg-archive-total">—</strong><span>Contenuti distinti in archivio</span></div>
+<div class="vg-stat"><strong id="vg-archive-assets">—</strong><span>Asset nel catalogo finale</span></div>
+<div class="vg-stat"><strong id="vg-archive-undated">—</strong><span>Contenuti senza anno</span></div>
+</div>
+<details open style="margin-top:28px"><summary>Esplora gli anni e i periodi catalogati</summary>
+<p id="vg-folder-status" class="vg-status" role="status">Caricamento della cronologia riconciliata…</p>
 <div id="vg-folders" class="vg-folder-grid" aria-label="Periodi Cloudinary"></div>
 </details>
 <p class="vg-notice">La presenza di un file su Cloudinary o Google Drive non costituisce autorizzazione alla ripubblicazione. Le fotografie dell’archivio privato entrano nella galleria soltanto dopo verifica individuale dei diritti. Le immagini già disponibili da Wikimedia Commons mantengono i rispettivi crediti e condizioni di licenza.</p>
