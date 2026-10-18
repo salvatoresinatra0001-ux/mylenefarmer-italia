@@ -132,3 +132,6 @@
     document.querySelectorAll('main section').forEach(function(s){io.observe(s)});
   } else {document.querySelectorAll('main section').forEach(function(s){s.classList.add('mf-visible')})}
 })();
+
+/* Favicon editoriale Claude Gassian 2008 / Cloudinary */
+(function(){var href='https://res.cloudinary.com/rxhqteak/image/upload/f_auto,q_auto,w_96,h_96,c_fill,g_face,fl_awebp/MYLENE_FARMER/00082beab8f5da27a5cd9b76f058137738d1df0346fe2fc1341ee8d9ad0ee9fa.jpg';var old=document.querySelector('link[rel="icon"]');if(old)old.href=href;else{var l=document.createElement('link');l.rel='icon';l.href=href;document.head.appendChild(l)}})();
