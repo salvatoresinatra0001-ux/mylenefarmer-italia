@@ -11,7 +11,7 @@
   // Editorial chronology: these are navigational eras, NOT Cloudinary folder claims.
   const editorialPeriods=['1984–1989','1990–1999','2000–2009','2010–2019','2020–2026'];
   const editorialDecades=['1980–1989','1990–1999','2000–2009','2010–2019','2020–2029'];
-  let all=[],filtered=[],folderData=[],taxonomyMode='folder-tree',taxonomyScanned=0,taxonomyInferred=false,limit=limitPerPage,active=-1,returnFocus=null,selectedDecade='all',imageSerial=0;
+  let all=[],filtered=[],folderData=[],taxonomyMode='folder-tree',taxonomyScanned=0,taxonomyInferred=false,taxonomyUnique=0,limit=limitPerPage,active=-1,returnFocus=null,selectedDecade='all',imageSerial=0;
   const normalize=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('it');
   const validYear=v=>/^(?:19|20)\d{2}$/.test(String(v||''))?String(v):'';
   const decade=v=>{const y=validYear(v);return y?String(Math.floor(Number(y)/10)*10)+'–'+String(Math.floor(Number(y)/10)*10+9):'Non datato'};
@@ -74,13 +74,15 @@
   function renderFolders(){
     folderGrid.replaceChildren();
     if(!folderData.length){folderStatus.textContent='La struttura delle cartelle Cloudinary non è al momento disponibile. Gli anni delle fotografie pubblicate rimangono consultabili.';return;}
-    folderStatus.textContent=taxonomyMode==='resource-metadata'
+    folderStatus.textContent=taxonomyMode==='import-ledger'
+      ?folderData.length+' anni recuperati dalle cartelle sorgenti tramite i registri di importazione: '+taxonomyUnique+' contenuti binari distinti nell’Audit 6.0 del 18 ottobre 2026. Conteggi di archivio, non di fotografie pubblicate; i caricamenti successivi non sono inclusi.'
+      :taxonomyMode==='resource-metadata'
       ?folderData.length+' periodi ricavati dai metadati di '+taxonomyScanned+' risorse Cloudinary. '+(taxonomyInferred?'Alcuni anni sono inferiti dai nomi dei file e richiedono verifica. ':'')+'Questi non sono necessariamente nomi di sottocartelle.'
       :folderData.length+' cartelle o sottocartelle rilevate in MYLENE_FARMER/. La catalogazione non autorizza automaticamente la pubblicazione delle immagini.';
     for(const f of folderData.slice(0,120)){
       const b=node('button','',String(f.label||f.period||'Cartella'));
       b.type='button';b.title='Filtra le fotografie pubblicate per questo periodo';
-      const meta=node('small','',[f.year,f.period].filter(Boolean).join(' · '));
+      const meta=node('small','',[f.period,Number.isInteger(f.unique_contents)?f.unique_contents+' contenuti in archivio':''].filter(Boolean).join(' · '));
       b.append(meta);
       b.addEventListener('click',()=>{selectedDecade='all';years.value=validYear(f.year)||'';periods.value=[...periods.options].some(o=>o.value===f.period)?f.period:'';limit=limitPerPage;renderTimeline();render();$('vg-gallery-section').scrollIntoView({behavior:'smooth',block:'start'})});
       folderGrid.append(b);
@@ -154,7 +156,7 @@
   $('vg-reset').addEventListener('click',()=>{query.value='';years.value='';periods.value='';category.value='';sort.value='new';selectedDecade='all';limit=limitPerPage;renderTimeline();render()});
   for(const el of [query,years,periods,category,sort])el.addEventListener(el===query?'input':'change',()=>{limit=limitPerPage;if(el===years&&years.value)selectedDecade='all';renderTimeline();render()});
   async function init(){
-    const periodUrl=(location.hostname.endsWith('github.io')?'https://mylenefarmer.it':'')+'/.netlify/functions/cloudinary-periods';
+    const periodUrl='./assets/data/archive-periods.json';
     const results=await Promise.allSettled([fetchJson('./data/gallery-public.json'),fetchJson('./assets/data/cloudinary-gallery.json')]);
     const old=results[0].status==='fulfilled'?commons(results[0].value):[];
     const newer=results[1].status==='fulfilled'?cloudinary(results[1].value):[];
@@ -175,8 +177,8 @@
     try{
       const taxonomy=await fetchJson(periodUrl);
       folderData=Array.isArray(taxonomy.folders)?taxonomy.folders.filter(f=>f&&typeof f.label==='string'):[];
-      taxonomyMode=taxonomy.sourceMode||'folder-tree';taxonomyScanned=Number(taxonomy.assetsScanned||0);taxonomyInferred=!!taxonomy.inferredFromFilenames;
-      updateSelectors();renderFolders();render();
+      taxonomyMode=taxonomy.sourceMode||'folder-tree';taxonomyScanned=Number(taxonomy.assetsScanned||0);taxonomyInferred=!!taxonomy.inferredFromFilenames;taxonomyUnique=Number(taxonomy.unique_contents||0);
+      updateSelectors();renderFolders();if(!dialog.open)render();
     }catch{renderFolders()}
   }
   init().catch(()=>{notice.hidden=false;notice.textContent='Errore temporaneo di caricamento della galleria.'});

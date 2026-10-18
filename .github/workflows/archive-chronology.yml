@@ -1,0 +1,30 @@
+name: Recovered archive chronology integrity
+on:
+  push:
+    branches: [main]
+    paths:
+      - assets/data/archive-periods.json
+      - assets/js/unified-gallery.js
+      - netlify/functions/cloudinary-periods.mjs
+      - tests/archive-chronology.test.mjs
+      - .github/workflows/archive-chronology.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: archive-chronology
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check gallery and function syntax
+        run: |
+          node --check assets/js/unified-gallery.js
+          node --check netlify/functions/cloudinary-periods.mjs
+      - name: Validate source-year counts and public data boundary
+        run: node --test tests/archive-chronology.test.mjs
