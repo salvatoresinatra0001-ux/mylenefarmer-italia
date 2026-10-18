@@ -1,0 +1,17 @@
+/* Barra riferimenti musicali globale */
+.mf-reference-bar{border-bottom:1px solid var(--line);background:var(--surface-2);font-size:12px}
+.mf-reference-bar .mf-ref-inner{max-width:var(--wrap);margin:auto;padding:8px var(--gut);display:flex;align-items:center;gap:16px;overflow-x:auto}
+.mf-ref-label{color:var(--muted);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;font-size:10px}
+.mf-ref-links{display:flex;gap:7px;align-items:center;list-style:none;margin:0;padding:0}
+.mf-ref-links a{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:var(--ink);white-space:nowrap;background:var(--surface)}
+.mf-ref-links a:hover{border-color:var(--accent);background:var(--ground)}
+.mf-ref-icon{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;font-size:9px;font-weight:700;letter-spacing:-.05em;color:#fff}
+.mf-spotify{background:#1ed760}.mf-apple{background:#a855f7}.mf-qobuz{background:#111;color:#fff;border:1px solid #777}.mf-deezer{background:#ef5466}.mf-youtube{background:#ff0033}
+.mf-reference-bar a::after{content:"↗";font-size:10px;color:var(--muted)}
+@media(max-width:600px){.mf-ref-label{display:none}.mf-reference-bar .mf-ref-inner{padding-block:7px}}
+.site-foot{min-height:360px}
+.site-foot .foot-grid{grid-template-columns:minmax(260px,1.35fr) repeat(3,minmax(170px,1fr));gap:clamp(24px,4vw,56px)}
+.mf-foot-meta{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);display:grid;gap:8px;color:var(--muted);font-size:12.5px;line-height:1.55}
+.mf-foot-meta strong{color:var(--ink);font-weight:500}
+.mf-foot-legal{max-width:72ch}
+@media(max-width:760px){.site-foot{min-height:0}.site-foot .foot-grid{grid-template-columns:1fr}}
