@@ -285,3 +285,5 @@ ul.ticks li::before { content: ""; width: 10px; height: 10px; margin-top: 8px; b
 .btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 .btn.ghost { border-color: var(--line); }
 .btn.ghost:hover { background: var(--surface-2); color: var(--ink); border-color: var(--line); }
+
+/* Theme tokens consumed by the shared adaptive layer. */
