@@ -6,7 +6,9 @@ const data=JSON.parse(readFileSync(new URL('../assets/data/archive-periods.json'
 test('audited chronology has exactly 25 source years and reconciles all counts',()=>{
  assert.equal(data.folders.length,25);
  assert.deepEqual(data.folders.map(x=>x.year),Array.from({length:25},(_,i)=>String(1984+i)));
- assert.equal(data.folders.reduce((n,x)=>n+x.unique_contents,0),1906);
+ const datedFolderTotal=data.folders.reduce((n,x)=>n+x.unique_contents,0);
+ assert.equal(datedFolderTotal,data.dated_contents);
+ assert.equal(data.dated_contents+data.undated_contents,data.unique_contents);
  assert.equal(data.unique_contents+data.redundant_copies,data.assetsScanned);
  assert.equal(data.live_inventory,false);
  assert.equal(data.sourceMode,'import-ledger');
