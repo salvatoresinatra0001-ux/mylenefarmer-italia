@@ -43,7 +43,7 @@
   });
   const cloudinaryPublicList=data=>(Array.isArray(data.resources)?data.resources:[]).filter(p=>p&&p.type==='upload'&&p.public_id&&Math.max(Number(p.width)||0,Number(p.height)||0)>=1280&&Math.min(Number(p.width)||0,Number(p.height)||0)>=720).map(p=>{
     const year=validYear(p.year),publicId=String(p.public_id),format=String(p.format||'jpg');
-    const delivery=(width)=>'https://res.cloudinary.com/rxhqteak/image/upload/f_auto,q_auto,w_'+width+'/'+publicId+'.'+format;
+    const delivery=(width)=>String(p['delivery_'+width]||'');
     return {id:'cloudinary-public:'+p.asset_id,title:publicId.split('/').pop(),year,period:decade(year),decade:decade(year),category:'visual',author:'Cloudinary · archivio pubblico',license:'Verifica editoriale in corso',source:'Cloudinary · MYLENE_FARMER',sourceUrl:'https://console.cloudinary.com/app/c-59f776cc3edb265311a3ac475b525f6/assets/media_library/search?q=&view_mode=grid&sortDirection=asc&sortField=publicId',licenseUrl:null,thumb:delivery(900),large:delivery(2200),fallback:null,alt:'Mylène Farmer · archivio Cloudinary pubblico',width:p.width,height:p.height,origin:'cloudinary'};
   });
   function options(select,values,firstLabel){
@@ -185,7 +185,7 @@
   for(const el of [query,years,periods,category,sort])el.addEventListener(el===query?'input':'change',()=>{limit=limitPerPage;if(el===years&&years.value)selectedDecade='all';renderTimeline();render()});
   async function init(){
     const periodUrl='./assets/data/archive-periods.json';
-    const results=await Promise.allSettled([fetchJson('./data/gallery-public.json'),fetchJson('./assets/data/cloudinary-gallery.json'),fetchJson('https://res.cloudinary.com/rxhqteak/image/list/MYLENE_FARMER.json')]);
+    const results=await Promise.allSettled([fetchJson('./data/gallery-public.json'),fetchJson('./assets/data/cloudinary-gallery.json'),fetchJson('/.netlify/functions/cloudinary-public-list')]);
     const old=results[0].status==='fulfilled'?commons(results[0].value):[];
     const newer=results[1].status==='fulfilled'?cloudinary(results[1].value):[];
     const publicList=results[2].status==='fulfilled'?cloudinaryPublicList(results[2].value):[];
