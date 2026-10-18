@@ -6,6 +6,7 @@ import {execFileSync} from 'node:child_process';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {enhancePages} from './enhance-pages.mjs';
+import {retiredPhotoIds,applyPhotoQuality} from './photo-quality.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const out=path.join(root,'dist');
 const publicDirs=new Set(['assets','data','gallerie','galleria-fotografica']);
@@ -28,7 +29,7 @@ for(const name of ['QUALITY_AUDIT.md','CATALOGO_FOTOGRAFICO_2026.md']){
 // Private Drive IDs, OAuth credentials and catalogue drafts never enter the public manifest.
 const source=readJSON('assets/data/catalogo-fotografie-2026.json');
 const drive=readJSON('data/drive-gallery.json');
-const commons=(source.records||[]).filter(p=>p.status==='licenza_indicata_sulla_scheda').map(p=>{
+const commons=(source.records||[]).filter(p=>p.status==='licenza_indicata_sulla_scheda'&&!retiredPhotoIds.has(p.id)).map(p=>{
   if(!p.author||!https(p.source_url)||!https(p.license_url)||!https(p.preview_url)||!p.width||!p.height)throw Error('Credito incompleto: '+p.id);
   const filename=p.file.normalize('NFC').replace(/ /g,'_');
   const hash=createHash('md5').update(filename).digest('hex');
@@ -54,6 +55,7 @@ const cards=items.map(p=>`<article class="mf-card" data-photo-id="${esc(p.id)}">
 template=template.replace('<!-- PHOTO_CARDS -->',cards).replaceAll('<!-- PHOTO_COUNT -->',String(items.length)).replaceAll('<!-- DRIVE_COUNT -->',String(approved.length));
 writeFileSync(page,template);
 enhancePages(out,items);
+applyPhotoQuality(out,source.records||[]);
 function sanitize(value){if(Array.isArray(value))return value.map(sanitize);if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).filter(([key])=>!['source_local_path','local_path','access_token','refresh_token','private_key','client_secret'].includes(key)).map(([k,v])=>[k,sanitize(v)]));return value;}
 let pages=0;const problems=[];const files=[];
 function walk(dir){for(const ent of readdirSync(dir,{withFileTypes:true}).sort((a,b)=>a.name.localeCompare(b.name,'en'))){const abs=path.join(dir,ent.name);if(ent.isDirectory()){walk(abs);continue;}files.push(path.relative(out,abs).split(path.sep).join('/'));if(ent.name.endsWith('.json'))writeFileSync(abs,JSON.stringify(sanitize(JSON.parse(readFileSync(abs,'utf8'))),null,2)+'\n');if(!ent.name.endsWith('.html'))continue;pages++;const html=readFileSync(abs,'utf8').replace(/<pre\b[^>]*>[\s\S]*?<\/pre>/gi,'').replace(/<code\b[^>]*>[\s\S]*?<\/code>/gi,'');for(const[,raw]of html.matchAll(/\b(?:href|src|poster)\s*=\s*["']([^"']+)["']/gi)){if(!raw||raw.startsWith('#')||/^(?:https?:|mailto:|tel:|data:|javascript:|\/\/)/i.test(raw)||raw.includes('${')||raw.includes('{{'))continue;let part;try{part=decodeURIComponent(raw.split(/[?#]/)[0]);}catch{problems.push('URL non valida: '+raw);continue;}if(!part)continue;const dest=part.startsWith('/')?path.join(out,part.slice(1)):path.resolve(path.dirname(abs),part);if(dest!==out&&!dest.startsWith(out+path.sep))problems.push('Percorso esterno: '+raw);else if(!existsSync(dest)&&!existsSync(path.join(dest,'index.html')))problems.push(path.relative(out,abs)+': '+raw);}}}
@@ -62,8 +64,7 @@ for(const p of ['index.html','galleria-hq.html','archivio-fotografico.html','arc
 if(problems.length)throw Error(problems.join('\n'));
 let commit=process.env.COMMIT_REF||process.env.GITHUB_SHA||'';
 if(!commit)try{commit=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();}catch{commit='local-preview';}
-// Every HTML response carries the same revision as the manifest. This also gives
-// deployment systems new content hashes after a processing configuration change.
+// Every HTML response carries the same revision as the manifest.
 for(const file of files.filter(p=>p.endsWith('.html'))){
   const absolute=path.join(out,file);
   const html=readFileSync(absolute,'utf8');
