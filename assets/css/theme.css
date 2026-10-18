@@ -13,3 +13,10 @@ html[data-theme="light"] .card,html[data-theme="light"] .alert,html[data-theme="
 @media(max-width:600px){.mf-theme-switcher{right:10px;bottom:10px;font-size:10px}}
 @media(min-width:1920px){:root{--wrap:1480px;--gut:clamp(48px,4vw,96px)}body{font-size:19px}.hero{min-height:82vh}.hero-lead{font-size:clamp(18px,1.2vw,22px)}h1{font-size:clamp(88px,8vw,156px)}h2{font-size:clamp(42px,3.5vw,64px)}.site-head .head-row{min-height:82px}}
 @media(min-width:3200px){:root{--wrap:1760px;--gut:120px}body{font-size:21px}.mf-reference-bar{font-size:14px}}
+
+/* Modern Light / Modern Dark: shared tokens also drive the photo archive. */
+:root{--mf-theme-bg:#0b0b0d;--mf-theme-surface:#141417;--mf-theme-ink:#f3f1ee;--mf-theme-muted:#aaa5a0;--mf-theme-line:#343438;--mf-theme-accent:#b58a72;--vg-bg:var(--mf-theme-bg);--vg-panel:var(--mf-theme-surface);--vg-panel2:#1c1c20;--vg-ink:var(--mf-theme-ink);--vg-muted:var(--mf-theme-muted);--vg-line:var(--mf-theme-line);--vg-accent:var(--mf-theme-accent)}
+html[data-theme="light"]{--mf-theme-bg:#f5f3ef;--mf-theme-surface:#fff;--mf-theme-ink:#20201f;--mf-theme-muted:#696660;--mf-theme-line:#ddd9d1;--mf-theme-accent:#765644;--vg-panel2:#f0ede8;color-scheme:light}
+html[data-theme="light"] body,html[data-theme="light"] body.vg-page{background:var(--mf-theme-bg);color:var(--mf-theme-ink)}
+html[data-theme="light"] .vg-top{background:#f5f3efed}html[data-theme="light"] .vg-periods,html[data-theme="light"] .vg-foot{background:#ebe8e2}html[data-theme="light"] .vg-dialog{background:#fff;color:#20201f}html[data-theme="light"] .vg-stage{background:#efede9}html[data-theme="light"] .vg-caption p{color:#514e49}html[data-theme="light"] .vg-filters input,html[data-theme="light"] .vg-filters select{background:var(--vg-panel2);color:var(--vg-ink)}html[data-theme="light"] .vg-open{background:#ece9e4}
+.mf-theme-switcher{border-radius:8px;box-shadow:none;letter-spacing:.04em;text-transform:none;background:var(--mf-theme-surface)}.mf-theme-switcher select{letter-spacing:0;text-transform:none}.mf-theme-switcher option{background:var(--mf-theme-surface);color:var(--mf-theme-ink)}
