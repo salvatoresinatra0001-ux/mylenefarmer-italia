@@ -94,3 +94,5 @@ body.vg-page{margin:0;background:var(--vg-bg);color:var(--vg-ink);font-family:sy
 @media(max-width:800px){.vg-top-inner{display:block}.vg-nav{margin-top:10px}.vg-grid{grid-template-columns:repeat(2,1fr)}.vg-dialog-inner{grid-template-columns:1fr}.vg-stage img{max-height:55vh}.vg-section-head{display:block}.vg-hero{min-height:72vh}}
 @media(max-width:520px){.vg-grid,.vg-filters{grid-template-columns:1fr}.vg-hero h1{font-size:clamp(55px,15vw,85px)}.vg-container{padding:52px 5vw}.vg-hero-inner{padding:80px 5vw 40px}.vg-nav{gap:10px}.vg-nav a{font-size:11px}.vg-card{max-width:480px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+/* Theme overrides live in assets/css/theme.css. */
