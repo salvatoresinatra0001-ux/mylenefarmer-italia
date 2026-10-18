@@ -63,7 +63,44 @@ export default async function handler(request){
     }
     if(queue.length)partial=true;
     const unique=[...new Map(folders.map(x=>[x.label+'|'+x.year+'|'+x.period,x])).values()];
-    const data={schema:1,source:'Cloudinary MYLENE_FARMER/',folders:unique,partial,scannedFolders:seen.size};
+    let sourceMode='folder-tree', assetsScanned=0, inferredFromFilenames=false;
+    // Some Cloudinary accounts use dynamic folders or a flat MYLENE_FARMER folder.
+    // When there are no subfolders, derive a chronology from asset metadata only;
+    // never expose private IDs, file names, CDN URLs, tags or raw context values.
+    if(!unique.length){
+      sourceMode='resource-metadata';
+      const periods=new Map();
+      let cursor,rounds=0;
+      do{
+        const url=new URL('https://api.cloudinary.com/v1_1/'+encodeURIComponent(cloud)+'/resources/image/upload');
+        url.searchParams.set('prefix','MYLENE_FARMER/');
+        url.searchParams.set('max_results','500');
+        if(cursor)url.searchParams.set('next_cursor',cursor);
+        const res=await fetch(url,{headers:{Authorization:auth,Accept:'application/json'},signal:AbortSignal.timeout(15000)});
+        if(!res.ok){partial=true;break;}
+        const payload=await res.json();
+        for(const asset of payload.resources||[]){
+          assetsScanned++;
+          const id=String(asset.public_id||'');
+          const folder=String(asset.asset_folder||id.split('/').slice(0,-1).join('/'));
+          const folderYear=detectYear(folder);
+          const contextYear=detectYear(asset.context?.custom?.year);
+          const fileYear=detectYear(id.split('/').at(-1));
+          const year=contextYear||folderYear||fileYear;
+          const inferred=!folderYear&&!contextYear&&!!fileYear;
+          if(inferred)inferredFromFilenames=true;
+          const period=detectPeriod(folder,year);
+          const label=year||'Non datato';
+          const k=label+'|'+period;
+          if(!periods.has(k))periods.set(k,{label,year,period,depth:1,source:inferred?'filename':folderYear?'folder':contextYear?'context':'undated'});
+        }
+        cursor=payload.next_cursor;
+        rounds++;
+      }while(cursor&&rounds<12&&assetsScanned<6000);
+      if(cursor)partial=true;
+      unique.push(...periods.values());
+    }
+    const data={schema:2,source:'Cloudinary MYLENE_FARMER/',sourceMode,folders:unique,partial,scannedFolders:seen.size,assetsScanned,inferredFromFilenames};
     memo=data;expires=Date.now()+15*60*1000;
     return response(data);
   }catch{
