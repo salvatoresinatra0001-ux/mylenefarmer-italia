@@ -23,7 +23,7 @@ export const handler=async(event)=>{
     if(!response.ok)return json(response.status===401?503:502,{error:'Image catalog unavailable'});
     const data=await response.json();
     if(!Array.isArray(data.resources))return json(502,{error:'Invalid image catalog'});
-    const resources=data.resources.filter(p=>p&&p.resource_type==='image'&&p.type==='upload'&&Array.isArray(p.tags)&&p.tags.includes('MYLENE_FARMER')&&typeof p.public_id==='string'&&p.public_id.startsWith('MYLENE_FARMER/')&&Math.max(Number(p.width)||0,Number(p.height)||0)>=1280&&Math.min(Number(p.width)||0,Number(p.height)||0)>=720).map(p=>{
+    const resources=data.resources.filter(p=>p&&p.resource_type==='image'&&p.type==='upload'&&typeof p.public_id==='string'&&Math.max(Number(p.width)||0,Number(p.height)||0)>=1280&&Math.min(Number(p.width)||0,Number(p.height)||0)>=720).map(p=>{
       const custom=p.context?.custom||{},year=/^(?:19|20)\d{2}$/.test(String(custom.year||''))?String(custom.year):'';
       const safeTitle=String(custom.title||'').slice(0,120);
       return {id:tokenFor(p.public_id,cloud,secret),title:safeTitle||'Fotografia HD',year,width:Number(p.width)||0,height:Number(p.height)||0,format:String(p.format||'jpg')};
