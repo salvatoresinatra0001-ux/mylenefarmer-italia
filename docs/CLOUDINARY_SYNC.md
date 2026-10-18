@@ -36,3 +36,11 @@ No such record is included by default. Merely possessing images or finding them 
 Synchronizes **metadata and approved imagery references**, not duplicate binary image storage. The legacy photographic catalog remains unchanged. Cloudinary may hold identical-byte duplicates; choose one approved public ID per photograph. Re-run the workflow after manual changes to Cloudinary or the approval list.
 
 **Netlify publishing is contingent on an active Git integration.** This repository does not contain an automatic Netlify deployment token or credentials.
+
+## Protected delivery mode (18 October 2026)
+The public gallery uses opaque image IDs and the Netlify function `/.netlify/functions/cloudinary-photo?id=<opaque-id>&size=thumb|large`. Browser markup and the generated `assets/data/cloudinary-gallery.json` no longer include per-image Cloudinary CDN URLs.
+The function checks the curated `data/cloudinary-approved.json` allowlist and fetches the image server-side. GitHub Pages consumes the image proxy on `https://mylenefarmer.it`; this creates a deliberate dependency on Netlify being operational.
+The public website build excludes `data/cloudinary-approved.json`. **However, this file is still visible in the public GitHub source repository.** It contains public IDs and rights documentation, not credentials.
+Configure `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET` in the **Netlify site environment** with Functions/runtime scope, as well as GitHub Actions secrets for inventory generation. Never commit any secret.
+The proxy URL itself remains retrievable by visitors and images can be saved or captured. It hides the Cloudinary delivery URL from the rendered page but **does not provide DRM, prevent copying, or revoke an existing publicly accessible Cloudinary origin URL**. Strong origin restrictions require moving selected assets to Cloudinary authenticated delivery, carefully testing signed delivery first; do not change existing asset access control in bulk.
+Netlify automatically bundles `netlify/functions/cloudinary-photo.mjs` during a successful deploy from `main`. Verify the function, actual image output, build and displayed gallery on both destinations before marking synchronization complete.
