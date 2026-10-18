@@ -36,7 +36,7 @@ controlla i collegamenti e richiede il login Netlify quando serve. Non usa
 1. Verificare HTTPS e home sul dominio `mylenefarmer.it`.
 2. Aprire `/galleria-hq.html`, `/archivio-fotografico.html`,
    `/speciale-egregore-2026.html`, `/biografia.html`, `/discografia.html`.
-3. Confermare immagini, qualità e licenze dei 19 scatti documentati.
+3. Confermare immagini, qualità e licenze delle sette fotografie pubblicate.
 4. Verificare navigazione mobile, favicon, redirect www/apex (solo dopo audit DNS).
 5. Confrontare sitemap, robots e URL canonici e leggere i log Netlify.
 

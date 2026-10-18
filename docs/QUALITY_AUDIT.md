@@ -1,9 +1,10 @@
 # Mylène Farmer Italia — Audit fotografico e controlli qualità
-_Aggiornamento: 17 ottobre 2026 — a cura di Salvatore Sinatra._
+_Aggiornamento: 18 ottobre 2026 — a cura di Salvatore Sinatra._
 
 ## Stato effettivamente verificato
 
-- **19 immagini** elencate nel catalogo fotografico con autore, licenza e collegamento alla rispettiva scheda Wikimedia Commons.
+- **7 immagini** incluse nell’artefatto pubblico con autore, licenza e collegamento alla rispettiva scheda Wikimedia Commons.
+- **12 schede** escluse dalla presentazione pubblica per revisione qualitativa; i riferimenti restano nel catalogo sorgente.
 - **19 risorse candidate** escluse o in ulteriore verifica: duplicati, ritagli, risoluzioni insufficienti e possibili diritti di terzi.
 - Le dimensioni originali sono quelle dichiarate sulle pagine Commons; **non certificano nitidezza ottica, assenza di rumore, autenticità o qualità estetica**.
 - Il materiale fotografico selezionato è visualizzato per collegamento ai server originali: non sono state acquisite copie binarie locali nel repository per quel catalogo.
@@ -20,7 +21,7 @@ _Aggiornamento: 17 ottobre 2026 — a cura di Salvatore Sinatra._
 
 ## Limiti e ulteriori controlli
 
-Non sono stati completati l'hash percettivo dei file originali, il confronto visivo pixel per pixel, il test sistematico dei server remoti e la verifica fotografica su browser reali. L'etichetta **HQ** descrive un obiettivo curatoriale, non una garanzia automatica per tutte le immagini della galleria.
+Non sono stati completati l'hash percettivo dei file originali, il confronto visivo pixel per pixel, il test sistematico dei server remoti e la verifica fotografica su browser reali. Il controllo browser locale può usare immagini sostitutive e non certifica la disponibilità corrente di Wikimedia Commons. L'etichetta **HQ** descrive un obiettivo curatoriale, non una garanzia automatica per tutte le immagini della galleria.
 
 Fonti di lavoro: [Catalogo fotografico 2026](./CATALOGO_FOTOGRAFICO_2026.md),
 [Archivio fotografico](../archivio-fotografico.html) e

@@ -8,8 +8,7 @@ body{font-family:Georgia,"Times New Roman",serif}
 .btn{border-radius:999px;transition:transform .2s,background .2s,border-color .2s}
 .btn:hover{transform:translateY(-1px)}
 .kicker{letter-spacing:.34em}
-section{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
-section.mf-visible{opacity:1;transform:none}
+/* Keep every section readable when scripts are disabled or still loading. */
 .mf-home-gassian{padding-top:clamp(54px,7vw,92px);background:var(--ground)}
 .mf-home-gassian .sec-head{max-width:760px}
 .mf-gassian-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}

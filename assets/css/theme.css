@@ -8,6 +8,7 @@ html[data-theme="light"] .card,html[data-theme="light"] .alert,html[data-theme="
 .mf-theme-switcher{position:fixed;right:18px;bottom:18px;z-index:1000;display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--mf-theme-line);border-radius:999px;background:color-mix(in srgb,var(--mf-theme-surface) 94%,transparent);color:var(--mf-theme-ink);box-shadow:0 8px 30px #0003;font:600 11px/1 system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase}
 .mf-theme-switcher label{color:var(--mf-theme-muted)}
 .mf-theme-switcher select{border:0;background:transparent;color:inherit;font:inherit;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;outline:0}
+.mf-theme-switcher.mf-theme-switcher--header{position:static;inset:auto;z-index:auto;margin:0 0 0 12px;box-shadow:none;backdrop-filter:none}
 .mf-theme-switcher option{background:#17171c;color:#ece7df}
 @media(max-width:600px){.mf-theme-switcher{right:10px;bottom:10px;font-size:10px}}
 @media(min-width:1920px){:root{--wrap:1480px;--gut:clamp(48px,4vw,96px)}body{font-size:19px}.hero{min-height:82vh}.hero-lead{font-size:clamp(18px,1.2vw,22px)}h1{font-size:clamp(88px,8vw,156px)}h2{font-size:clamp(42px,3.5vw,64px)}.site-head .head-row{min-height:82px}}

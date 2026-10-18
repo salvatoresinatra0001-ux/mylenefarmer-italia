@@ -1,7 +1,7 @@
 # Mylène Farmer · Italia
 
-Archivio italiano indipendente dedicato all'opera di Mylène Farmer. Sito statico in italiano, senza dipendenze, senza build step.
-Cura editoriale: **Salvatore Sinatra**. Stato dei dati: **17 ottobre 2026**.
+Archivio italiano indipendente dedicato all'opera di Mylène Farmer. Front end statico in italiano; il sito non richiede dipendenze applicative e genera l'artefatto di pubblicazione con Node.js 22.
+Cura editoriale: **Salvatore Sinatra**. Stato dei dati: **18 ottobre 2026**.
 
 > Progetto editoriale indipendente, non affiliato all'artista, al management o alle etichette.
 
@@ -52,9 +52,10 @@ La precisione della data (giorno / mese / anno) è un campo distinto dalla solid
 
 ## Immagini
 
-La sezione fotografica documentata comprende **19 fotografie** collegate alle rispettive
-schede Wikimedia Commons, con autore e licenza riportati, più 19 risorse candidate escluse
-o in ulteriore verifica. I file binari del catalogo non sono ospitati nella repository.
+La galleria pubblica comprende attualmente **7 fotografie** collegate alle rispettive
+schede Wikimedia Commons, con autore e licenza riportati. Altre 12 schede sono escluse
+dalla presentazione dopo revisione editoriale; 19 risorse candidate restano in ulteriore
+verifica. I file binari del catalogo non sono ospitati nella repository.
 La galleria HQ è una sezione editoriale distinta: l'audit di provenienza e qualità è in
 [QUALITY_AUDIT.md](docs/QUALITY_AUDIT.md). Copertine, foto stampa e fotogrammi di
 videoclip non sono automaticamente immagini libere.
@@ -79,7 +80,7 @@ della tabella e, se cambia il livello di verifica, il relativo indicatore di sol
 
 ## Archivio fotografico 2026
 
-Nuova sezione: [galleria documentata](https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/archivio-fotografico.html), 19 scatti con licenza indicata e 19 risorse candidate da controllare o escludere. Il dataset è in `assets/data/catalogo-fotografie-2026.json`; crediti e fonti in `docs/CATALOGO_FOTOGRAFICO_2026.md`. Le anteprime sono servite da Commons: i file binari delle fotografie non sono stati scaricati né incorporati nella repository.
+Galleria documentata: sette fotografie attualmente pubblicate e attribuite; le altre schede sono conservate per revisione. Il dataset è in `assets/data/catalogo-fotografie-2026.json`; crediti e fonti in `docs/CATALOGO_FOTOGRAFICO_2026.md`. Le anteprime sono servite da Commons: i file binari delle fotografie non sono stati scaricati né incorporati nella repository.
 
 ## Edizione editoriale del 17 ottobre 2026
 

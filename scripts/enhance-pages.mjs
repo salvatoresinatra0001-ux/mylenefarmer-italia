@@ -8,7 +8,7 @@ export function enhancePages(out,photos){
  if(!html.includes('assets/css/gallery.css'))html=html.replace('</head>','<link rel="stylesheet" href="./assets/css/gallery.css">\n</head>');
  if(!html.includes('class="mf-home-strip"')){
   const chosen=['MF-2026-001','MF-2026-012','MF-2026-009'].map(id=>photos.find(p=>p.id===id)).filter(Boolean);
-  const strip='<section><div class="wrap"><p class="kicker">Fotografie / Archivio visivo</p><h2>Le immagini, dentro il sito.</h2><div class="mf-home-strip">'+chosen.map(p=>`<figure><a href="./archivio-visivo.html#${esc(p.id)}"><img src="${esc(p.src)}" loading="lazy" decoding="async" alt="${esc(p.alt)}" draggable="false"></a><figcaption>${esc(p.author)} &middot; ${esc(p.license)} &middot; Crediti completi nella scheda.</figcaption></figure>`).join('')+'</div><p><a class="btn" href="./archivio-visivo.html">Tutte le fotografie documentate</a></p></div></section>';
+  const strip='<section><div class="wrap"><p class="kicker">Fotografie / Archivio visivo</p><h2>Le immagini, dentro il sito.</h2><div class="mf-home-strip">'+chosen.map(p=>`<figure><a href="./fotografie.html#vg-gallery-section"><img src="${esc(p.src)}" loading="lazy" decoding="async" alt="${esc(p.alt)}" draggable="false"></a><figcaption>${esc(p.author)} &middot; ${esc(p.license)} &middot; Crediti completi nella scheda.</figcaption></figure>`).join('')+'</div><p><a class="btn" href="./fotografie.html#vg-gallery-section">Tutte le fotografie documentate</a></p></div></section>';
   html=html.replace('</main>',strip+'</main>');
  }
  writeFileSync(home,html);
@@ -18,7 +18,7 @@ export function enhancePages(out,photos){
   const start=html.lastIndexOf('<article ',index),end=html.indexOf('</article>',index)+10;
   if(start<0||end<10)continue;
   let card=html.slice(start,end);
-  card=card.replace(/<a\s[^>]*class="photo-image"[^>]*>/,'<a class="photo-image" href="./archivio-visivo.html#'+esc(p.id)+'">');
+  card=card.replace(/<a\s[^>]*class="photo-image"[^>]*>/,'<a class="photo-image" href="./fotografie.html#vg-gallery-section">');
   card=card.replace(/(<img[^>]*\bsrc=")[^"]+/,'$1'+esc(p.src));
   card=card.replace('Apri originale su Wikimedia Commons \u2197','Visualizza nel sito');
   html=html.slice(0,start)+card+html.slice(end);

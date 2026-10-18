@@ -1,6 +1,6 @@
-# Catalogo fotografico Mylène Farmer Italia · 16 ottobre 2026
+# Catalogo fotografico Mylène Farmer Italia · 18 ottobre 2026
 
-**19 fotografie con informazioni di attribuzione/licenza controllate dalle schede, 19 risorse candidate da verificare o escludere.**
+**19 schede selezionate nel catalogo sorgente; sette fotografie restano nella galleria pubblica corrente, mentre 12 sono escluse in attesa di revisione editoriale. Altre 19 risorse sono candidate da verificare o escludere.**
 Le fotografie sono **collegate a Wikimedia Commons, non scaricate nella repository**. Catalogo consultabile: [archivio-fotografico.html](https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/archivio-fotografico.html).
 
 ## Fotografie selezionate
