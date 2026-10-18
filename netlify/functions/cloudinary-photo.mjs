@@ -16,18 +16,30 @@ export const handler=async(event)=>{
   if(event.httpMethod!=='GET'&&event.httpMethod!=='HEAD')return jsonError(405,'Method not allowed');
   const cloud=String(process.env.CLOUDINARY_CLOUD_NAME||''),key=String(process.env.CLOUDINARY_API_KEY||''),secret=String(process.env.CLOUDINARY_API_SECRET||'');
   if(!/^[a-z0-9-]{2,80}$/i.test(cloud)||!key||!secret)return jsonError(503,'Image service unavailable');
-  const publicId=decryptId(String(event.queryStringParameters?.id||''),cloud,secret);
+  const decoded=decryptId(String(event.queryStringParameters?.id||''),cloud,secret);
+  if(!decoded)return jsonError(404,'Not found');
+  let original=null,publicId='';
+  try{
+    const u=new URL(decoded);
+    if(u.protocol==='https:'&&u.hostname==='res.cloudinary.com'&&u.pathname.startsWith('/'+cloud+'/image/upload/')){
+      original=u;original.search='';original.hash='';
+    }
+  }catch{}
+  if(!original)publicId=decoded;
+  if(!original&&(!publicId||publicId.length>255||publicId.includes('..')||publicId.includes('\\')||/[\\u0000-\\u001f]/.test(publicId)))return jsonError(404,'Not found');
   if(!publicId||publicId.length>255||publicId.includes('..')||publicId.includes('\\')||/[\\u0000-\\u001f]/.test(publicId))return jsonError(404,'Not found');
   const mode=event.queryStringParameters?.size==='large'?'large':'thumb';
   try{
-    const encoded=publicId.split('/').map(encodeURIComponent).join('/');
-    const api='https://api.cloudinary.com/v1_1/'+encodeURIComponent(cloud)+'/resources/image/upload/'+encoded+'?tags=true';
-    const auth=Buffer.from(key+':'+secret).toString('base64');
-    const metaResp=await fetch(api,{headers:{Authorization:'Basic '+auth,Accept:'application/json'},signal:AbortSignal.timeout(10000)});
-    if(!metaResp.ok)return jsonError(404,'Not found');
-    const meta=await metaResp.json();
-    if(meta.resource_type!=='image'||meta.type!=='upload'||!Array.isArray(meta.tags)||!meta.tags.includes('MYLENE_FARMER')||!/^https:\/\/res\.cloudinary\.com\//.test(meta.secure_url||''))return jsonError(404,'Not found');
-    const original=new URL(meta.secure_url);
+    if(!original){
+      const encoded=publicId.split('/').map(encodeURIComponent).join('/');
+      const api='https://api.cloudinary.com/v1_1/'+encodeURIComponent(cloud)+'/resources/image/upload/'+encoded+'?tags=true';
+      const auth=Buffer.from(key+':'+secret).toString('base64');
+      const metaResp=await fetch(api,{headers:{Authorization:'Basic '+auth,Accept:'application/json'},signal:AbortSignal.timeout(10000)});
+      if(!metaResp.ok)return jsonError(404,'Not found');
+      const meta=await metaResp.json();
+      if(meta.resource_type!=='image'||meta.type!=='upload'||!Array.isArray(meta.tags)||!meta.tags.includes('MYLENE_FARMER')||!/^https:\/\/res\.cloudinary\.com\//.test(meta.secure_url||''))return jsonError(404,'Not found');
+      original=new URL(meta.secure_url);
+    }
     const transformations=mode==='large'?'c_limit,w_1800,h_1800,q_auto,f_auto':'c_limit,w_720,h_900,q_auto,f_auto';
     original.pathname=original.pathname.replace('/image/upload/','/image/upload/'+transformations+'/');
     const imgResp=await fetch(original,{signal:AbortSignal.timeout(20000)});
