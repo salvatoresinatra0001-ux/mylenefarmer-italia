@@ -75,7 +75,7 @@ def main():
             "image_id":image_id,"title":meta["title"],"category":meta["category"],
             "year":year,"period":period,"decade":decade,"folder_label":folder_label,"photographer":meta["photographer"],
             "description":meta.get("description",""),"alt":meta.get("alt",meta["title"]),
-            "license":meta["license"],"source_url":meta["source_url"],"rights_evidence":meta["rights_evidence"],
+            "license":meta["license"],"source_url":meta["source_url"],
             "rights_verified":True,"publish":True,"width":a.get("width"),"height":a.get("height")
         })
     doc={"version":"8.1","source":"Cloudinary MYLENE_FARMER/","cloudinary_assets_scanned":len(found),"published_count":len(images),"images":images}
