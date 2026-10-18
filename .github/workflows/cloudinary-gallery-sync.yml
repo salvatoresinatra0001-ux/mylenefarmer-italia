@@ -1,0 +1,39 @@
+name: Cloudinary gallery catalog sync
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: cloudinary-gallery-sync
+  cancel-in-progress: false
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Cloudinary credentials configured
+        env:
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+        run: |
+          test -n "$CLOUDINARY_CLOUD_NAME" && test -n "$CLOUDINARY_API_KEY" && test -n "$CLOUDINARY_API_SECRET" || { echo 'Configure the three Cloudinary secrets in GitHub Actions'; exit 1; }
+      - name: Generate rights-reviewed Cloudinary catalog
+        env:
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+        run: python3 scripts/sync_cloudinary_catalog.py
+      - name: Verify site build
+        run: node scripts/build-site.mjs
+      - name: Commit generated public catalog if changed
+        run: |
+          if git diff --quiet -- assets/data/cloudinary-gallery.json; then
+            echo 'No changes to commit'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/data/cloudinary-gallery.json
+          git commit -m 'Sync approved Cloudinary photo catalog'
+          git push
