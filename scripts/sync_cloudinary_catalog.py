@@ -3,11 +3,27 @@
 Environment: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET.
 The approval file contains individual public IDs and documented rights.
 """
-import base64, json, os, pathlib, sys, urllib.parse, urllib.request, urllib.error
+import base64, json, os, pathlib, re, sys, urllib.parse, urllib.request, urllib.error
 ROOT=pathlib.Path(__file__).resolve().parent.parent
 APPROVALS=ROOT/"data/cloudinary-approved.json"
 OUTPUT=ROOT/"assets/data/cloudinary-gallery.json"
 PREFIX="MYLENE_FARMER/"
+YEAR_RE=re.compile(r"(?<!\\d)((?:19|20)\\d{2})(?!\\d)")
+RANGE_RE=re.compile(r"((?:19|20)\\d{2})\\s*[-_–]\\s*((?:19|20)\\d{2})")
+def chronology(item, asset, pid):
+    # Cloudinary asset_folder is authoritative when dynamic folders are enabled.
+    folder=str(asset.get("asset_folder") or pid.rpartition("/")[0])
+    segments=[part.strip() for part in folder.split("/") if part.strip()][1:]
+    supplied=str(item.get("year") or "").strip()
+    folder_year=next((m.group(1) for part in reversed(segments) if (m:=YEAR_RE.search(part))),"")
+    year=supplied if re.fullmatch(r"(?:19|20)\\d{2}",supplied) else folder_year
+    explicit=str(item.get("period") or "").strip()
+    named=next((part for part in segments if RANGE_RE.search(part)), "")
+    if not named: named=next((part for part in segments if re.search(r"(?:19|20)\\d0(?:s|ies)?",part,re.I)), "")
+    decade=(str(int(year)//10*10)+"–"+str(int(year)//10*10+9)) if year else ""
+    period=(explicit or named or decade or "Non datato")[:90]
+    label=(segments[-1] if segments else "")[:90]
+    return year, period, decade, label
 def fail(s): raise SystemExit(s)
 def load_approvals():
     data=json.loads(APPROVALS.read_text(encoding="utf-8"))
@@ -54,9 +70,10 @@ def main():
         a=found[pid]
         import hashlib
         image_id=hashlib.sha256(pid.encode("utf-8")).hexdigest()[:24]
+        year,period,decade,folder_label=chronology(meta,a,pid)
         images.append({
             "image_id":image_id,"title":meta["title"],"category":meta["category"],
-            "year":meta.get("year",""),"photographer":meta["photographer"],
+            "year":year,"period":period,"decade":decade,"folder_label":folder_label,"photographer":meta["photographer"],
             "description":meta.get("description",""),"alt":meta.get("alt",meta["title"]),
             "license":meta["license"],"source_url":meta["source_url"],"rights_evidence":meta["rights_evidence"],
             "rights_verified":True,"publish":True,"width":a.get("width"),"height":a.get("height")
