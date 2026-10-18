@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Project Upgrade"
+  short_description: "Improve websites from audit through verified deployment."
+  default_prompt: "Analyze and improve my website project, then verify changes and deployment."
