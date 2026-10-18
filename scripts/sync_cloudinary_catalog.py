@@ -8,18 +8,18 @@ ROOT=pathlib.Path(__file__).resolve().parent.parent
 APPROVALS=ROOT/"data/cloudinary-approved.json"
 OUTPUT=ROOT/"assets/data/cloudinary-gallery.json"
 PREFIX="MYLENE_FARMER/"
-YEAR_RE=re.compile(r"(?<!\\d)((?:19|20)\\d{2})(?!\\d)")
-RANGE_RE=re.compile(r"((?:19|20)\\d{2})\\s*[-_–]\\s*((?:19|20)\\d{2})")
+YEAR_RE=re.compile(r"(?<!\d)((?:19|20)\d{2})(?!\d)")
+RANGE_RE=re.compile(r"((?:19|20)\d{2})\s*[-_–]\s*((?:19|20)\d{2})")
 def chronology(item, asset, pid):
     # Cloudinary asset_folder is authoritative when dynamic folders are enabled.
     folder=str(asset.get("asset_folder") or pid.rpartition("/")[0])
     segments=[part.strip() for part in folder.split("/") if part.strip()][1:]
     supplied=str(item.get("year") or "").strip()
     folder_year=next((m.group(1) for part in reversed(segments) if (m:=YEAR_RE.search(part))),"")
-    year=supplied if re.fullmatch(r"(?:19|20)\\d{2}",supplied) else folder_year
+    year=supplied if re.fullmatch(r"(?:19|20)\d{2}",supplied) else folder_year
     explicit=str(item.get("period") or "").strip()
     named=next((part for part in segments if RANGE_RE.search(part)), "")
-    if not named: named=next((part for part in segments if re.search(r"(?:19|20)\\d0(?:s|ies)?",part,re.I)), "")
+    if not named: named=next((part for part in segments if re.search(r"(?:19|20)\d0(?:s|ies)?",part,re.I)), "")
     decade=(str(int(year)//10*10)+"–"+str(int(year)//10*10+9)) if year else ""
     period=(explicit or named or decade or "Non datato")[:90]
     label=(segments[-1] if segments else "")[:90]
