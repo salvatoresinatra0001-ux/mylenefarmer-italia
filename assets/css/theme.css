@@ -1,5 +1,5 @@
 /* Tema Light / Dark / System e ottimizzazione UHD */
-:root{color-scheme:dark;--mf-theme-bg:#09090b;--mf-theme-surface:#111114;--mf-theme-ink:#ece7df;--mf-theme-muted:#9b958c;--mf-theme-line:#2a2a31;--mf-theme-accent:#c0173a}
+:root{color-scheme:dark;--mf-theme-bg:#000000;--mf-theme-surface:#111114;--mf-theme-ink:#ece7df;--mf-theme-muted:#9b958c;--mf-theme-line:#2a2a31;--mf-theme-accent:#c0173a}
 html[data-theme="light"]{color-scheme:light;--mf-theme-bg:#f4f0eb;--mf-theme-surface:#fffdf9;--mf-theme-ink:#211d1b;--mf-theme-muted:#6c625e;--mf-theme-line:#d8cec6;--mf-theme-accent:#9f302d}
 html[data-theme="light"] body{background:var(--mf-theme-bg);color:var(--mf-theme-ink)}
 html[data-theme="light"] .site-head,html[data-theme="light"] .mf-reference-bar{background:color-mix(in srgb,var(--mf-theme-bg) 92%,transparent)}
@@ -15,8 +15,11 @@ html[data-theme="light"] .card,html[data-theme="light"] .alert,html[data-theme="
 @media(min-width:3200px){:root{--wrap:1760px;--gut:120px}body{font-size:21px}.mf-reference-bar{font-size:14px}}
 
 /* Modern Light / Modern Dark: shared tokens also drive the photo archive. */
-:root{--mf-theme-bg:#0b0b0d;--mf-theme-surface:#141417;--mf-theme-ink:#f3f1ee;--mf-theme-muted:#aaa5a0;--mf-theme-line:#343438;--mf-theme-accent:#b58a72;--vg-bg:var(--mf-theme-bg);--vg-panel:var(--mf-theme-surface);--vg-panel2:#1c1c20;--vg-ink:var(--mf-theme-ink);--vg-muted:var(--mf-theme-muted);--vg-line:var(--mf-theme-line);--vg-accent:var(--mf-theme-accent)}
+:root{--mf-theme-bg:#000000;--mf-theme-surface:#141417;--mf-theme-ink:#f3f1ee;--mf-theme-muted:#aaa5a0;--mf-theme-line:#343438;--mf-theme-accent:#b58a72;--vg-bg:var(--mf-theme-bg);--vg-panel:var(--mf-theme-surface);--vg-panel2:#1c1c20;--vg-ink:var(--mf-theme-ink);--vg-muted:var(--mf-theme-muted);--vg-line:var(--mf-theme-line);--vg-accent:var(--mf-theme-accent)}
 html[data-theme="light"]{--mf-theme-bg:#f5f3ef;--mf-theme-surface:#fff;--mf-theme-ink:#20201f;--mf-theme-muted:#696660;--mf-theme-line:#ddd9d1;--mf-theme-accent:#765644;--vg-panel2:#f0ede8;color-scheme:light}
 html[data-theme="light"] body,html[data-theme="light"] body.vg-page{background:var(--mf-theme-bg);color:var(--mf-theme-ink)}
 html[data-theme="light"] .vg-top{background:#f5f3efed}html[data-theme="light"] .vg-periods,html[data-theme="light"] .vg-foot{background:#ebe8e2}html[data-theme="light"] .vg-dialog{background:#fff;color:#20201f}html[data-theme="light"] .vg-stage{background:#efede9}html[data-theme="light"] .vg-caption p{color:#514e49}html[data-theme="light"] .vg-filters input,html[data-theme="light"] .vg-filters select{background:var(--vg-panel2);color:var(--vg-ink)}html[data-theme="light"] .vg-open{background:#ece9e4}
 .mf-theme-switcher{border-radius:8px;box-shadow:none;letter-spacing:.04em;text-transform:none;background:var(--mf-theme-surface)}.mf-theme-switcher select{letter-spacing:0;text-transform:none}.mf-theme-switcher option{background:var(--mf-theme-surface);color:var(--mf-theme-ink)}
+
+/* Nero AMOLED e indicatore tastiera per il selettore del tema. */
+.mf-theme-switcher select:focus-visible{outline:2px solid var(--mf-theme-accent);outline-offset:4px}

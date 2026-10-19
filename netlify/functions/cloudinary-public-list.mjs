@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 
-const json=(statusCode,body,cache='no-store')=>({statusCode,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':cache,'X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Robots-Tag':'noindex, nofollow'},body:JSON.stringify(body)});
+const json=(statusCode,body,cache='no-store')=>({statusCode,headers:{'Access-Control-Allow-Origin':'https://salvatoresinatra0001-ux.github.io','Content-Type':'application/json; charset=utf-8','Cache-Control':cache,'X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Robots-Tag':'noindex, nofollow'},body:JSON.stringify(body)});
 const tokenFor=(publicId,cloud,secret)=>{
   const key=crypto.createHash('sha256').update('mf-cloudinary-proxy-v1:'+cloud+':'+secret).digest();
   const iv=crypto.randomBytes(12),cipher=crypto.createCipheriv('aes-256-gcm',key,iv);
@@ -44,6 +44,6 @@ export const handler=async(event)=>{
     safeResources.sort((a,b)=>(b.width*b.height)-(a.width*a.height));
     const body=JSON.stringify({resources:safeResources,next_cursor:typeof data.next_cursor==='string'?data.next_cursor:null});
     if(body.length>2*1024*1024)return json(502,{error:'Image catalog page too large'});
-    return {statusCode:200,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'public, max-age=120, s-maxage=600','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Robots-Tag':'noindex, nofollow'},body:event.httpMethod==='HEAD'?'':body};
+    return {statusCode:200,headers:{'Access-Control-Allow-Origin':'https://salvatoresinatra0001-ux.github.io','Content-Type':'application/json; charset=utf-8','Cache-Control':'public, max-age=120, s-maxage=600','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Robots-Tag':'noindex, nofollow'},body:event.httpMethod==='HEAD'?'':body};
   }catch{return json(502,{error:'Image catalog unavailable'})}
 };

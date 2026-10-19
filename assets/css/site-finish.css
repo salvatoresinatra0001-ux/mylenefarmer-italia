@@ -1,14 +1,14 @@
 /* Mylène Farmer Italia — design system globale, editoriale e accessibile */
 :root{
  color-scheme:dark;
- --ground:#111013;--surface:#1a181b;--surface-2:#252226;--line:#433b3e;
+ --ground:#000000;--surface:#1a181b;--surface-2:#252226;--line:#433b3e;
  --ink:#f3efec;--muted:#b9b1b0;--accent:#9e3d50;--accent-soft:#d68a98;--accent-2:#adb7c9;
  --r:4px;--wrap:1280px;--gut:clamp(18px,4vw,54px);
  --mf-bg:var(--ground);--mf-panel:var(--surface);--mf-panel-2:var(--surface-2);--mf-ink:var(--ink);--mf-muted:var(--muted);--mf-line:var(--line);--mf-accent:var(--accent);
  --mf-theme-bg:var(--ground);--mf-theme-surface:var(--surface);--mf-theme-ink:var(--ink);--mf-theme-muted:var(--muted);--mf-theme-line:var(--line);--mf-theme-accent:var(--accent);
  --vg-bg:var(--ground);--vg-panel:var(--surface);--vg-panel2:var(--surface-2);--vg-ink:var(--ink);--vg-muted:var(--muted);--vg-line:var(--line);--vg-accent:var(--accent);--vg-max:1480px;
 }
-html:root[data-theme="dark"]{color-scheme:dark;--ground:#111013;--surface:#1a181b;--surface-2:#252226;--line:#433b3e;--ink:#f3efec;--muted:#b9b1b0;--accent:#9e3d50;--accent-soft:#d68a98;--accent-2:#adb7c9}
+html:root[data-theme="dark"]{color-scheme:dark;--ground:#000000;--surface:#1a181b;--surface-2:#252226;--line:#433b3e;--ink:#f3efec;--muted:#b9b1b0;--accent:#9e3d50;--accent-soft:#d68a98;--accent-2:#adb7c9}
 html:root[data-theme="light"]{color-scheme:light;--ground:#f5f2ee;--surface:#fffdfa;--surface-2:#eee8e3;--line:#d8cec8;--ink:#241d1e;--muted:#695e5d;--accent:#75283b;--accent-soft:#813346;--accent-2:#4d5c70}
 @media(prefers-color-scheme:light){html:root:not([data-theme]){color-scheme:light;--ground:#f5f2ee;--surface:#fffdfa;--surface-2:#eee8e3;--line:#d8cec8;--ink:#241d1e;--muted:#695e5d;--accent:#75283b;--accent-soft:#813346;--accent-2:#4d5c70}}
 html{background:var(--ground);scroll-behavior:smooth;color-scheme:inherit}

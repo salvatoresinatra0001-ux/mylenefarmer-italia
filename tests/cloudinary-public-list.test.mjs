@@ -24,6 +24,7 @@ test('Cloudinary list requires 800px short edge, quality review, credits and doc
   globalThis.fetch=async()=>new Response(JSON.stringify({resources}),{status:200,headers:{'Content-Type':'application/json'}});
   const response=await handler({httpMethod:'GET',queryStringParameters:{}});
   assert.equal(response.statusCode,200);
+  assert.equal(response.headers['Access-Control-Allow-Origin'],'https://salvatoresinatra0001-ux.github.io');
   const body=JSON.parse(response.body);
   assert.deepEqual(body.resources.map(p=>p.title),['landscape-1200','portrait-800']);
   assert.ok(body.resources.every(p=>Math.min(p.width,p.height)>=800));
@@ -31,4 +32,14 @@ test('Cloudinary list requires 800px short edge, quality review, credits and doc
   assert.equal(body.resources[0].width,1600);
   assert.equal(body.resources[1].width,800);
   assert.ok(!('rights_evidence' in body.resources[0]),'private evidence URL is not exposed publicly');
+});
+
+ test('unavailable catalog remains readable by the GitHub Pages client',async t=>{
+ const saved=process.env.CLOUDINARY_CLOUD_NAME;
+ t.after(()=>{if(saved===undefined)delete process.env.CLOUDINARY_CLOUD_NAME;else process.env.CLOUDINARY_CLOUD_NAME=saved});
+ delete process.env.CLOUDINARY_CLOUD_NAME;
+ const response=await handler({httpMethod:'GET'});
+ assert.equal(response.statusCode,503);
+ assert.equal(response.headers['Access-Control-Allow-Origin'],'https://salvatoresinatra0001-ux.github.io');
+ assert.deepEqual(JSON.parse(response.body),{error:'Image catalog unavailable'});
 });

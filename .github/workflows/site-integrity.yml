@@ -30,6 +30,8 @@ jobs:
           node --check netlify/functions/cloudinary-periods.mjs
       - name: Check Cloudinary catalog generator syntax
         run: python3 -m py_compile scripts/sync_cloudinary_catalog.py
+      - name: Run archive and publication rights tests
+        run: node --test tests/*.test.mjs
       - name: Produce the shared public artifact
         run: node scripts/build-site.mjs
       - name: Verify entry points
