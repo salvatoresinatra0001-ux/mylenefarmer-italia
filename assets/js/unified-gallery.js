@@ -84,7 +84,7 @@
     const preview=document.createElement('section');preview.id='vg-public-period-preview';preview.className='vg-period-public-preview';
     const h=document.createElement('div');h.className='vg-section-head';h.innerHTML='<div><p class="vg-eyebrow">03 / Selezione HQ</p><h3>Le immagini con più dettaglio.</h3></div><p>Scatti verificati con lato corto di almeno 800 px, crediti e prova dei diritti. Le dimensioni maggiori appaiono per prime; la data non viene dedotta dal file.</p>';
     const grid=document.createElement('div');grid.className='vg-grid';
-    publicItems.forEach(p=>{const i=filtered.indexOf(p);const card=document.createElement('article');card.className='vg-card';const b=document.createElement('button');b.type='button';b.className='vg-open';b.setAttribute('aria-label','Apri fotografia HQ: '+p.title);const img=document.createElement('img');img.src=p.thumb;img.alt=p.alt;img.loading='lazy';img.decoding='async';b.append(img);b.addEventListener('click',()=>{if(i>=0)show(i,b)});const info=document.createElement('div');info.className='vg-card-info';info.innerHTML='<div class="vg-meta">HQ · '+Number(p.width)+' × '+Number(p.height)+' px</div><h4>'+p.title+'</h4><p>'+p.author+' · '+p.license+'</p>';card.append(b,info);grid.append(card)});
+    publicItems.forEach(p=>{const i=filtered.indexOf(p);const card=document.createElement('article');card.className='vg-card';const b=document.createElement('button');b.type='button';b.className='vg-open';b.setAttribute('aria-label','Apri fotografia HQ: '+p.title);const img=document.createElement('img');img.src=p.thumb;img.alt=p.alt;img.loading='lazy';img.decoding='async';b.append(img);b.addEventListener('click',()=>{if(i>=0)show(i,b)});const info=document.createElement('div');info.className='vg-card-info';info.append(node('div','vg-meta','HQ · '+Number(p.width)+' × '+Number(p.height)+' px'),node('h4','',p.title),node('p','',p.author+' · '+p.license));card.append(b,info);grid.append(card)});
     preview.append(h,grid);document.querySelector('.vg-periods .vg-container').append(preview);
   }
   function renderFolders(){
@@ -194,8 +194,10 @@
     const results=await Promise.allSettled([fetchJson('./data/gallery-public.json'),fetchJson('./assets/data/cloudinary-gallery.json')]);
     const old=results[0].status==='fulfilled'?commons(results[0].value):[];
     const newer=results[1].status==='fulfilled'?cloudinary(results[1].value):[];
-    let publicList=[];let nextCursor='';let pages=0;
-    try{do{const u='/.netlify/functions/cloudinary-public-list'+(nextCursor?'?cursor='+encodeURIComponent(nextCursor):'');const page=await fetchJson(u);publicList.push(...cloudinaryPublicList(page));nextCursor=String(page.next_cursor||'');pages++}while(nextCursor&&pages<30)}catch{if(!publicList.length)throw Error('Cloudinary catalog unavailable')}
+    all=[...old,...newer];
+    updateSelectors();render();
+    let publicList=[];let nextCursor='';let pages=0;let cloudUnavailable=false;
+    try{do{const u=(location.hostname.endsWith('github.io')?'https://mylenefarmer.it':'')+'/.netlify/functions/cloudinary-public-list'+(nextCursor?'?cursor='+encodeURIComponent(nextCursor):'');const page=await fetchJson(u);publicList.push(...cloudinaryPublicList(page));nextCursor=String(page.next_cursor||'');pages++}while(nextCursor&&pages<30)}catch{cloudUnavailable=true}
     publicList.sort((a,b)=>(Number(b.width)||0)*(Number(b.height)||0)-(Number(a.width)||0)*(Number(a.height)||0));
     const unique=new Map();for(const p of [...old,...newer,...publicList])if(!unique.has(p.id))unique.set(p.id,p);
     all=[...unique.values()];
@@ -208,9 +210,9 @@
       if(i>=0)show(i,document.querySelector('.vg-brand'));
     }
     if(results[0].status==='rejected'&&results[1].status==='rejected'&&!publicList.length){notice.hidden=false;notice.textContent='Impossibile caricare i cataloghi fotografici. Riprova più tardi.'}
-    else if(results[1].status==='rejected'&&!publicList.length){$('vg-catalog-status').textContent='Catalogo Cloudinary temporaneamente non disponibile; la selezione documentata rimane consultabile.'}
+    else if((cloudUnavailable||results[1].status==='rejected')&&!publicList.length){$('vg-catalog-status').textContent='Catalogo Cloudinary temporaneamente non disponibile; la selezione documentata rimane consultabile.'}
     else if(!newer.length&&!publicList.length){$('vg-catalog-status').textContent='Le fotografie dell’archivio Cloudinary sono in revisione dei diritti: nessun file viene pubblicato automaticamente.'}
-    else if(publicList.length){$('vg-catalog-status').textContent=publicList.length+' fotografie HQ con lato corto di almeno 800 px, crediti e diritti documentati; le immagini più grandi compaiono per prime e sono servite dal proxy protetto.'}else {$('vg-catalog-status').textContent='Nessuna fotografia Cloudinary ha ancora superato revisione HQ e diritti.'}
+    else if(publicList.length){$('vg-catalog-status').textContent=publicList.length+' fotografie HQ con lato corto di almeno 800 px, crediti e diritti documentati; le immagini più grandi compaiono per prime e sono servite dal proxy protetto.'}else {$('vg-catalog-status').textContent='Selezione Cloudinary autorizzata integrata nella galleria.'}
     try{
       const taxonomy=await fetchJson(periodUrl);
       folderData=Array.isArray(taxonomy.folders)?taxonomy.folders.filter(f=>f&&typeof f.label==='string'):[];
