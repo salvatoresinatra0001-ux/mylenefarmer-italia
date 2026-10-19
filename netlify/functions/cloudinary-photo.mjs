@@ -39,7 +39,7 @@ export const handler=async(event)=>{
       if(meta.resource_type!=='image'||meta.type!=='upload'||!Array.isArray(meta.tags)||!meta.tags.includes('MYLENE_FARMER')||!/^https:\/\/res\.cloudinary\.com\//.test(meta.secure_url||''))return jsonError(404,'Not found');
       original=new URL(meta.secure_url);
     }
-    const transformations=mode==='large'?'c_limit,w_1800,h_1800,q_auto,f_auto':'c_limit,w_720,h_900,q_auto,f_auto';
+    const transformations=mode==='large'?'c_limit,w_3840,h_3840,q_auto:best,f_auto':'c_limit,w_720,h_900,q_auto,f_auto';
     original.pathname=original.pathname.replace('/image/upload/','/image/upload/'+transformations+'/');
     const imgResp=await fetch(original,{signal:AbortSignal.timeout(20000)});
     if(!imgResp.ok)return jsonError(502,'Image unavailable');

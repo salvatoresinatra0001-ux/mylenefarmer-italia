@@ -33,17 +33,17 @@
       sourceUrl:https(p.sourceUrl),licenseUrl:https(p.licenseUrl),thumb:https(p.src),large:https(p.original)||https(p.src),
       fallback:https(p.fallback),alt:String(p.alt||p.title||'Mylène Farmer'),width:p.width,height:p.height,origin:'commons'};
   });
-  const cloudinary=data=>(Array.isArray(data.images)?data.images:[]).filter(p=>{const publicAsset=p&&(p.public===true||p.visibility==='public'||p.access_mode==='public'||p.type==='upload');const hd=p&&(String(p.quality||p.resolution||'').toLowerCase().match(/hd|uhd|4k|high/)||((Number(p.width)||0)>=1280&&(Number(p.height)||0)>=720));return p&&p.publish===true&&p.rights_verified===true&&publicAsset&&hd&&/^[a-f0-9]{24}$/.test(p.image_id||'')}).map(p=>{
+  const cloudinary=data=>(Array.isArray(data.images)?data.images:[]).filter(p=>{const publicAsset=p&&(p.public===true||p.visibility==='public'||p.access_mode==='public'||p.type==='upload');const hd=p&&Math.min(Number(p.width)||0,Number(p.height)||0)>=800;return p&&p.publish===true&&p.rights_verified===true&&publicAsset&&hd&&/^[a-f0-9]{24}$/.test(p.image_id||'')}).map(p=>{
     const year=validYear(p.year),id=String(p.image_id);
     return {id:'cloudinary:'+id,title:String(p.title||'Fotografia'),year,period:String(p.period||decade(year)),
       decade:decade(year),category:String(p.category||'visual'),author:String(p.photographer||'Autore non indicato'),
       license:String(p.license||''),source:'Cloudinary · scheda autorizzata',sourceUrl:https(p.source_url),licenseUrl:null,
       thumb:proxy(id,'thumb'),large:proxy(id,'large'),fallback:null,alt:String(p.alt||p.title||'Mylène Farmer'),
-      width:p.width,height:p.height,origin:'cloudinary'};
+      width:p.width,height:p.height,origin:'cloudinary',rightsVerified:true};
   });
-  const cloudinaryPublicList=data=>(Array.isArray(data.resources)?data.resources:[]).filter(p=>p&&p.id&&proxy(p.id,'thumb')).map(p=>{
+  const cloudinaryPublicList=data=>(Array.isArray(data.resources)?data.resources:[]).filter(p=>p&&p.id&&proxy(p.id,'thumb')&&Math.min(Number(p.width)||0,Number(p.height)||0)>=800&&p.photographer&&p.license&&https(p.source_url)).map(p=>{
     const year=validYear(p.year);
-    return {id:'cloudinary-public:'+p.id,title:String(p.title||'Fotografia HD'),year,period:decade(year),decade:decade(year),category:'fotografie-hd',author:'Autore non indicato nei metadati Cloudinary',license:'Licenza non indicata nei metadati Cloudinary',source:'Archivio Cloudinary · visualizzazione tramite proxy protetto',sourceUrl:null,licenseUrl:null,thumb:proxy(p.id,'thumb'),large:proxy(p.id,'large'),fallback:null,alt:'Mylène Farmer · fotografia dall’archivio Cloudinary',width:p.width,height:p.height,origin:'cloudinary'};
+    return {id:'cloudinary-public:'+p.id,title:String(p.title||'Fotografia HQ'),year,period:decade(year),decade:decade(year),category:'fotografie-hq',author:String(p.photographer),license:String(p.license),source:'Archivio Cloudinary · diritti verificati',sourceUrl:https(p.source_url),licenseUrl:https(p.license_url),thumb:proxy(p.id,'thumb'),large:proxy(p.id,'large'),fallback:null,alt:String(p.alt),width:p.width,height:p.height,origin:'cloudinary',rightsVerified:true};
   });
   function options(select,values,firstLabel){
     const old=select.value;select.replaceChildren();
@@ -58,7 +58,7 @@
     const p=[...new Set([...editorialPeriods,...all.map(x=>x.period),...folderData.map(f=>String(f.period||''))].filter(Boolean))].sort((a,b)=>b.localeCompare(a,'it'));
     options(periods,p,'Tutti i periodi');
     const cats=[...new Set(all.map(p=>p.category))].sort();
-    const labels={documentary:'Documentazione',portraits:'Ritratti',live:'Live e tournée',discography:'Discografia',visual:'Universo visivo',appearances:'Apparizioni','fotografie-hd':'Fotografie HD'};
+    const labels={documentary:'Documentazione',portraits:'Ritratti',live:'Live e tournée',discography:'Discografia',visual:'Universo visivo',appearances:'Apparizioni','fotografie-hq':'Fotografie HQ'};
     const old=category.value;category.replaceChildren();const first=node('option','','Tutte le categorie');first.value='';category.append(first);
     for(const cat of cats){const opt=node('option','',labels[cat]||cat);opt.value=cat;category.append(opt)}
     if(cats.includes(old))category.value=old;
@@ -79,12 +79,12 @@
   function renderPublicPreview(){
     const publicPreview=document.getElementById('vg-public-period-preview');
     if(publicPreview) publicPreview.remove();
-    const publicItems=filtered.filter(p=>p.origin==='cloudinary').slice(0,24);
+    const publicItems=filtered.filter(p=>p.origin==='cloudinary').sort((a,b)=>(Number(b.width)||0)*(Number(b.height)||0)-(Number(a.width)||0)*(Number(a.height)||0)).slice(0,24);
     if(!publicItems.length)return;
     const preview=document.createElement('section');preview.id='vg-public-period-preview';preview.className='vg-period-public-preview';
-    const h=document.createElement('div');h.className='vg-section-head';h.innerHTML='<div><p class="vg-eyebrow">03 / Public HD</p><h3>Fotografie pubbliche nel fondo.</h3></div><p>Questi asset Cloudinary sono pubblici e HD. L’identificativo non attribuisce automaticamente un anno o una data di scatto.</p>';
+    const h=document.createElement('div');h.className='vg-section-head';h.innerHTML='<div><p class="vg-eyebrow">03 / Selezione HQ</p><h3>Le immagini con più dettaglio.</h3></div><p>Scatti verificati con lato corto di almeno 800 px, crediti e prova dei diritti. Le dimensioni maggiori appaiono per prime; la data non viene dedotta dal file.</p>';
     const grid=document.createElement('div');grid.className='vg-grid';
-    publicItems.forEach(p=>{const i=filtered.indexOf(p);const card=document.createElement('article');card.className='vg-card';const b=document.createElement('button');b.type='button';b.className='vg-open';b.setAttribute('aria-label','Apri fotografia pubblica Cloudinary');const img=document.createElement('img');img.src=p.thumb;img.alt=p.alt;img.loading='lazy';img.decoding='async';b.append(img);b.addEventListener('click',()=>{if(i>=0)show(i,b)});const info=document.createElement('div');info.className='vg-card-info';info.innerHTML='<div class="vg-meta">Public HD · anno non indicato</div><h4>'+p.title+'</h4><p>Cloudinary · classificazione temporale in corso</p>';card.append(b,info);grid.append(card)});
+    publicItems.forEach(p=>{const i=filtered.indexOf(p);const card=document.createElement('article');card.className='vg-card';const b=document.createElement('button');b.type='button';b.className='vg-open';b.setAttribute('aria-label','Apri fotografia HQ: '+p.title);const img=document.createElement('img');img.src=p.thumb;img.alt=p.alt;img.loading='lazy';img.decoding='async';b.append(img);b.addEventListener('click',()=>{if(i>=0)show(i,b)});const info=document.createElement('div');info.className='vg-card-info';info.innerHTML='<div class="vg-meta">HQ · '+Number(p.width)+' × '+Number(p.height)+' px</div><h4>'+p.title+'</h4><p>'+p.author+' · '+p.license+'</p>';card.append(b,info);grid.append(card)});
     preview.append(h,grid);document.querySelector('.vg-periods .vg-container').append(preview);
   }
   function renderFolders(){
@@ -124,7 +124,8 @@
   function photoDisclaimer(p){
     const date=p.year?'Anno catalogato: '+p.year+'.':'Data di scatto non indicata.';
     const author=p.author||'Autore non indicato';
-    const rights=p.origin==='cloudinary'?'Immagine presente tra gli asset pubblici Cloudinary; la pubblicazione sul sito non certifica titolarità o licenza.':'Attribuzione e licenza secondo la fonte collegata.';
+    const verified=p.origin==='cloudinary'&&p.rightsVerified===true;
+    const rights=p.origin==='cloudinary'?(verified?'Pubblicazione autorizzata secondo i metadati registrati.':'Immagine presente tra gli asset pubblici Cloudinary; la pubblicazione sul sito non certifica titolarità o licenza.'):'Attribuzione e licenza secondo la fonte collegata.';
     return 'Scheda foto: '+date+' Autore: '+author+'. '+rights+' Per le serie, il periodo è editoriale e non prova la data di scatto; diritti dei rispettivi autori e aventi diritto.';
   }
   function render(){
@@ -195,6 +196,7 @@
     const newer=results[1].status==='fulfilled'?cloudinary(results[1].value):[];
     let publicList=[];let nextCursor='';let pages=0;
     try{do{const u='/.netlify/functions/cloudinary-public-list'+(nextCursor?'?cursor='+encodeURIComponent(nextCursor):'');const page=await fetchJson(u);publicList.push(...cloudinaryPublicList(page));nextCursor=String(page.next_cursor||'');pages++}while(nextCursor&&pages<30)}catch{if(!publicList.length)throw Error('Cloudinary catalog unavailable')}
+    publicList.sort((a,b)=>(Number(b.width)||0)*(Number(b.height)||0)-(Number(a.width)||0)*(Number(a.height)||0));
     const unique=new Map();for(const p of [...old,...newer,...publicList])if(!unique.has(p.id))unique.set(p.id,p);
     all=[...unique.values()];
     // Render approved photographs immediately; folder inventory may take longer.
@@ -208,7 +210,7 @@
     if(results[0].status==='rejected'&&results[1].status==='rejected'&&!publicList.length){notice.hidden=false;notice.textContent='Impossibile caricare i cataloghi fotografici. Riprova più tardi.'}
     else if(results[1].status==='rejected'&&!publicList.length){$('vg-catalog-status').textContent='Catalogo Cloudinary temporaneamente non disponibile; la selezione documentata rimane consultabile.'}
     else if(!newer.length&&!publicList.length){$('vg-catalog-status').textContent='Le fotografie dell’archivio Cloudinary sono in revisione dei diritti: nessun file viene pubblicato automaticamente.'}
-    else if(publicList.length){$('vg-catalog-status').textContent=publicList.length+' fotografie HD caricate dal catalogo Cloudinary. Le immagini sono servite dal proxy; i percorsi originali non vengono inviati al browser.'}else {$('vg-catalog-status').textContent='Selezione Cloudinary autorizzata integrata nella galleria.'}
+    else if(publicList.length){$('vg-catalog-status').textContent=publicList.length+' fotografie HQ con lato corto di almeno 800 px, crediti e diritti documentati; le immagini più grandi compaiono per prime e sono servite dal proxy protetto.'}else {$('vg-catalog-status').textContent='Nessuna fotografia Cloudinary ha ancora superato revisione HQ e diritti.'}
     try{
       const taxonomy=await fetchJson(periodUrl);
       folderData=Array.isArray(taxonomy.folders)?taxonomy.folders.filter(f=>f&&typeof f.label==='string'):[];

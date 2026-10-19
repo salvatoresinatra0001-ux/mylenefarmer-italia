@@ -4,6 +4,7 @@ This repository contains the **public gallery implementation**, not a public cop
 
 ## Architecture
 - Cloudinary Media Library stores images, including content not cleared for publication.
+- The live public-list function includes only assets with a short edge of **at least 800 px**, explicit `quality_reviewed=true` and `publish=true`, `rights_verified=true`, photographer/license, and HTTPS source/evidence URLs. It sorts the largest pixel area first. The evidence URL is validated but never returned to the browser.
 - `data/cloudinary-approved.json` is an explicit, human-reviewed allowlist. Empty means **publish none**.
 - `scripts/sync_cloudinary_catalog.py` uses the Cloudinary Admin API to enumerate **MYLENE_FARMER/**, validates approved public IDs and produces `assets/data/cloudinary-gallery.json`.
 - `archivio-visivo.html` is the **single public photographic archive**, merging the verified Wikimedia/Drive public manifest with individually approved Cloudinary photos; it provides years, periods, categories, search, sorting and an accessible lightbox.
@@ -34,6 +35,8 @@ This repository contains the **public gallery implementation**, not a public cop
 }
 ```
 No such record is included by default. Merely possessing images or finding them on third-party sites is not publication permission.
+
+For the optional tagged-asset list, store these custom metadata fields on each Cloudinary image only after review: `publish=true`, `rights_verified=true`, `quality_reviewed=true`, `photographer`, `license`, `alt`, `source_url` (HTTPS), and `rights_evidence` (HTTPS). Optional fields: `title`, `year`, and `license_url`. Assets without the complete review record are omitted even when their resolution is high.
 
 ## Scope of synchronization
 Synchronizes **metadata and approved imagery references**, not duplicate binary image storage. The legacy photographic catalog remains unchanged. Cloudinary may hold identical-byte duplicates; choose one approved public ID per photograph. Re-run the workflow after manual changes to Cloudinary or the approval list.
