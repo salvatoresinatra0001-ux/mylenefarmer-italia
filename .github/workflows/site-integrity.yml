@@ -31,6 +31,8 @@ jobs:
       - name: Check V500 module syntax
         run: |
           node --check assets/js/interactive-v500.js
+          node --check assets/js/editorial-unified-v501.js
+          node --check scripts/verify-unified-v501.mjs
           node --check scripts/verify-v500.mjs
       - name: Check Cloudinary catalog generator syntax
         run: python3 -m py_compile scripts/sync_cloudinary_catalog.py
@@ -42,6 +44,8 @@ jobs:
         run: node scripts/build-site.mjs
       - name: Verify V500 output and search index
         run: node scripts/verify-v500.mjs
+      - name: Verify unified V501 design and 21:7 banners
+        run: node scripts/verify-unified-v501.mjs
       - name: Verify entry points
         run: |
           test -s dist/index.html

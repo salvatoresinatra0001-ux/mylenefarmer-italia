@@ -7,7 +7,7 @@ const ready=fn=>document.readyState==='loading'?document.addEventListener('DOMCo
 const button=(label,cls)=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.className=cls;return b};
 const safeStorage={get(key){try{return localStorage.getItem(key)}catch{return null}},set(key,value){try{localStorage.setItem(key,value)}catch{}}};
 function quickSearch(){
- const header=document.querySelector('.site-head .head-row');if(!header)return;
+ const header=document.querySelector('.mf-header-tools')||document.querySelector('.site-head .head-row');if(!header)return;const fallback=header.querySelector('.mf-header-search');if(fallback)fallback.remove();
  const trigger=button('Cerca  /','mf-v500-trigger');trigger.dataset.v500Search='';trigger.setAttribute('aria-haspopup','dialog');trigger.setAttribute('aria-keyshortcuts','Control+K Meta+K /');trigger.title='Cerca nell’archivio (Ctrl/⌘+K)';
  header.append(trigger);
  const dialog=document.createElement('dialog');dialog.className='mf-v500-dialog';dialog.setAttribute('aria-label','Ricerca rapida nell’archivio');
