@@ -70,3 +70,7 @@ button,.btn,.vg-button,.mf-reference-bar a,.mf-theme-switcher{transition:backgro
 @media(min-width:3200px){:root{--wrap:1840px;--gut:120px;--vg-max:1840px}body{font-size:22px}}
 @media(max-width:700px){.mf-reference-bar .mf-ref-inner{padding-block:7px}.mf-ref-label{display:none}.mf-theme-switcher{right:10px;bottom:10px;font-size:10px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Music links belong to Ascolta, never in top-of-site bars. */
+.mf-reference-bar,.reference-rail,.mf-theme-switcher{display:none!important}
+:root,[data-theme="dark"]{color-scheme:dark}
