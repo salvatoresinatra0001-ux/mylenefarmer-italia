@@ -25,7 +25,7 @@ body .mf-unified-header{position:sticky;top:0;z-index:1000;height:72px;backgroun
 .mf-header-search{border:1px solid #59404e;background:#151016;cursor:pointer;min-width:61px;text-align:center}
 .mf-header-menu{display:none;border:1px solid #5d3b4b;background:#141016;color:#fff;padding:10px 15px;border-radius:8px;cursor:pointer;font:600 12px Archivo,Arial,sans-serif}
 .mf-editorial-banner{position:relative;isolation:isolate;width:min(calc(100% - 36px),1600px);aspect-ratio:21/7;margin:clamp(16px,2.4vw,32px) auto 0;overflow:hidden;border:1px solid #46313d;border-radius:clamp(12px,1.6vw,24px);background-color:#0a0709;background-size:cover;background-position:center 44%;box-shadow:0 16px 65px #000d}
-.mf-editorial-banner::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(90deg,#080408 0%,rgba(7,4,7,.99) 23%,rgba(7,4,7,.94) 40%,rgba(7,4,7,.57) 59%,rgba(7,4,7,.08) 79%,rgba(0,0,0,.08) 100%)}
+.mf-editorial-banner::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(90deg,#080408 0%,#080408 42%,rgba(7,4,7,.98) 51%,rgba(7,4,7,.60) 62%,rgba(7,4,7,.08) 82%,rgba(0,0,0,.08) 100%)}
 .mf-editorial-banner::after{content:"";position:absolute;inset:0;pointer-events:none;border:1px solid #fff1;border-radius:inherit;z-index:3}
 .mf-editorial-banner[data-photo=biografia]{background-image:url("../banners-photo/biografia-8k.webp")}
 .mf-editorial-banner[data-photo=discografia]{background-image:url("../banners-photo/discografia-8k.webp")}
