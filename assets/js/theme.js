@@ -1,26 +1,10 @@
 (()=>{'use strict';
 if(window.__mfSiteFinish)return;window.__mfSiteFinish=true;
-const root=document.documentElement,key='mf-theme',media=window.matchMedia('(prefers-color-scheme: light)');
+const root=document.documentElement;
 const icon=document.querySelector('link[rel~="icon"]');if(icon&&!icon.href.includes('v=mf-photo-20261018'))icon.href+=(icon.href.includes('?')?'&':'?')+'v=mf-photo-20261018';
-let mode='system';try{const v=localStorage.getItem(key);if(['system','light','dark'].includes(v))mode=v}catch{}
-function apply(){root.dataset.themeMode=mode;root.dataset.theme=mode==='system'?(media.matches?'light':'dark'):mode}
-apply();
+root.dataset.themeMode='dark';root.dataset.theme='dark';root.style.colorScheme='dark';try{localStorage.removeItem('mf-theme')}catch{}
 function setup(){
- let box=document.querySelector('.mf-theme-switcher');
- if(!box){box=document.createElement('div');box.className='mf-theme-switcher';}
- box.setAttribute('aria-label','Modalità visiva del sito');
- let select=box.querySelector('select');
- if(!select){box.innerHTML='<label for="mf-theme-select">Tema</label><select id="mf-theme-select" aria-label="Seleziona tema visivo" title="Seleziona tema visivo"><option value="light">Modern Light</option><option value="dark">AMOLED Dark</option><option value="system">Sistema</option></select>';select=box.querySelector('select')}
- if(!select.dataset.mfBound){select.dataset.mfBound='true';select.value=mode;select.addEventListener('change',()=>{mode=select.value;try{localStorage.setItem(key,mode)}catch{}apply()})}
- const slot=document.querySelector('.site-head .head-row,.vg-top-inner,.top-inner,header.top');
- if(slot){
-  box.classList.add('mf-theme-switcher--header');
-  const nav=slot.querySelector(':scope > nav');
-  if(nav)nav.insertAdjacentElement('afterend',box);else slot.append(box);
- }else{
-  box.classList.remove('mf-theme-switcher--header');
-  document.body.append(box);
- }
+ document.querySelectorAll('.mf-theme-switcher').forEach(el=>el.remove());
  if(!document.querySelector('.mf-reference-bar')){
   const platforms=[['Spotify','S','mf-spotify','https://open.spotify.com/search/Mylene%20Farmer'],['Apple Music','♪','mf-apple','https://music.apple.com/it/search?term=Myl%C3%A8ne%20Farmer'],['Qobuz','Q','mf-qobuz','https://www.qobuz.com/it-it/search?q=Myl%C3%A8ne%20Farmer'],['Deezer','D','mf-deezer','https://www.deezer.com/search/Mylene%20Farmer'],['YouTube Music','▶','mf-youtube','https://music.youtube.com/search?q=Myl%C3%A8ne%20Farmer']];
   const bar=document.createElement('div');bar.className='mf-reference-bar';bar.setAttribute('role','navigation');bar.setAttribute('aria-label','Riferimenti musicali');
