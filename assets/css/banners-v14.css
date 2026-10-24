@@ -1,3 +1,4 @@
+@import url("./banners-v15.css");
 /* Mylène Farmer Italia · 17 unique, text-only, native 8K vector banners · 7680x3291 */
 .mf-page-banner{position:relative;isolation:isolate;width:min(100% - 32px,1500px);aspect-ratio:7680/3291;margin:clamp(14px,2vw,28px) auto;border-radius:clamp(10px,1.5vw,22px);background-color:#1a1217;background-repeat:no-repeat;background-size:100% 100%;background-position:center;box-shadow:0 12px 38px rgba(0,0,0,.12);border:1px solid rgba(120,90,100,.19);overflow:hidden}
 .mf-page-banner::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
