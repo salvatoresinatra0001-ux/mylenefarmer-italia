@@ -36,7 +36,8 @@ with sync_playwright() as playwright:
         for name in paths:
             item = {"path": name, "viewport": mode, "errors": []}
             events = []
-            page.on("pageerror", lambda exc: events.append(str(exc)))
+            def on_error(exc): events.append(str(exc))
+            page.on("pageerror", on_error)
             try:
                 response = page.goto(urllib.parse.urljoin(args.base, name), wait_until="domcontentloaded", timeout=40000)
                 item["status"] = response.status if response else None
@@ -54,7 +55,7 @@ with sync_playwright() as playwright:
             except Exception as exc:
                 item["errors"].append(str(exc))
             report["pages"].append(item)
-            page.remove_all_listeners("pageerror")
+            page.remove_listener("pageerror", on_error)
         context.close()
     browser.close()
 report["music"] = {
