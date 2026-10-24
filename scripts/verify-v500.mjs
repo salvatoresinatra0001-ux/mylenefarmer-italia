@@ -11,13 +11,13 @@ for(const filename of html){
  assert.ok(s.includes('interactive-v500.js'),'V500 JS missing: '+filename);
  assert.ok(s.includes('mf-edition'),'V500 edition marker missing: '+filename);
 if(filename==='discografia-streaming.html'){
- const covers=[...s.matchAll(/<img\\b[^>]*src="([^"]+)"[^>]*>/gi)].map(m=>m[1]);
+ const covers=[...s.matchAll(/<img\b[^>]*src="([^"]+)"[^>]*>/gi)].map(m=>m[1]);
  assert.equal(covers.length,18,'18 cataloged archive covers required');
  for(const src of covers){
-  assert.match(src,/^\\.\\/assets\\/covers-originali\\/[0-9]{2}-[a-f0-9]{12}\\.jpg$/,'unapproved music-cover path');
+  assert.match(src,/^\.\/assets\/covers-originali\/[0-9]{2}-[a-f0-9]{12}\.jpg$/,'unapproved music-cover path');
   assert.ok(existsSync(path.join(dir,src)),'unpublished cover: '+src);
  }
-} else assert.ok(!/<img\\b|<picture\\b|og:image|twitter:image/i.test(s),'unapproved image: '+filename);
+} else assert.ok(!/<img\b|<picture\b|og:image|twitter:image/i.test(s),'unapproved image: '+filename);
  const canonical=s.match(/<link rel="canonical" href="([^"]+)"/i);
  if(canonical)assert.ok(canonical[1].startsWith(base),'canonical host not GitHub Pages: '+filename);
 }
