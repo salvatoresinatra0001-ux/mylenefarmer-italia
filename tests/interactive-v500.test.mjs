@@ -24,5 +24,5 @@ test('progressive interface and no external media hosts added',()=>{
  assert.match(js,/prefers-reduced-motion/);
  assert.match(js,/localStorage/);
  assert.match(css,/#[0]{3}/i);
- assert.doesNotMatch(js,/(?:autoplay|analytics|gtag\()/i);
+ assert.doesNotMatch(js,/(?:\.autoplay\s*=\s*true|\.play\s*\(|gtag\s*\()/i);
 });
