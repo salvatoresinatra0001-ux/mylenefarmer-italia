@@ -2,7 +2,7 @@
 if(window.__mfSiteFinish)return;window.__mfSiteFinish=true;
 const root=document.documentElement;
 const icon=document.querySelector('link[rel~="icon"]');if(icon&&!icon.href.includes('v=mf-photo-20261018'))icon.href+=(icon.href.includes('?')?'&':'?')+'v=mf-photo-20261018';
-root.dataset.themeMode='dark';root.dataset.theme='dark';root.style.colorScheme='dark';try{localStorage.removeItem('mf-theme')}catch{}
+root.dataset.themeMode='light';root.dataset.theme='light';root.style.colorScheme='light';try{localStorage.removeItem('mf-theme')}catch{}
 function setup(){
  document.querySelectorAll('.mf-theme-switcher').forEach(el=>el.remove());
  document.querySelectorAll('.mf-reference-bar').forEach(el=>el.remove());
