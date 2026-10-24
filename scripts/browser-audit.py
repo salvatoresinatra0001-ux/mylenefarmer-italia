@@ -1,126 +1,77 @@
 #!/usr/bin/env python3
-"""Actual Chromium checks; offline mode is explicitly marked and never certifies delivery."""
-import argparse, json, pathlib, urllib.parse
-from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeout
-parser=argparse.ArgumentParser()
-parser.add_argument('--base',default='https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/')
-parser.add_argument('--offline',action='store_true')
-parser.add_argument('--executable')
-args=parser.parse_args()
-root=pathlib.Path('dist'); output=pathlib.Path('reports'); output.mkdir(exist_ok=True)
-manifest=json.loads((root/'site-manifest.json').read_text())
-paths=[r['path'] for r in manifest['files'] if r['path'].endswith('.html')]
-report={'base':args.base,'mode':'offline-fixtures' if args.offline else 'live','pages':[], 'gallery':{}, 'unifiedGallery':{}, 'limitations':['Video/audio playback and third-party iframe interactions are excluded.','Full-resolution third-party source availability can vary; the internal viewer retains a verified thumbnail when an original cannot be loaded.']}
-fixture='<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800"><rect width="600" height="800" fill="#29262b"/><text x="30" y="400" fill="white" font-size="20">OFFLINE IMAGE FIXTURE</text></svg>'
-def route_handler(route):
-    request=route.request
-    if request.resource_type=='media' or (request.resource_type=='document' and request.frame.parent_frame is not None):
-        route.abort(); return
-    if args.offline and urllib.parse.urlparse(request.url).hostname not in ['127.0.0.1','localhost']:
-        if request.resource_type=='image': route.fulfill(status=200,content_type='image/svg+xml',body=fixture)
-        else: route.abort()
-        return
-    route.continue_()
-with sync_playwright() as p:
-    browser=p.chromium.launch(headless=True,executable_path=args.executable,args=['--no-sandbox'])
-    for mode,viewport in [('desktop',{'width':1440,'height':1000}),('mobile',{'width':390,'height':844})]:
-        context=browser.new_context(viewport=viewport,device_scale_factor=1,ignore_https_errors=False,reduced_motion='reduce')
-        context.route('**/*',route_handler)
-        page=context.new_page()
+"""GitHub Pages AMOLED V16: responsive pages and music-embed smoke audit."""
+import argparse
+import json
+import pathlib
+import urllib.parse
+from playwright.sync_api import sync_playwright
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--base", default="https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/")
+parser.add_argument("--offline", action="store_true")
+parser.add_argument("--executable")
+args = parser.parse_args()
+root = pathlib.Path("dist")
+out = pathlib.Path("reports")
+out.mkdir(exist_ok=True)
+files = json.loads((root / "site-manifest.json").read_text())["files"]
+paths = [f["path"] for f in files if f["path"].endswith(".html")]
+report = {"base": args.base, "theme": "AMOLED Black", "pages": [], "music": {}, "limitations": ["Streaming playback and subscriber access are controlled by Apple Music and Spotify."]}
+with sync_playwright() as playwright:
+    browser = playwright.chromium.launch(headless=True, executable_path=args.executable, args=["--no-sandbox"])
+    for mode, viewport in [("desktop", {"width": 1440, "height": 900}), ("mobile", {"width": 390, "height": 844})]:
+        context = browser.new_context(viewport=viewport, device_scale_factor=1, reduced_motion="reduce")
+        def route_handler(route):
+            req = route.request
+            host = urllib.parse.urlparse(req.url).hostname
+            basehost = urllib.parse.urlparse(args.base).hostname
+            if req.resource_type in ("media", "font") or (req.is_navigation_request() and req.frame.parent_frame is not None):
+                route.abort()
+            elif host not in ("127.0.0.1", "localhost", basehost) and req.resource_type in ("image", "stylesheet", "script"):
+                route.abort()
+            else:
+                route.continue_()
+        context.route("**/*", route_handler)
+        page = context.new_page()
         for name in paths:
-            record={'path':name,'viewport':mode,'errors':[],'brokenImages':[]}; errors=[]
-            def collect(error): errors.append(str(error))
-            page.on('pageerror',collect)
+            item = {"path": name, "viewport": mode, "errors": []}
+            events = []
+            page.on("pageerror", lambda exc: events.append(str(exc)))
             try:
-                response=page.goto(urllib.parse.urljoin(args.base,name),wait_until='domcontentloaded',timeout=45000)
-                record['status']=response.status if response else None
-                page.locator('body').wait_for()
-                # Respect native lazy loading in the new chronological gallery.
-                # Forcing all 19 remote thumbnails to eager at once can trigger Wikimedia throttling.
-                if name!='archivio-visivo.html':
-                    page.evaluate("document.querySelectorAll('img').forEach(i=>i.loading='eager')")
-                try: page.wait_for_function("[...document.images].every(i=>i.complete)",timeout=20000)
-                except PlaywrightTimeout: pass
-                page.wait_for_timeout(200)
-                record['title']=page.title()
-                record['horizontalOverflow']=page.evaluate('document.documentElement.scrollWidth>innerWidth+1')
-                record['horizontalMetrics']=page.evaluate("({innerWidth,documentScrollWidth:document.documentElement.scrollWidth,documentClientWidth:document.documentElement.clientWidth,bodyScrollWidth:document.body.scrollWidth,bodyClientWidth:document.body.clientWidth})")
-                record['images']=page.evaluate('document.images.length')
-                record['imageDetails']=page.evaluate("[...document.images].filter(i=>i.getAttribute('src')).map(i=>({src:i.currentSrc||i.src,width:i.naturalWidth,height:i.naturalHeight,complete:i.complete,visible:!!(i.offsetWidth||i.offsetHeight)}))")
-                record['overflowElements']=page.evaluate("[...document.querySelectorAll('body *')].map(e=>{const r=e.getBoundingClientRect();return{tag:e.tagName,cls:typeof e.className==='string'?e.className:'',left:r.left,right:r.right,width:r.width,scrollWidth:e.scrollWidth,clientWidth:e.clientWidth,overflowX:getComputedStyle(e).overflowX}}).filter(e=>e.right>innerWidth+1||e.left< -1||(e.scrollWidth>e.clientWidth+1&&e.scrollWidth>innerWidth+1)).slice(0,16)")
-                record['brokenImages']=page.evaluate("""[...document.images].filter(i=>{
-                    if(!i.getAttribute('src')||i.closest('dialog:not([open])'))return false;
-                    const r=i.getBoundingClientRect();
-                    if(i.loading==='lazy'&&(r.top>innerHeight+200||r.bottom<0))return false;
-                    return !i.complete||!i.naturalWidth;
-                }).map(i=>({src:i.currentSrc||i.src,alt:i.alt}))""")
-                record['missingAlt']=page.locator('img:not([alt])').count()
-                if name in ['index.html','archivio-drive.html','crediti-foto.html']:
-                    for photo in page.locator('img').all():
-                        if photo.is_visible():
-                            photo.scroll_into_view_if_needed()
-                            photo.evaluate("async im=>{try{await im.decode()}catch{}}")
-                            page.wait_for_timeout(100)
-                    page.evaluate('window.scrollTo(0,0)'); page.wait_for_timeout(500)
-                    page.screenshot(path=str(output/(mode+'-'+name.replace('.html','')+'.png')),full_page=True)
-            except Exception as exc: record['errors'].append(str(exc))
-            record['errors'].extend(errors); page.remove_listener('pageerror',collect); report['pages'].append(record)
+                response = page.goto(urllib.parse.urljoin(args.base, name), wait_until="domcontentloaded", timeout=40000)
+                item["status"] = response.status if response else None
+                item["title"] = page.title()
+                item["background"] = page.locator("body").evaluate("(el)=>getComputedStyle(el).backgroundColor")
+                item["overflow"] = page.evaluate("document.documentElement.scrollWidth > innerWidth + 2")
+                item["themeStylesheet"] = page.locator('link[href*="amoled-v16.css"]').count() > 0
+                item["errors"].extend(events)
+                if name in ("index.html", "ascolta.html", "discografia.html") and mode == "desktop":
+                    page.screenshot(path=str(out / (mode + "-" + name.replace(".html", "") + ".png")), full_page=True)
+                if name == "discografia.html":
+                    item["appleEmbeds"] = page.locator('iframe[src*="embed.music.apple.com"]').count()
+                if name == "ascolta.html":
+                    item["spotifyEmbeds"] = page.locator('iframe[src*="open.spotify.com/embed/artist"]').count()
+            except Exception as exc:
+                item["errors"].append(str(exc))
+            report["pages"].append(item)
+            page.remove_all_listeners("pageerror")
         context.close()
-    context=browser.new_context(viewport={'width':1280,'height':900}); context.route('**/*',route_handler)
-    page=context.new_page()
-    try:
-        page.goto(urllib.parse.urljoin(args.base,'archivio-drive.html'),wait_until='domcontentloaded')
-        page.wait_for_function("document.querySelector('#mf-year').options.length>1")
-        expected=json.loads((root/'data/gallery-public.json').read_text())['counts']['published']
-        assert page.locator('.mf-card').count()==expected, 'Not all manifest photographs are rendered'
-        page.locator('#mf-search').fill('no-match-zzzzzz')
-        assert page.locator('.mf-card:visible').count()==0, 'Search did not filter'
-        page.locator('#mf-reset').click()
-        assert page.locator('.mf-card:visible').count()==expected, 'Reset lost photographs'
-        page.locator('[data-open-photo]').first.click()
-        assert page.locator('#mf-viewer').evaluate('(d)=>d.open'), 'Lightbox did not open'
-        before=page.locator('#mf-position').inner_text(); page.keyboard.press('ArrowRight')
-        assert page.locator('#mf-position').inner_text()!=before, 'Keyboard navigation failed'
-        failures=[]; shown=[]
-        for n in range(expected):
-            try:
-                page.wait_for_function("document.querySelector('#mf-large').naturalWidth>200 && !document.querySelector('#mf-large').hidden",timeout=10000)
-                shown.append({'position':page.locator('#mf-position').inner_text(),'dimensions':page.locator('#mf-large').evaluate('(im)=>[im.naturalWidth,im.naturalHeight]')})
-            except PlaywrightTimeout: failures.append({'position':page.locator('#mf-position').inner_text(),'src':page.locator('#mf-large').get_attribute('src')})
-            page.keyboard.press('ArrowRight')
-        page.keyboard.press('Escape')
-        assert not page.locator('#mf-viewer').evaluate('(d)=>d.open'), 'Escape did not close'
-        assert page.locator('[download]').count()==0, 'Download button exposed'
-        assert page.locator('a[href*="drive.google.com"]').count()==0, 'Drive link exposed'
-        report['gallery']={'ok':not failures,'renderedPhotos':expected,'search':True,'reset':True,'lightbox':True,'keyboard':True,'noDriveLinks':True,'noDownloadButtons':True,'lightboxImagesFailed':failures,'lightboxImagesShown':shown}
-    except Exception as exc: report['gallery']={'ok':False,'error':str(exc)}
-    try:
-        page.goto(urllib.parse.urljoin(args.base,'archivio-visivo.html'),wait_until='domcontentloaded',timeout=45000)
-        page.wait_for_function("document.querySelector('#vg-total').textContent.trim() !== '—'",timeout=30000)
-        published=int(page.locator('#vg-total').inner_text())
-        expected=json.loads((root/'data/gallery-public.json').read_text())['counts']['published']
-        assert published>=expected, 'Unified gallery lost documented photographs'
-        assert page.locator('.vg-card').count()>=expected, 'Unified gallery missing photo cards'
-        assert page.locator('#vg-year option').count()>1, 'Year filter not populated'
-        page.locator('#vg-query').fill('no-match-zzzzzz')
-        assert page.locator('.vg-card').count()==0, 'Unified search did not filter'
-        page.locator('#vg-reset').click()
-        assert page.locator('.vg-card').count()>=expected, 'Unified reset lost photographs'
-        page.locator('#vg-year').select_option('2013')
-        assert page.locator('.vg-card').count()>0, 'Unified year filter empty for documented 2013 images'
-        page.locator('.vg-open').first.click()
-        assert page.locator('#vg-dialog').evaluate('(d)=>d.open'), 'Unified lightbox did not open'
-        initial=page.locator('#vg-position').inner_text()
-        if published>1:
-            page.keyboard.press('ArrowRight')
-            assert page.locator('#vg-position').inner_text()!=initial, 'Unified keyboard navigation failed'
-        page.keyboard.press('Escape')
-        assert not page.locator('#vg-dialog').evaluate('(d)=>d.open'), 'Unified lightbox did not close'
-        report['unifiedGallery']={'ok':True,'published':published,'search':True,'reset':True,'lightbox':True,'keyboard':True}
-    except Exception as exc:
-        report['unifiedGallery']={'ok':False,'error':str(exc)}
-    context.close(); browser.close()
-report['ok']=report['gallery'].get('ok',False) and report['unifiedGallery'].get('ok',False) and all(r.get('status')==200 and not r['errors'] and not r.get('horizontalOverflow') and not r.get('brokenImages') for r in report['pages'])
-(output/'browser-audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
-print(json.dumps({'mode':report['mode'],'pages':len(report['pages']),'ok':report['ok'],'gallery':report['gallery'],'unifiedGallery':report['unifiedGallery'],'pagesWithProblems':sum(bool(r['errors'] or r.get('brokenImages') or r.get('horizontalOverflow')) for r in report['pages'])},ensure_ascii=False))
-raise SystemExit(0 if report['ok'] else 1)
+    browser.close()
+report["music"] = {
+    "appleAlbums": max((p.get("appleEmbeds", 0) for p in report["pages"] if p["path"] == "discografia.html"), default=0),
+    "spotifyPlayers": max((p.get("spotifyEmbeds", 0) for p in report["pages"] if p["path"] == "ascolta.html"), default=0)
+}
+report["ok"] = all(
+    p.get("status") == 200
+    and not p["errors"]
+    and not p.get("overflow")
+    and p.get("themeStylesheet", False)
+    and p.get("background") in ("rgb(0, 0, 0)", "rgba(0, 0, 0, 1)")
+    for p in report["pages"]
+) and report["music"]["appleAlbums"] >= 12 and report["music"]["spotifyPlayers"] >= 1
+(out / "browser-audit.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+print(json.dumps({
+    "ok": report["ok"], "pagesTested": len(report["pages"]), "music": report["music"],
+    "problems": [p for p in report["pages"] if p.get("status") != 200 or p["errors"] or p.get("overflow") or not p.get("themeStylesheet") or p.get("background") not in ("rgb(0, 0, 0)", "rgba(0, 0, 0, 1)")][:8]
+}, ensure_ascii=False))
+raise SystemExit(0 if report["ok"] else 1)

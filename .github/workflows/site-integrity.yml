@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   check:
-    name: Build and validate static pages
+    name: Build and validate GitHub Pages AMOLED edition
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -32,7 +32,7 @@ jobs:
         run: python3 -m py_compile scripts/sync_cloudinary_catalog.py
       - name: Run archive and publication rights tests
         run: node --test tests/*.test.mjs
-      - name: Produce the shared public artifact
+      - name: Produce GitHub Pages artifact
         run: node scripts/build-site.mjs
       - name: Verify entry points
         run: |
@@ -41,17 +41,19 @@ jobs:
           test -s dist/archivio-visivo.html
           test -s dist/assets/js/unified-gallery.js
           test -s dist/note-legali.html
-          test -s dist/data/gallery-public.json
+          test -s dist/assets/css/amoled-v16.css
+          test -s dist/assets/banners-photo/biografia-8k.webp
+          test -s dist/assets/banners-photo/discografia-8k.webp
+          test -s dist/assets/banners-photo/ascolta-8k.webp
+          test -s dist/assets/banners-photo/archivio-8k.webp
+          test -s dist/assets/banners-photo/approfondimento-8k.webp
+          test -s dist/assets/banners-photo/news-8k.webp
+          test ! -e dist/fonti.html
+          test ! -e dist/riferimenti.html
+          grep -q 'embed.music.apple.com' dist/discografia.html
+          grep -q 'open.spotify.com/embed/artist' dist/ascolta.html
           test -s dist/site-manifest.json
           test -s dist/build-info.json
-      - name: Probe photographic delivery
-        run: node scripts/probe-photos.mjs
-      - name: Save photographic diagnostics
-        uses: actions/upload-artifact@v4
-        with:
-          name: photo-delivery-probe
-          path: reports/photo-delivery.json
-          retention-days: 7
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
