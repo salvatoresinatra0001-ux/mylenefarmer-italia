@@ -74,3 +74,14 @@ button,.btn,.vg-button,.mf-reference-bar a,.mf-theme-switcher{transition:backgro
 /* Music links belong to Ascolta, never in top-of-site bars. */
 .mf-reference-bar,.reference-rail,.mf-theme-switcher{display:none!important}
 :root,[data-theme="dark"]{color-scheme:dark}
+
+/* Editorial cream-light palette; special interactive deep-dives may opt out via data-theme-exempt. */
+html:not([data-theme-exempt]){color-scheme:light!important;--ground:#f7f3eb!important;--surface:#ffffff!important;--surface-2:#f0eae1!important;--line:#d9d0c5!important;--ink:#282421!important;--muted:#605a54!important;--accent:#a51e32!important;--accent-soft:#a51e32!important;--accent-2:#8d2636!important}
+html:not([data-theme-exempt]) body{background:#f7f3eb!important;color:#282421!important}
+html:not([data-theme-exempt]) :where(.mf-editorial-hub){background:#f0eae1!important;color:#282421!important;border-color:#d9d0c5!important}
+html:not([data-theme-exempt]) .mf-editorial-hub h2{color:#282421!important}
+html:not([data-theme-exempt]) .mf-hub-links a{background:#fff!important;color:#282421!important;border-color:#d9d0c5!important}
+html:not([data-theme-exempt]) .mf-hub-links a:hover{border-color:#a51e32!important}
+html:not([data-theme-exempt]) :where(.mf-platform-grid a,.mf-album){background:#fff!important;color:#282421!important;border-color:#d9d0c5!important}
+html:not([data-theme-exempt]) :where(.mf-album h3,.mf-platform-grid a){color:#282421!important}
+html:not([data-theme-exempt]) .mf-platform-grid a:hover{background:#f0eae1!important}
