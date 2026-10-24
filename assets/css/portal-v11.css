@@ -72,3 +72,15 @@ html:not([data-theme-exempt]) :is(.mf-reference-bar,.reference-rail,.mf-theme-sw
   .mf-player-card iframe{height:310px}
 }
 @media(prefers-reduced-motion:reduce){.mf-resource-card{transition:none!important;transform:none!important}}
+
+/* Author credit: never link to the personal website. */
+.mf-author-signature,.mf-author-signature em{font-family:"Times New Roman",Times,serif!important;font-weight:700!important;font-style:italic!important;color:inherit!important}
+.mf-author-signature{display:inline;font-size:1.08em;letter-spacing:.005em}
+/* The single optional, rights-approved photograph has one source and appears wide. */
+.mf-shared-banner{background:var(--ground);padding:clamp(12px,2vw,24px) 0;border-bottom:1px solid var(--line)}
+.mf-shared-banner__inner{width:min(100% - 36px,1500px);margin:auto;overflow:hidden;background:#f0eae1;border:1px solid var(--line)}
+.mf-shared-banner img{display:block;width:100%;aspect-ratio:21/9;max-height:560px;object-fit:cover;object-position:center}
+.mf-shared-banner p{margin:0;padding:11px 18px;text-align:right;font:italic 13px/1.5 "Times New Roman",serif;color:var(--muted)}
+.mf-site-nav-link .mf-svg{width:16px;height:16px;color:var(--accent)}
+@media(min-width:921px){.site-head .head-row{min-height:70px}.site-head #nav ul{justify-content:flex-end;gap:2px}.site-head #nav a{font-size:12px;padding:8px 9px}}
+@media(max-width:1120px){.site-head .nav-toggle{display:block}.site-head #nav{display:none;width:100%;padding-bottom:14px}.site-head #nav.open{display:block}.site-head #nav ul{display:flex;flex-direction:column}.site-head .head-row{flex-wrap:wrap}}
