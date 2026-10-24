@@ -8,6 +8,11 @@ const pages=[];
 for(const dir of [base,path.join(base,'V500,0')]){
  for(const name of readdirSync(dir).filter(n=>n.endsWith('.html'))){
   const html=readFileSync(path.join(dir,name),'utf8');pages.push(dir+'/'+name);
+  if(name==='discografia-streaming.html'){
+   assert.ok(html.includes('discografia.html#copertine-originali'),'legacy discography alias target missing');
+   assert.ok(html.includes('http-equiv="refresh"'),'legacy discography alias redirect missing');
+   continue;
+  }
   assert.ok(html.includes('editorial-unified-v501.css'),name+' stylesheet missing');
   assert.ok(html.includes('editorial-unified-v501.js'),name+' script missing');
   assert.ok(html.includes('mf-unified-nav'),name+' navigation missing');
