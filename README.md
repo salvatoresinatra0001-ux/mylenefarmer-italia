@@ -1,9 +1,13 @@
-# Mylène Farmer Italia · GitHub Pages — AMOLED V16
+# Mylène Farmer Italia · GitHub Pages — Unified Editorial V501
 
-## Interactive Edition V500.0 — proposta di evoluzione (Pull Request)
+## Unified Editorial Design V501.0
+Tutte le pagine della root e del sottosito V500,0 usano ora un design unificato, con navigazione identica, tipografia editoriale AMOLED Black e banner fotografici in rapporto 21:7. Sei fotografie composite WebP già approvate a 7680x3291 vengono **solo visualizzate** tramite CSS: originali invariati, nessun ritocco IA, nessuna alterazione dei volti. La UI è generata staticamente durante la build, conservando il contenuto editoriale e i player musicali ufficiali.
+
+
+## Interactive Edition V500.0 — pubblicata e preservata
 La V500.0 conserva la base V16 e aggiunge ricerca rapida globale (Ctrl/⌘+K o /), indice esteso a 12 album accertati e 30 capitoli, filtri per tipologia e decennio nella discografia, avanzamento tra capitoli e ripresa della lettura locale. Moduli nuovi: `assets/js/interactive-v500.js` e `assets/css/interactive-v500.css`. Le funzioni sono progressive: i contenuti restano consultabili senza JavaScript.
 
-**Stato di pubblicazione:** questa documentazione appartiene a un branch di proposta. Finché non viene effettuato il merge su `main` e non risulta riuscito `deploy-pages.yml`, la V500.0 non deve essere dichiarata pubblicata su GitHub Pages. L'allineamento di `www.mylenefarmer.it` è ancora da verificare separatamente. Nessun deploy Netlify.
+**Stato:** V500.0 e sottosito `/V500,0/` pubblicati su GitHub Pages. Il dominio `www.mylenefarmer.it` richiede verifica indipendente. Nessun deploy Netlify.
 
 **Privacy:** il segnalibro di lettura usa esclusivamente `localStorage` nel browser del visitatore; non trasmette cronologie, non introduce cookie di tracciamento o registrazioni. **Streaming:** riproduzione, accesso territoriale e autenticazione sono gestiti dai fornitori ufficiali; nessun autoplay. **Diritti:** resta attivo il filtro dei sei banner consentiti; nessuna importazione delle fotografie d'archivio.
 

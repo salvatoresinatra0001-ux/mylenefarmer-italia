@@ -27,3 +27,6 @@ Validazioni automatiche:
 **Versione culturale fan indipendente** a cura di Salvatore Sinatra. Non affiliata all'artista, al management o alle etichette.
 
 © 2026 Salvatore Sinatra.
+
+## Unified Editorial Design V501.0
+L'intero sottosito eredita header, tipografia, schede e banner fotografici 21:7 tramite la build condivisa. Le sei immagini WebP originarie restano intatte; nessuna IA sui soggetti. 

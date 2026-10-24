@@ -71,7 +71,7 @@ walk(out,(file,name)=>{
   if(!cleaned.includes('portal-v11.css')&&cleaned.includes('</head>'))cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/portal-v11.css">\n</head>');
   if(banner&&/<main\b/i.test(cleaned))cleaned=cleaned.replace(/(<main\b[^>]*>)/i,'$1'+banner);
   if(cleaned!==old)removed++;writeFileSync(file,cleaned);pageCount++;}
- if(name.endsWith('.css')){let s=readFileSync(file,'utf8');if(name==='banners-v15.css'){
+ if(name.endsWith('.css')){let s=readFileSync(file,'utf8');if(name==='banners-v15.css'||name==='editorial-unified-v501.css'){
    const urls=[...s.matchAll(/url\([\"']?([^\"')]+)[\"']?\)/g)].map(m=>m[1]);
    for(const u of urls)if(!/^\.\.\/banners-photo\/(?:biografia|discografia|ascolta|archivio|approfondimento|news)-8k\.webp$/.test(u))throw Error('Unapproved banner URL '+u);
   }else{s=s.replace(/url\(([\"']?)[^)]*\.(?:png|jpe?g|gif|webp|avif)(?:\?[^)]*)?\1\)/gi,'none');}writeFileSync(file,s);}
@@ -85,6 +85,56 @@ walk(out,(file,name)=>{if(!name.endsWith('.html'))return;let s=readFileSync(file
  s=s.replace(/(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/gi,(_,a,b,c)=>a+b.replaceAll('https://www.mylenefarmer.it/',base).replaceAll('https://mylenefarmer.it/',base)+c);
  s=s.replace(/<iframe\b(?![^>]*\bloading\s*=)/gi,'<iframe loading="lazy"');
  if(!s.includes('interactive-v500.js'))s=s.replace('</head>','<link rel="stylesheet" href="./assets/css/interactive-v500.css">\n<script src="./assets/js/interactive-v500.js" defer></script>\n<meta name="mf-edition" content="Interactive Edition V500.0">\n</head>');
+
+ const relative=path.relative(path.dirname(file),path.join(out,'assets')).split(path.sep).join('/');
+ const prefix=(relative.startsWith('.')?relative:'./'+relative);
+ const leaf=name.replace(/\.html$/i,'');
+ const bannerMap={
+  'index':['Mylène Farmer','L’opera, la musica, l’immaginario','biografia','Archivio italiano indipendente'],
+  'biografia':['Biografia','Una voce, molte metamorfosi','biografia','Dall’esordio al linguaggio personale'],
+  'discografia':['Discografia','Quarant’anni di musica e ricerca','discografia','Album, raccolte e ascolto ufficiale'],
+  'ascolta':['Ascolta','La musica al centro','ascolta','Spotify, Apple Music e piattaforme'],
+  'approfondimento':['Approfondimenti','La parola oltre la musica','approfondimento','Tre dossier, trenta capitoli'],
+  'news':['News','Il presente dell’opera','news','Cronache e aggiornamenti editoriali'],
+  'concerti':['Concerti','La scena e la memoria','archivio','Tournée, spettacoli e linguaggio dal vivo'],
+  'media':['Media','Il linguaggio dell’immagine','news','Videoclip, cinema e interpretazione'],
+  'cerca':['Cerca','Esplora tutto l’archivio','approfondimento','Ricerca tra album e dossier'],
+  'speciale-egregore-2026':['Ultimo album','Dossier e verifiche','news','Informazioni preliminari, senza anticipazioni non verificate'],
+  'dossier-storia-poetica':['Storia e poetica','La parola, l’identità, la memoria','biografia','Dieci capitoli di lettura critica'],
+  'dossier-discografia':['Discografia ragionata','Produzione e trasformazioni','discografia','Dieci capitoli sul repertorio'],
+  'dossier-scena':['Linguaggio scenico','La scena come opera','archivio','Dieci capitoli su concerti e audiovisivo'],
+  'note-legali':['Note legali','Diritti, trasparenza e responsabilità','archivio','Progetto indipendente, non ufficiale'],
+  'crediti-foto':['Crediti fotografici','Le immagini e i loro autori','biografia','Utilizzi e attribuzioni'],
+  'archivio-testuale':['Archivio testuale','Memoria documentata','archivio','Cronologie e contenuti editoriali'],
+  'archivio-drive':['Archivio testuale','Memoria documentata','archivio','Selezione editoriale'],
+  'archivio-visivo':['Archivio testuale','Memoria documentata','archivio','Selezione editoriale'],
+  'archivio-fotografico':['Archivio testuale','Memoria documentata','archivio','Selezione editoriale'],
+  'galleria-hq':['Archivio testuale','Memoria documentata','archivio','Selezione editoriale'],
+  'fotografie':['Archivio testuale','Memoria documentata','archivio','Selezione editoriale'],
+  'edizione-visiva':['Archivio testuale','Memoria documentata','archivio','Selezione editoriale'],
+  '404':['Pagina non trovata','Il percorso continua','archivio','Torna all’archivio principale']
+ };
+ const [title,subtitle,photo,eyebrow]=bannerMap[leaf]||['Mylène Farmer','Archivio editoriale','archivio','Edizione italiana'];
+ const current='index.html';
+ const navItems=[['index.html','Home'],['biografia.html','Biografia'],['discografia.html','Discografia'],['ascolta.html','Ascolta'],['approfondimento.html','Dossier'],['concerti.html','Concerti'],['media.html','Media'],['news.html','News']];
+ const nav=navItems.map(([url,label])=>'<a href="./'+url+'"'+(name===url?' aria-current="page"':'')+'>'+label+'</a>').join('');
+ const navHeader='<header class="mf-unified-header"><div class="mf-header-inner"><a class="mf-header-brand" href="./index.html" aria-label="Mylène Farmer Italia - homepage"><strong>Mylène Farmer</strong><small>Archivio Italia / 1984–2026</small></a><nav id="mf-unified-nav" class="mf-header-nav" aria-label="Navigazione principale">'+nav+'</nav><div class="mf-header-tools"><a href="./cerca.html" class="mf-header-search">Cerca</a><button class="mf-header-menu" type="button" aria-controls="mf-unified-nav" aria-expanded="false">Menu</button></div></div></header>';
+ const bannerSection='<section class="mf-editorial-banner" data-photo="'+photo+'" aria-label="Banner panoramico fotografico Mylène Farmer, proporzione 21:7"><div class="mf-editorial-banner-copy"><p class="mf-editorial-banner-index">'+esc(eyebrow)+'</p><h2>'+esc(title)+'</h2><p class="mf-editorial-banner-sub">'+esc(subtitle)+'</p></div><span class="mf-editorial-banner-mark">MYLÈNE FARMER · ITALIA</span></section>';
+ const oldHead=/<header\b[^>]*class=["'][^"']*(?:site-head|dp-top|egr-header)[^"']*["'][^>]*>[\s\S]*?<\/header>/i;
+ if(oldHead.test(s))s=s.replace(oldHead,navHeader);
+ else s=s.replace(/(<main\b)/i,navHeader+'$1');
+ const oldBanner=/<div\s+class=["'][^"']*\bmf-page-banner\b[^"']*["'][^>]*>[\s\S]*?<\/div>/i;
+ if(oldBanner.test(s))s=s.replace(oldBanner,bannerSection);
+ else s=s.replace(/(<main\b)/i,bannerSection+'$1');
+ const relatedLinks=navItems.filter(([url])=>url!==name).slice(Math.max(0,navItems.findIndex(([url])=>url===name)),Math.max(0,navItems.findIndex(([url])=>url===name))+3);
+ if(relatedLinks.length<3)relatedLinks.push(...navItems.filter(([url])=>url!==name).slice(0,3-relatedLinks.length));
+ const related='<aside class="mf-unified-related" aria-label="Continua la visita"><p class="mf-unified-kicker">Percorsi dell’archivio</p><h2>Continua a esplorare</h2><nav class="mf-unified-related-nav">'+relatedLinks.map(([url,label])=>'<a href="./'+url+'">'+label+' ↗</a>').join('')+'</nav></aside>';
+ s=s.replace(/<\/main>/i,related+'</main>');
+ const footer='<footer class="mf-unified-footer"><p>© 2026 · A cura di Salvatore Sinatra · Archivio culturale indipendente e non ufficiale.</p><nav aria-label="Informazioni e crediti"><a href="./note-legali.html">Note legali</a><a href="./crediti-foto.html">Crediti fotografici</a><a href="./index.html">Torna alla home</a></nav></footer>';
+ if(/<footer\b[^>]*>[\s\S]*?<\/footer>/i.test(s))s=s.replace(/<footer\b[^>]*>[\s\S]*?<\/footer>/i,footer);
+ else s=s.replace(/<\/body>/i,footer+'</body>');
+ if(!s.includes('editorial-unified-v501.css'))s=s.replace('</head>','<link rel="stylesheet" href="'+prefix+'/css/editorial-unified-v501.css">\n<script src="'+prefix+'/js/editorial-unified-v501.js" defer></script>\n<meta name="mf-unified-edition" content="V501.0 — 21:7 original-photo layout">\n</head>');
+ 
 s=s.replace('</head>','<meta name="mf-build-commit" content="'+esc(commit)+'">\n</head>');writeFileSync(file,s);});
 writeFileSync(path.join(out,'build-info.json'),JSON.stringify({schema:2,commit,artifact:'mylene-farmer-italia-github-pages-interactive-v500',htmlPages:pageCount,imagesPublished:selectedBannerFiles.size+(featureActive?1:0),photoReferencesSanitized:removed},null,2)+'\n');
 const files=[];walk(out,(file,name)=>{if(['_headers','_redirects','.nojekyll','site-manifest.json'].includes(name))return;const data=readFileSync(file);files.push({path:path.relative(out,file).split(path.sep).join('/'),bytes:data.length,sha256:createHash('sha256').update(data).digest('hex')});});
