@@ -65,7 +65,7 @@ function walk(dir,fn){for(const ent of readdirSync(dir,{withFileTypes:true})){co
 let pageCount=0,removed=0;
 walk(out,(file,name)=>{
  if(name.endsWith('.html')){let old=readFileSync(file,'utf8');let cleaned=sanitizeHtml(old);
-  if(name==='archivio-testuale.html')cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/banners-v14.css">\n<link rel="stylesheet" href="./assets/css/amoled-v16.css">\n</head>').replace('</header>','</header><div class="mf-page-banner mf-page-banner--archivio" role="img" aria-label="Archivio — banner editoriale panoramico"><span class="mf-page-banner__mobile"><strong>Archivio</strong><small>Selezione fotografica e contenuti HD</small></span></div>');
+  if(photoPages.has(name))cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/banners-v14.css">\n<link rel="stylesheet" href="./assets/css/amoled-v16.css">\n</head>').replace('</header>','</header><div class="mf-page-banner mf-page-banner--archivio" role="img" aria-label="Archivio — banner editoriale panoramico"><span class="mf-page-banner__mobile"><strong>Archivio</strong><small>Selezione fotografica e contenuti HD</small></span></div>');
   if(/<img\b|<picture\b|og:image|twitter:image/i.test(cleaned))throw Error('Unapproved photo reference remains: '+file);
   if(cleaned.includes('</head>')&&!cleaned.includes('href="./assets/icons/favicon.svg"'))cleaned=cleaned.replace('</head>','<link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">\n</head>');
   if(!cleaned.includes('portal-v11.css')&&cleaned.includes('</head>'))cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/portal-v11.css">\n</head>');
