@@ -85,17 +85,17 @@
 </section>
 
 <aside class="music-v10" data-music-v10 aria-label="Music Experience V10">
-  <button class="music-v10__handle" type="button" aria-controls="music-v10-panel" aria-expanded="false" aria-label="Apri il pannello musicale">♫ <span>ASCOLTA</span></button>
+  <button class="music-v10__handle" type="button" aria-controls="music-v10-panel" aria-expanded="false" aria-label="Apri il pannello musicale"><span aria-hidden="true">♫</span> <span>ASCOLTA</span></button>
   <div class="music-v10__panel" id="music-v10-panel" inert>
     <div class="music-v10__head"><div><small>MUSIC EXPERIENCE / V10</small><h2>Mylène Farmer</h2><p>Streaming ufficiale</p></div><button class="music-v10__close" type="button" aria-label="Chiudi il pannello">×</button></div>
     <div class="music-v10__tabs" role="group" aria-label="Piattaforma di ascolto">
-      <button type="button" data-provider="spotify" aria-pressed="true">Spotify</button>
-      <button type="button" data-provider="apple" aria-pressed="false">Apple Music</button>
+      <button type="button" data-provider="spotify" aria-pressed="true"><img src="https://open.spotify.com/favicon.ico" alt="" width="20" height="20"> Spotify</button>
+      <button type="button" data-provider="apple" aria-pressed="false"><img src="https://music.apple.com/favicon.ico" alt="" width="20" height="20"> Apple Music</button>
     </div>
     <div class="music-v10__player" data-player><p>Apri il pannello per caricare il lettore musicale.</p></div>
     <nav class="music-v10__links" aria-label="Collegamenti musicali">
-      <a href="https://open.spotify.com/artist/0e04xgVBPU6mE2QkSHlufD" target="_blank" rel="noopener noreferrer">Spotify ufficiale ↗</a>
-      <a href="https://music.apple.com/it/artist/myl%C3%A8ne-farmer/132793877" target="_blank" rel="noopener noreferrer">Apple Music ufficiale ↗</a>
+      <a href="https://open.spotify.com/artist/0e04xgVBPU6mE2QkSHlufD" target="_blank" rel="noopener noreferrer"><img src="https://open.spotify.com/favicon.ico" alt="" width="20" height="20"> Spotify ufficiale ↗</a>
+      <a href="https://music.apple.com/it/artist/myl%C3%A8ne-farmer/132793877" target="_blank" rel="noopener noreferrer"><img src="https://music.apple.com/favicon.ico" alt="" width="20" height="20"> Apple Music ufficiale ↗</a>
       <a href="./discografia.html">Discografia completa →</a>
       <a href="./ascolta.html">Archivio degli ascolti →</a>
     </nav>
@@ -103,25 +103,25 @@
   </div>
 </aside>
 <style>
-.music-v10{position:fixed;z-index:1100;left:0;top:50%;transform:translateY(-50%);font-family:Archivo,Arial,sans-serif;color:#f5f5f5}
-.music-v10__handle{position:absolute;left:0;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;display:flex;align-items:center;gap:12px;background:#171717;color:#fff;border:1px solid #777;border-left:0;border-radius:0 12px 12px 0;padding:17px 11px;letter-spacing:.15em;cursor:pointer;box-shadow:0 4px 25px #0005}
-.music-v10__panel{position:relative;box-sizing:border-box;width:min(390px,calc(100vw - 48px));max-height:min(88vh,850px);overflow-y:auto;overscroll-behavior:contain;padding:25px;background:#101010;border:1px solid #444;border-left:0;border-radius:0 18px 18px 0;box-shadow:12px 10px 45px #0008;transform:translateX(calc(-100% - 12px));visibility:hidden;transition:transform .32s ease,visibility .32s}
+.music-v10{position:fixed;z-index:1100;right:0;top:50%;transform:translateY(-50%);font-family:Archivo,Arial,sans-serif;color:#f5f5f5}
+.music-v10__handle{position:absolute;right:0;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;display:flex;align-items:center;gap:12px;background:#171717;color:#fff;border:1px solid #777;border-right:0;border-radius:12px 0 0 12px;padding:17px 11px;letter-spacing:.15em;cursor:pointer;box-shadow:0 4px 25px #0005}
+.music-v10__panel{position:relative;box-sizing:border-box;width:min(390px,calc(100vw - 48px));max-height:min(88vh,850px);overflow-y:auto;overscroll-behavior:contain;padding:25px;background:#101010;border:1px solid #444;border-right:0;border-radius:18px 0 0 18px;box-shadow:12px 10px 45px #0008;transform:translateX(calc(100% + 12px));visibility:hidden;transition:transform .32s ease,visibility .32s}
 .music-v10.is-open .music-v10__panel{transform:translateX(0);visibility:visible}
-.music-v10.is-open .music-v10__handle{left:100%;opacity:0;pointer-events:none}
+.music-v10.is-open .music-v10__handle{opacity:0;pointer-events:none}
 .music-v10__head{display:flex;justify-content:space-between;gap:12px;align-items:start;border-bottom:1px solid #444;padding-bottom:18px}
 .music-v10__head small{font-size:.67rem;letter-spacing:.2em;color:#aaa}
 .music-v10__head h2{font-family:"Bodoni Moda",serif;font-size:2rem;color:#fff;margin:8px 0}
 .music-v10__head p{color:#bbb;margin:0}
 .music-v10__close{background:transparent;color:#fff;border:1px solid #777;border-radius:50%;font-size:1.5rem;width:38px;height:38px;cursor:pointer}
 .music-v10__tabs{display:flex;gap:8px;margin:20px 0}
-.music-v10__tabs button{flex:1;background:#222;color:#ddd;border:1px solid #555;border-radius:9px;padding:12px 8px;cursor:pointer}
+.music-v10__tabs button{display:flex;align-items:center;justify-content:center;gap:8px;flex:1;background:#222;color:#ddd;border:1px solid #555;border-radius:9px;padding:12px 8px;cursor:pointer}
 .music-v10__tabs button[aria-pressed=true]{background:#eee;color:#111;border-color:#eee;font-weight:700}
 .music-v10__player iframe{display:block;border:0;border-radius:12px;width:100%;height:390px}
 .music-v10__player p{color:#bbb}
 .music-v10__links{display:grid;gap:10px;margin-top:22px}
-.music-v10__links a{display:block;color:#eee;text-decoration:none;border-bottom:1px solid #333;padding:9px 0}
+.music-v10__links a{display:flex;align-items:center;gap:10px;color:#eee;text-decoration:none;border-bottom:1px solid #333;padding:9px 0}
 .music-v10__links a:hover,.music-v10__links a:focus-visible{text-decoration:underline}
-.music-v10__legal{font-size:.72rem;line-height:1.6;color:#aaa;margin-top:22px}
+.music-v10__tabs img,.music-v10__links img{width:20px;height:20px;object-fit:contain;flex:none}.music-v10__legal{font-size:.72rem;line-height:1.6;color:#aaa;margin-top:22px}
 @media(max-width:480px){.music-v10__panel{width:min(350px,calc(100vw - 32px));padding:17px}.music-v10__player iframe{height:360px}}
 @media(prefers-reduced-motion:reduce){.music-v10__panel{transition:none}}
 </style>
