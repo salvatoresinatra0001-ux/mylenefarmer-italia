@@ -1,7 +1,5 @@
 name: Public host diagnostics
 on:
-  push:
-    branches: [main, 'preview/byte-sync-20261017']
   workflow_dispatch:
 permissions:
   contents: read

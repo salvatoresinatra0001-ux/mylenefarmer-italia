@@ -1,112 +1,110 @@
 {
-  "version": 1,
-  "language": "it",
-  "updated": "2026-10-18",
+  "version": "16.0",
   "items": [
     {
-      "title": "Mylène Farmer · Italia",
+      "title": "Mylène Farmer Italia",
       "type": "Progetto",
-      "summary": "Archivio italiano indipendente, metodo editoriale e novità documentate.",
+      "summary": "Archivio italiano indipendente: biografia, musica, concerti e approfondimenti.",
       "url": "index.html",
-      "keywords": "home progetto archivio fonti"
+      "keywords": "home artista progetto musica"
     },
     {
       "title": "Biografia",
       "type": "Artista",
-      "summary": "Percorso biografico e artistico organizzato per fasi cronologiche.",
+      "summary": "Le origini, la carriera e i passaggi principali della ricerca artistica.",
       "url": "biografia.html",
-      "keywords": "artista carriera identità origini storia"
+      "keywords": "vita carriera origini cronologia"
     },
     {
-      "title": "Discografia",
+      "title": "Discografia e Apple Music",
       "type": "Musica",
-      "summary": "Album e pubblicazioni con livelli di verifica e fonti dichiarate.",
+      "summary": "Album, raccolte e singoli con 13 player Apple Music per ascoltare tracce e anteprime.",
       "url": "discografia.html",
-      "keywords": "album singoli ep edizioni musica"
+      "keywords": "album singoli apple music tracce streaming"
     },
     {
       "title": "Ascolta",
       "type": "Musica",
-      "summary": "Riferimenti alle piattaforme musicali e percorsi d’ascolto.",
+      "summary": "Spotify, Apple Music, Qobuz, Deezer e YouTube Music.",
       "url": "ascolta.html",
-      "keywords": "spotify apple music qobuz deezer youtube"
+      "keywords": "spotify qobuz deezer apple youtube musica"
     },
     {
-      "title": "Concerti e tournée",
-      "type": "Scena",
-      "summary": "Cronologia degli spettacoli e delle tournée documentate.",
-      "url": "concerti.html",
-      "keywords": "tour live nevermore timeless mylenium"
-    },
-    {
-      "title": "Media e videografia",
-      "type": "Audiovisivo",
-      "summary": "Videoclip e opere audiovisive con riferimenti editoriali.",
-      "url": "media.html",
-      "keywords": "video videoclip film documentari"
-    },
-    {
-      "title": "Fotografie per anno e periodo",
-      "type": "Fotografia",
-      "summary": "Archivio fotografico con ricerca, filtri cronologici, attribuzioni e licenze.",
-      "url": "fotografie.html",
-      "keywords": "foto fotografo licenza archivio 2012 2013 2019 2023"
-    },
-    {
-      "title": "Archivio visivo",
-      "type": "Fotografia",
-      "summary": "Galleria unificata e catalogo fotografico pubblicato secondo le autorizzazioni registrate.",
-      "url": "archivio-visivo.html",
-      "keywords": "galleria cloudinary fotografie archivio"
-    },
-    {
-      "title": "Galleria HQ",
-      "type": "Fotografia",
-      "summary": "Percorso visivo editoriale con galleria, ricerca e crediti.",
-      "url": "galleria-hq.html",
-      "keywords": "foto immagini galleria"
-    },
-    {
-      "title": "Égrégore · dossier editoriale",
-      "type": "Musica",
-      "summary": "Dossier sulle informazioni annunciate per l’album, con fonti e stato editoriale.",
-      "url": "speciale-egregore-2026.html",
-      "keywords": "egregore tracklist album 2026"
-    },
-    {
-      "title": "Approfondimento",
+      "title": "Approfondimenti",
       "type": "Ricerca",
-      "summary": "Cronologie, analisi e percorsi di consultazione.",
+      "summary": "Tre dossier interattivi e trenta capitoli di approfondimento.",
       "url": "approfondimento.html",
-      "keywords": "ricerca cronologia analisi"
+      "keywords": "poetica musica scena analisi"
     },
     {
-      "title": "Edizione visiva",
+      "title": "Storia e poetica",
       "type": "Ricerca",
-      "summary": "Indice interattivo dei percorsi editoriali e documentali.",
-      "url": "edizione-visiva.html",
-      "keywords": "atlante indice percorsi"
+      "summary": "Dieci capitoli dedicati alla storia artistica e alla poetica.",
+      "url": "dossier-storia-poetica.html",
+      "keywords": "simboli testi poetica ricerca"
     },
     {
-      "title": "Fonti e metodo",
-      "type": "Documentazione",
-      "summary": "Fonti, livelli di solidità e criteri di verifica adottati nell’archivio.",
-      "url": "fonti.html",
-      "keywords": "fonti solidità verifica metodo bibliografia"
+      "title": "Catalogo ragionato",
+      "type": "Ricerca",
+      "summary": "Dieci capitoli sull'evoluzione discografica.",
+      "url": "dossier-discografia.html",
+      "keywords": "album analisi catalogo"
     },
     {
-      "title": "Crediti fotografici",
-      "type": "Documentazione",
-      "summary": "Attribuzioni, provenienza e criteri di pubblicazione delle immagini.",
+      "title": "Linguaggio scenico",
+      "type": "Ricerca",
+      "summary": "Dieci capitoli sull'immaginario dei concerti e la performance.",
+      "url": "dossier-scena.html",
+      "keywords": "tour luci coreografie scena"
+    },
+    {
+      "title": "Concerti e tour",
+      "type": "Dal vivo",
+      "summary": "Tournée, scenografia e memoria del repertorio dal vivo.",
+      "url": "concerti.html",
+      "keywords": "concerti live tournée ricordi"
+    },
+    {
+      "title": "Media",
+      "type": "Audiovisivo",
+      "summary": "Videoclip e linguaggi visivi.",
+      "url": "media.html",
+      "keywords": "video videoclip film cinema"
+    },
+    {
+      "title": "News",
+      "type": "Attualità",
+      "summary": "Novità, pubblicazioni e aggiornamenti editoriali.",
+      "url": "news.html",
+      "keywords": "news aggiornamenti musica"
+    },
+    {
+      "title": "Ultimo album",
+      "type": "Musica",
+      "summary": "Dossier speciale dedicato a Égrégore 2026.",
+      "url": "speciale-egregore-2026.html",
+      "keywords": "egregore ultimo album 2026"
+    },
+    {
+      "title": "Archivio",
+      "type": "Archivio",
+      "summary": "Cronologie e memorie artistiche in formato testuale, con un banner editoriale selezionato.",
+      "url": "archivio-testuale.html",
+      "keywords": "archivio ricordi fotografie biografia"
+    },
+    {
+      "title": "Crediti visivi",
+      "type": "Progetto",
+      "summary": "Diritti e indicazioni sulle immagini pubblicate.",
       "url": "crediti-foto.html",
-      "keywords": "crediti autore licenza copyright"
+      "keywords": "diritti immagini foto"
     },
     {
       "title": "Note legali",
-      "type": "Documentazione",
-      "summary": "Natura indipendente del progetto e informazioni legali.",
+      "type": "Progetto",
+      "summary": "Informazioni legali relative all'archivio indipendente.",
       "url": "note-legali.html",
-      "keywords": "privacy diritti disclaimer legale"
+      "keywords": "disclaimer copyright"
     }
   ]
 }

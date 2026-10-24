@@ -3,7 +3,7 @@
 import argparse, json, pathlib, urllib.parse
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeout
 parser=argparse.ArgumentParser()
-parser.add_argument('--base',default='https://mylenefarmer.it/')
+parser.add_argument('--base',default='https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/')
 parser.add_argument('--offline',action='store_true')
 parser.add_argument('--executable')
 args=parser.parse_args()

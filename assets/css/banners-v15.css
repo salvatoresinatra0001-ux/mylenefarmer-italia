@@ -3,7 +3,6 @@
 .mf-page-banner--discografia{background-image:url("../banners-photo/discografia-8k.webp")!important}
 .mf-page-banner--ascolta{background-image:url("../banners-photo/ascolta-8k.webp")!important}
 .mf-page-banner--archivio{background-image:url("../banners-photo/archivio-8k.webp")!important}
-.mf-page-banner--fonti{background-image:url("../banners-photo/fonti-8k.webp")!important}
 .mf-page-banner--approfondimento{background-image:url("../banners-photo/approfondimento-8k.webp")!important}
 .mf-page-banner--news{background-image:url("../banners-photo/news-8k.webp")!important}
 @media(max-width:650px){.mf-page-banner--biografia,.mf-page-banner--discografia,.mf-page-banner--ascolta,.mf-page-banner--archivio,.mf-page-banner--fonti,.mf-page-banner--approfondimento,.mf-page-banner--news{background-position:65% center!important;background-size:cover!important}}
