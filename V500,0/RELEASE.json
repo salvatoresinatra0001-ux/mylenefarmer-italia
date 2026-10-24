@@ -1,0 +1,20 @@
+{
+  "version": "500.0",
+  "folder": "V500,0",
+  "date": "2026-10-24",
+  "status": "merged to main",
+  "site": "https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/",
+  "repository": "https://github.com/salvatoresinatra0001-ux/mylenefarmer-italia",
+  "pull_request": 7,
+  "merged_sha": "b8cddab6b71130f2a293282b20c6e66b8bea7fb2",
+  "publication": "github-pages-only",
+  "theme": "AMOLED Black",
+  "search_items": 58,
+  "dossier_chapters": 30,
+  "albums_indexed": 12,
+  "photographic_archive": "excluded",
+  "streaming": "authorized embeds; no autoplay",
+  "netlify": "excluded",
+  "preview_files": "delivered separately as downloadable offline HTML and full-site ZIP",
+  "notes": "This GitHub version folder contains release metadata; the deployed site remains at repository root."
+}
