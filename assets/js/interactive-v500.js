@@ -54,6 +54,7 @@ function quickSearch(){
   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();open();return}
   if(event.key==='/'&&!typing&&!event.altKey&&!event.ctrlKey&&!event.metaKey&&!dialog.open){event.preventDefault();open()}
  });
+ dialog.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();dialog.close();trigger.focus()}});
  dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
 }
 function discography(){
