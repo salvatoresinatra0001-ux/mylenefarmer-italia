@@ -28,12 +28,18 @@ jobs:
           node --check assets/js/gallery.js
           node --check assets/js/unified-gallery.js
           node --check netlify/functions/cloudinary-periods.mjs
+      - name: Check V500 module syntax
+        run: |
+          node --check assets/js/interactive-v500.js
+          node --check scripts/verify-v500.mjs
       - name: Check Cloudinary catalog generator syntax
         run: python3 -m py_compile scripts/sync_cloudinary_catalog.py
       - name: Run archive and publication rights tests
         run: node --test tests/*.test.mjs
       - name: Produce GitHub Pages artifact
         run: node scripts/build-site.mjs
+      - name: Verify V500 output and search index
+        run: node scripts/verify-v500.mjs
       - name: Verify entry points
         run: |
           test -s dist/index.html
@@ -69,6 +75,7 @@ jobs:
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           python scripts/browser-audit.py --base http://127.0.0.1:8000/
+          python scripts/browser-v500.py --base http://127.0.0.1:8000/
       - name: Export deployable ZIP
         run: cd dist && zip -q -r ../mylenefarmer-italia-synchronized.zip .
       - name: Save deployment artifact

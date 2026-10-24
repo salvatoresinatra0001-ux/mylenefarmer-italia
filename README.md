@@ -1,5 +1,14 @@
 # Mylène Farmer Italia · GitHub Pages — AMOLED V16
 
+## Interactive Edition V500.0 — proposta di evoluzione (Pull Request)
+La V500.0 conserva la base V16 e aggiunge ricerca rapida globale (Ctrl/⌘+K o /), indice esteso a 12 album accertati e 30 capitoli, filtri per tipologia e decennio nella discografia, avanzamento tra capitoli e ripresa della lettura locale. Moduli nuovi: `assets/js/interactive-v500.js` e `assets/css/interactive-v500.css`. Le funzioni sono progressive: i contenuti restano consultabili senza JavaScript.
+
+**Stato di pubblicazione:** questa documentazione appartiene a un branch di proposta. Finché non viene effettuato il merge su `main` e non risulta riuscito `deploy-pages.yml`, la V500.0 non deve essere dichiarata pubblicata su GitHub Pages. L'allineamento di `www.mylenefarmer.it` è ancora da verificare separatamente. Nessun deploy Netlify.
+
+**Privacy:** il segnalibro di lettura usa esclusivamente `localStorage` nel browser del visitatore; non trasmette cronologie, non introduce cookie di tracciamento o registrazioni. **Streaming:** riproduzione, accesso territoriale e autenticazione sono gestiti dai fornitori ufficiali; nessun autoplay. **Diritti:** resta attivo il filtro dei sei banner consentiti; nessuna importazione delle fotografie d'archivio.
+
+**Verifica:** `node scripts/build-site.mjs`, `node --test tests/*.test.mjs`, `node scripts/verify-v500.mjs`, `python scripts/browser-v500.py --base http://127.0.0.1:8000/` (dopo aver avviato un server HTTP locale in `dist/`).
+
 Progetto culturale indipendente rivolto al pubblico italiano, dedicato alla discografia e alla ricerca artistica su Mylène Farmer. Non affiliato all'artista, al management o alle etichette.
 
 **Sito pubblico GitHub Pages:** https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/
