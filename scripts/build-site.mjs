@@ -78,8 +78,15 @@ walk(out,(file,name)=>{
 });
 let commit=process.env.COMMIT_REF||process.env.GITHUB_SHA||'';
 if(!commit)try{commit=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();}catch{commit='local-preview';}
-walk(out,(file,name)=>{if(!name.endsWith('.html'))return;let s=readFileSync(file,'utf8');if(!s.includes('</head>'))throw Error('No head in '+file);s=s.replace('</head>','<meta name="mf-build-commit" content="'+esc(commit)+'">\n</head>');writeFileSync(file,s);});
-writeFileSync(path.join(out,'build-info.json'),JSON.stringify({schema:2,commit,artifact:'mylene-farmer-italia-github-pages-amoled-v16',htmlPages:pageCount,imagesPublished:selectedBannerFiles.size+(featureActive?1:0),photoReferencesSanitized:removed},null,2)+'\n');
+walk(out,(file,name)=>{if(!name.endsWith('.html'))return;let s=readFileSync(file,'utf8');if(!s.includes('</head>'))throw Error('No head in '+file);
+ const canonicalUrl=base+(name==='index.html'?'':name);
+ s=s.replace(/<link\s+rel="canonical"\s+href="[^"]*"[^>]*>/i,'<link rel="canonical" href="'+canonicalUrl+'">');
+ s=s.replace(/<meta\s+property="og:url"\s+content="[^"]*"[^>]*>/i,'<meta property="og:url" content="'+canonicalUrl+'">');
+ s=s.replace(/(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/gi,(_,a,b,c)=>a+b.replaceAll('https://www.mylenefarmer.it/',base).replaceAll('https://mylenefarmer.it/',base)+c);
+ s=s.replace(/<iframe\b(?![^>]*\bloading\s*=)/gi,'<iframe loading="lazy"');
+ if(!s.includes('interactive-v500.js'))s=s.replace('</head>','<link rel="stylesheet" href="./assets/css/interactive-v500.css">\n<script src="./assets/js/interactive-v500.js" defer></script>\n<meta name="mf-edition" content="Interactive Edition V500.0">\n</head>');
+s=s.replace('</head>','<meta name="mf-build-commit" content="'+esc(commit)+'">\n</head>');writeFileSync(file,s);});
+writeFileSync(path.join(out,'build-info.json'),JSON.stringify({schema:2,commit,artifact:'mylene-farmer-italia-github-pages-interactive-v500',htmlPages:pageCount,imagesPublished:selectedBannerFiles.size+(featureActive?1:0),photoReferencesSanitized:removed},null,2)+'\n');
 const files=[];walk(out,(file,name)=>{if(['_headers','_redirects','.nojekyll','site-manifest.json'].includes(name))return;const data=readFileSync(file);files.push({path:path.relative(out,file).split(path.sep).join('/'),bytes:data.length,sha256:createHash('sha256').update(data).digest('hex')});});
 files.sort((a,b)=>a.path.localeCompare(b.path,'en'));
 writeFileSync(path.join(out,'site-manifest.json'),JSON.stringify({schema:2,commit,files},null,2)+'\n');

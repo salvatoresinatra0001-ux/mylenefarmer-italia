@@ -1,5 +1,5 @@
 {
-  "version": "16.0",
+  "version": "500.0",
   "items": [
     {
       "title": "Mylène Farmer Italia",
@@ -105,6 +105,307 @@
       "summary": "Informazioni legali relative all'archivio indipendente.",
       "url": "note-legali.html",
       "keywords": "disclaimer copyright"
+    },
+    {
+      "title": "Cendres de lune",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (1986). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 1986 Cendres de lune"
+    },
+    {
+      "title": "Ainsi soit je…",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (1988). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 1988 Ainsi soit je…"
+    },
+    {
+      "title": "L’Autre…",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (1991). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 1991 L’Autre…"
+    },
+    {
+      "title": "Anamorphosée",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (1995). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 1995 Anamorphosée"
+    },
+    {
+      "title": "Innamoramento",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (1999). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 1999 Innamoramento"
+    },
+    {
+      "title": "Avant que l’ombre…",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (2005). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 2005 Avant que l’ombre…"
+    },
+    {
+      "title": "Point de suture",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (2008). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 2008 Point de suture"
+    },
+    {
+      "title": "Bleu noir",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (2010). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 2010 Bleu noir"
+    },
+    {
+      "title": "Monkey Me",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (2012). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 2012 Monkey Me"
+    },
+    {
+      "title": "Interstellaires",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (2015). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 2015 Interstellaires"
+    },
+    {
+      "title": "Désobéissance",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (2018). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 2018 Désobéissance"
+    },
+    {
+      "title": "L’Emprise",
+      "type": "Album",
+      "summary": "Album in studio di Mylène Farmer (2022). Consulta scheda discografica e ascolto Apple Music.",
+      "url": "discografia.html#catalogo-studio",
+      "keywords": "album discografia 2022 L’Emprise"
+    },
+    {
+      "title": "Égrégore (2026) — dossier preliminare",
+      "type": "Da verificare",
+      "summary": "Dossier con informazioni preliminari; pubblicazione e dettagli da confermare con fonti primarie.",
+      "url": "speciale-egregore-2026.html",
+      "keywords": "egregore annuncio preliminare non confermato"
+    },
+    {
+      "title": "Storia e poetica — La formazione di un’identità artistica",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier storia e poetica.",
+      "url": "dossier-storia-poetica.html#capitolo-01",
+      "keywords": "dossier capitolo approfondimento Storia e poetica La formazione di un’identità artistica"
+    },
+    {
+      "title": "Storia e poetica — Dalle prime incisioni al primo album",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier storia e poetica.",
+      "url": "dossier-storia-poetica.html#capitolo-02",
+      "keywords": "dossier capitolo approfondimento Storia e poetica Dalle prime incisioni al primo album"
+    },
+    {
+      "title": "Storia e poetica — Ambiguità, fragilità e linguaggio",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier storia e poetica.",
+      "url": "dossier-storia-poetica.html#capitolo-03",
+      "keywords": "dossier capitolo approfondimento Storia e poetica Ambiguità, fragilità e linguaggio"
+    },
+    {
+      "title": "Storia e poetica — La maturazione e la prima grande scena",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier storia e poetica.",
+      "url": "dossier-storia-poetica.html#capitolo-04",
+      "keywords": "dossier capitolo approfondimento Storia e poetica La maturazione e la prima grande scena"
+    },
+    {
+      "title": "Storia e poetica — L’Autre… e Anamorphosée: due modi di cambiare",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier storia e poetica.",
+      "url": "dossier-storia-poetica.html#capitolo-05",
+      "keywords": "dossier capitolo approfondimento Storia e poetica L’Autre… e Anamorphosée: due modi di cambiare"
+    },
+    {
+      "title": "Storia e poetica — Innamoramento e la forma del racconto",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier storia e poetica.",
+      "url": "dossier-storia-poetica.html#capitolo-06",
+      "keywords": "dossier capitolo approfondimento Storia e poetica Innamoramento e la forma del racconto"
+    },
+    {
+      "title": "Storia e poetica — Persistenza e trasformazione nella maturità",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier storia e poetica.",
+      "url": "dossier-storia-poetica.html#capitolo-07",
+      "keywords": "dossier capitolo approfondimento Storia e poetica Persistenza e trasformazione nella maturità"
+    },
+    {
+      "title": "Storia e poetica — Collaborazioni e pluralità della produzione",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier storia e poetica.",
+      "url": "dossier-storia-poetica.html#capitolo-08",
+      "keywords": "dossier capitolo approfondimento Storia e poetica Collaborazioni e pluralità della produzione"
+    },
+    {
+      "title": "Storia e poetica — Dal repertorio recente ai nuovi annunci",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier storia e poetica.",
+      "url": "dossier-storia-poetica.html#capitolo-09",
+      "keywords": "dossier capitolo approfondimento Storia e poetica Dal repertorio recente ai nuovi annunci"
+    },
+    {
+      "title": "Storia e poetica — Come studiare la poetica senza confonderla con la biografia",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier storia e poetica.",
+      "url": "dossier-storia-poetica.html#capitolo-10",
+      "keywords": "dossier capitolo approfondimento Storia e poetica Come studiare la poetica senza confonderla con la biografia"
+    },
+    {
+      "title": "Discografia e produzione — La discografia come documento storico",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier discografia e produzione.",
+      "url": "dossier-discografia.html#capitolo-01",
+      "keywords": "dossier capitolo approfondimento Discografia e produzione La discografia come documento storico"
+    },
+    {
+      "title": "Discografia e produzione — Cendres de lune e Ainsi soit je…",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier discografia e produzione.",
+      "url": "dossier-discografia.html#capitolo-02",
+      "keywords": "dossier capitolo approfondimento Discografia e produzione Cendres de lune e Ainsi soit je…"
+    },
+    {
+      "title": "Discografia e produzione — L’Autre… e Anamorphosée",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier discografia e produzione.",
+      "url": "dossier-discografia.html#capitolo-03",
+      "keywords": "dossier capitolo approfondimento Discografia e produzione L’Autre… e Anamorphosée"
+    },
+    {
+      "title": "Discografia e produzione — Innamoramento e Avant que l’ombre…",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier discografia e produzione.",
+      "url": "dossier-discografia.html#capitolo-04",
+      "keywords": "dossier capitolo approfondimento Discografia e produzione Innamoramento e Avant que l’ombre…"
+    },
+    {
+      "title": "Discografia e produzione — Point de suture, Bleu noir e Monkey Me",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier discografia e produzione.",
+      "url": "dossier-discografia.html#capitolo-05",
+      "keywords": "dossier capitolo approfondimento Discografia e produzione Point de suture, Bleu noir e Monkey Me"
+    },
+    {
+      "title": "Discografia e produzione — Interstellaires, Désobéissance e L’Emprise",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier discografia e produzione.",
+      "url": "dossier-discografia.html#capitolo-06",
+      "keywords": "dossier capitolo approfondimento Discografia e produzione Interstellaires, Désobéissance e L’Emprise"
+    },
+    {
+      "title": "Discografia e produzione — Registrazioni di concerto e opere discografiche",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier discografia e produzione.",
+      "url": "dossier-discografia.html#capitolo-07",
+      "keywords": "dossier capitolo approfondimento Discografia e produzione Registrazioni di concerto e opere discografiche"
+    },
+    {
+      "title": "Discografia e produzione — Antologie, nuove versioni e identità delle registrazioni",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier discografia e produzione.",
+      "url": "dossier-discografia.html#capitolo-08",
+      "keywords": "dossier capitolo approfondimento Discografia e produzione Antologie, nuove versioni e identità delle registrazioni"
+    },
+    {
+      "title": "Discografia e produzione — Come integrare legalmente i lettori ufficiali",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier discografia e produzione.",
+      "url": "dossier-discografia.html#capitolo-09",
+      "keywords": "dossier capitolo approfondimento Discografia e produzione Come integrare legalmente i lettori ufficiali"
+    },
+    {
+      "title": "Discografia e produzione — Verifica, edizioni e ultimo progetto annunciato",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier discografia e produzione.",
+      "url": "dossier-discografia.html#capitolo-10",
+      "keywords": "dossier capitolo approfondimento Discografia e produzione Verifica, edizioni e ultimo progetto annunciato"
+    },
+    {
+      "title": "Concerti e scena — Il concerto come opera complessa",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier concerti e scena.",
+      "url": "dossier-scena.html#capitolo-01",
+      "keywords": "dossier capitolo approfondimento Concerti e scena Il concerto come opera complessa"
+    },
+    {
+      "title": "Concerti e scena — La nascita della dimensione dal vivo",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier concerti e scena.",
+      "url": "dossier-scena.html#capitolo-02",
+      "keywords": "dossier capitolo approfondimento Concerti e scena La nascita della dimensione dal vivo"
+    },
+    {
+      "title": "Concerti e scena — Live à Bercy e la logica della tournée",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier concerti e scena.",
+      "url": "dossier-scena.html#capitolo-03",
+      "keywords": "dossier capitolo approfondimento Concerti e scena Live à Bercy e la logica della tournée"
+    },
+    {
+      "title": "Concerti e scena — La scena come narrazione monumentale",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier concerti e scena.",
+      "url": "dossier-scena.html#capitolo-04",
+      "keywords": "dossier capitolo approfondimento Concerti e scena La scena come narrazione monumentale"
+    },
+    {
+      "title": "Concerti e scena — Avant que l’ombre… à Bercy",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier concerti e scena.",
+      "url": "dossier-scena.html#capitolo-05",
+      "keywords": "dossier capitolo approfondimento Concerti e scena Avant que l’ombre… à Bercy"
+    },
+    {
+      "title": "Concerti e scena — Dalle grandi tournée a Timeless",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier concerti e scena.",
+      "url": "dossier-scena.html#capitolo-06",
+      "keywords": "dossier capitolo approfondimento Concerti e scena Dalle grandi tournée a Timeless"
+    },
+    {
+      "title": "Concerti e scena — La residenza scenica e la documentazione",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier concerti e scena.",
+      "url": "dossier-scena.html#capitolo-07",
+      "keywords": "dossier capitolo approfondimento Concerti e scena La residenza scenica e la documentazione"
+    },
+    {
+      "title": "Concerti e scena — La tournée 2023–2024 e le sue fonti",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier concerti e scena.",
+      "url": "dossier-scena.html#capitolo-08",
+      "keywords": "dossier capitolo approfondimento Concerti e scena La tournée 2023–2024 e le sue fonti"
+    },
+    {
+      "title": "Concerti e scena — Il racconto audiovisivo oltre la promozione",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier concerti e scena.",
+      "url": "dossier-scena.html#capitolo-09",
+      "keywords": "dossier capitolo approfondimento Concerti e scena Il racconto audiovisivo oltre la promozione"
+    },
+    {
+      "title": "Concerti e scena — Memoria, fonti e responsabilità editoriale",
+      "type": "Capitolo",
+      "summary": "Capitolo del dossier concerti e scena.",
+      "url": "dossier-scena.html#capitolo-10",
+      "keywords": "dossier capitolo approfondimento Concerti e scena Memoria, fonti e responsabilità editoriale"
     }
   ]
 }

@@ -1,0 +1,33 @@
+/* Mylène Farmer Italia — V500.0, AMOLED Black only, progressive components */
+.mf-v500-trigger{order:10;white-space:nowrap;padding:8px 13px;margin-left:auto;background:#141116;color:#fff;border:1px solid #66505b;border-radius:10px;font:600 12px/1.4 Archivo,Arial,sans-serif;cursor:pointer}
+.mf-v500-trigger:hover,.mf-v500-trigger:focus-visible{border-color:#f18ca6;background:#24121c}
+.mf-v500-dialog{width:min(92vw,740px);max-height:min(86vh,780px);margin:auto;padding:0;border:1px solid #74435a;border-radius:18px;background:#08080a;color:#f5f5f7;box-shadow:0 30px 100px #000e;overflow:auto}
+.mf-v500-dialog::backdrop{background:rgba(0,0,0,.82);backdrop-filter:blur(6px)}
+.mf-v500-dialog-head{padding:20px 24px 14px;display:grid;grid-template-columns:1fr auto;gap:10px;border-bottom:1px solid #383039}
+.mf-v500-dialog-head label{grid-column:1/-1;color:#f6d4df;font-size:13px;font-weight:600}
+.mf-v500-dialog-head input{width:100%;min-width:0;padding:14px;background:#17171a;border:1px solid #49404a;border-radius:9px;color:#fff;font:inherit}
+.mf-v500-close{cursor:pointer;padding:8px 14px;border:1px solid #444!important;background:#151517!important;color:#fff}
+.mf-v500-status{padding:12px 24px 0;color:#c8bfc6;font-size:13px}
+.mf-v500-results{padding:8px 16px 12px;display:grid;gap:7px}
+.mf-v500-hit{display:grid;gap:3px;padding:12px 14px;border:1px solid #302b31;border-radius:10px;color:#f5f5f7;text-decoration:none;background:#111014}
+.mf-v500-hit:hover,.mf-v500-hit:focus-visible{border-color:#ba6c8b;background:#261620;color:#fff}
+.mf-v500-hit small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#f18ca6}
+.mf-v500-hit strong{font:500 clamp(16px,2vw,21px)/1.3 "Bodoni Moda",Georgia,serif}
+.mf-v500-hit span{color:#bbb9c2;font-size:12px}
+.mf-v500-full{display:block;padding:15px 24px;border-top:1px solid #393039;color:#f18ca6;font-size:13px}
+.mf-v500-filter{margin:18px 0;padding:20px;border:1px solid #42323b;border-radius:14px;background:#111014}
+.mf-v500-filter h3{margin:0 0 12px;font-size:25px}
+.mf-v500-pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.mf-v500-pill{cursor:pointer;border:1px solid #5b4651!important;border-radius:100px!important;padding:8px 13px;background:#19151a!important;color:#f5f5f7!important}
+.mf-v500-pill[aria-pressed=true]{background:#6a3048!important;border-color:#d98ca8!important}
+.mf-v500-filter select{margin-left:8px;min-height:40px;padding:8px;color:#fff;background:#17171a;border:1px solid #51414a}
+.mf-v500-count{color:#fff;font-size:13px;margin:12px 0 5px}
+.mf-v500-note{font-size:12px;color:#bbb9c2;margin:5px 0}
+.mf-v500-reading{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:20px 0;padding:12px 16px;border-left:2px solid #9b4868;background:#111014}
+.mf-v500-reading p{margin:0;font-size:12px;color:#bcb5be}
+.mf-v500-resume{padding:8px 13px;cursor:pointer;border:1px solid #81516a!important;background:#23151e!important;color:#fff!important}
+.mf-v500-next{display:inline-block;margin:16px 0 8px;padding:9px 13px;border:1px solid #604050;border-radius:9px;text-decoration:none;color:#f18ca6}
+.mf-v500-next:hover{background:#241821}
+[hidden]{display:none!important}
+@media(max-width:800px){.mf-v500-trigger{margin-left:0;padding:8px}.mf-v500-dialog-head{padding:13px}.mf-v500-results{padding:8px}.mf-v500-filter{padding:15px}}
+@media(prefers-reduced-motion:reduce){.mf-v500-dialog,.mf-v500-trigger,.mf-v500-hit,.mf-v500-next{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
