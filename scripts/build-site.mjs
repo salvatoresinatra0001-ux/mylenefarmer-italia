@@ -63,10 +63,10 @@ function walk(dir,fn){for(const ent of readdirSync(dir,{withFileTypes:true})){co
 let pageCount=0,removed=0;
 walk(out,(file,name)=>{
  if(name.endsWith('.html')){let old=readFileSync(file,'utf8');let cleaned=sanitizeHtml(old);
-  if(cleaned.includes('</head>')&&!cleaned.includes('href="./assets/icons/favicon.svg"'))cleaned=cleaned.replace('</head>','<link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">\\n</head>');
-  if(banner&&/<main\\b/i.test(cleaned))cleaned=cleaned.replace(/(<main\\b[^>]*>)/i,'$1'+banner);
+  if(/<img\b|<picture\b|og:image|twitter:image/i.test(cleaned))throw Error('Unapproved photo reference remains: '+file);
+  if(cleaned.includes('</head>')&&!cleaned.includes('href="./assets/icons/favicon.svg"'))cleaned=cleaned.replace('</head>','<link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">\n</head>');
   if(!cleaned.includes('portal-v11.css')&&cleaned.includes('</head>'))cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/portal-v11.css">\n</head>');
-  if(/<img\b|<picture\b|og:image|twitter:image/i.test(cleaned))throw Error('Photo reference remains: '+file);
+  if(banner&&/<main\b/i.test(cleaned))cleaned=cleaned.replace(/(<main\b[^>]*>)/i,'$1'+banner);
   if(cleaned!==old)removed++;writeFileSync(file,cleaned);pageCount++;}
  if(name.endsWith('.css')){let s=readFileSync(file,'utf8');s=s.replace(/url\((["']?)[^)]*\.(?:png|jpe?g|gif|webp|avif)(?:\?[^)]*)?\1\)/gi,'none');writeFileSync(file,s);}
 });
