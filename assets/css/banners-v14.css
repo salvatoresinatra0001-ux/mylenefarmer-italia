@@ -1,0 +1,23 @@
+/* Mylène Farmer Italia · 17 unique, text-only, native 8K vector banners · 7680x3291 */
+.mf-page-banner{position:relative;isolation:isolate;width:min(100% - 32px,1500px);aspect-ratio:7680/3291;margin:clamp(14px,2vw,28px) auto;border-radius:clamp(10px,1.5vw,22px);background-color:#1a1217;background-repeat:no-repeat;background-size:100% 100%;background-position:center;box-shadow:0 12px 38px rgba(0,0,0,.12);border:1px solid rgba(120,90,100,.19);overflow:hidden}
+.mf-page-banner::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+.mf-page-banner__mobile{display:none}
+.mf-page-banner--home{background-image:url("../banners/home.svg")}
+.mf-page-banner--biografia{background-image:url("../banners/biografia.svg")}
+.mf-page-banner--discografia{background-image:url("../banners/discografia.svg")}
+.mf-page-banner--approfondimento{background-image:url("../banners/approfondimento.svg")}
+.mf-page-banner--ascolta{background-image:url("../banners/ascolta.svg")}
+.mf-page-banner--news{background-image:url("../banners/news.svg")}
+.mf-page-banner--egregore-2026{background-image:url("../banners/egregore-2026.svg")}
+.mf-page-banner--riferimenti{background-image:url("../banners/riferimenti.svg")}
+.mf-page-banner--concerti{background-image:url("../banners/concerti.svg")}
+.mf-page-banner--media{background-image:url("../banners/media.svg")}
+.mf-page-banner--fonti{background-image:url("../banners/fonti.svg")}
+.mf-page-banner--crediti-foto{background-image:url("../banners/crediti-foto.svg")}
+.mf-page-banner--note-legali{background-image:url("../banners/note-legali.svg")}
+.mf-page-banner--dossier-storia-poetica{background-image:url("../banners/dossier-storia-poetica.svg")}
+.mf-page-banner--dossier-discografia{background-image:url("../banners/dossier-discografia.svg")}
+.mf-page-banner--dossier-scena{background-image:url("../banners/dossier-scena.svg")}
+.mf-page-banner--cerca{background-image:url("../banners/cerca.svg")}
+@media(max-width:650px){.mf-page-banner{aspect-ratio:16/9;min-height:210px;background-size:cover;background-position:15% center;border-radius:12px}.mf-page-banner::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,7,10,.86),rgba(10,7,10,.40));z-index:0}.mf-page-banner__mobile{position:absolute;z-index:1;inset:auto 16px 16px;display:grid;gap:7px;color:#fff;text-shadow:0 1px 8px #0008}.mf-page-banner__mobile strong{font:700 italic clamp(23px,6vw,37px)/1.1 "Times New Roman",serif;letter-spacing:-.02em}.mf-page-banner__mobile small{font:500 12px/1.45 Arial,sans-serif;color:#eee;max-width:90%}}
+@media(prefers-reduced-motion:reduce){.mf-page-banner{animation:none!important}}
