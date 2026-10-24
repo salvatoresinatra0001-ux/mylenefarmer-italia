@@ -34,6 +34,8 @@ jobs:
           node --check scripts/verify-v500.mjs
       - name: Check Cloudinary catalog generator syntax
         run: python3 -m py_compile scripts/sync_cloudinary_catalog.py
+      - name: Check V500 browser test syntax
+        run: python3 -m py_compile scripts/browser-v500.py scripts/browser-audit.py
       - name: Run archive and publication rights tests
         run: node --test tests/*.test.mjs
       - name: Produce GitHub Pages artifact
