@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* Mylène Farmer Italia — deterministic, text-first, NO-PHOTOGRAPHS build.
-   Photo files can remain in the private source repository but are never
+   Original abstract SVG banners are permitted. Photo files are never
    copied to dist or embedded in public HTML, CSS, JSON or JS.
 */
 import {cpSync,existsSync,mkdirSync,readdirSync,rmSync,readFileSync,writeFileSync,lstatSync} from 'node:fs';
@@ -24,7 +24,7 @@ const rootStatic=new Set(['.nojekyll','_headers','_redirects','robots.txt','site
 const photographRe=/(?:\.(?:png|jpe?g|webp|avif|gif|bmp|tiff?|heic|ico|mp4|mov|webm)$|(?:^|\/)(?:gallerie|galleria-fotografica|covers|photos|photo|fotografie|images|img|cloudinary|gallery)(?:\/|$)|(?:photo|fotograf|galler|cloudinary|drive-gallery|gallery-public|catalogo-fotografie)\.(?:json|js)$)/i;
 const privateRe=/(^|\/)(?:\.git|\.github|\.netlify|node_modules|dist|reports|tests|private|\.private)(\/|$)|(^|\/)\.env(?:\.|$)|\.(?:pem|key|p12|pfx|log|zip|tar|gz|sh)$/i;
 const photoPages=new Set(['galleria-hq.html','archivio-fotografico.html','archivio-drive.html','archivio-visivo.html','fotografie.html','edizione-visiva.html','galleria.html','galleria-fotografica.html','galleria-interattiva.html','galleria-2026.html','archivio-testuale.html']);
-const permittedAsset=p=>!privateRe.test(p)&&!photographRe.test(p)&&!(/\.svg$/i.test(p)&&!/^assets\/icons\//.test(p));
+const permittedAsset=p=>!privateRe.test(p)&&!photographRe.test(p)&&!(/\.svg$/i.test(p)&&!/^assets\/(?:icons|banners)\//.test(p));
 for(const entry of readdirSync(root,{withFileTypes:true})){
  if(entry.isSymbolicLink())continue;
  if(entry.isDirectory()&&!['assets','data'].includes(entry.name))continue;
