@@ -41,6 +41,12 @@ with sync_playwright() as playwright:
             try:
                 response = page.goto(urllib.parse.urljoin(args.base, name), wait_until="domcontentloaded", timeout=40000)
                 item["status"] = response.status if response else None
+                if name == "discografia-streaming.html":
+                    page.wait_for_function(
+                        "location.pathname.endsWith('/discografia.html') && location.hash === '#copertine-originali'",
+                        timeout=15000,
+                    )
+                    item["redirectedTo"] = page.url
                 item["title"] = page.title()
                 item["background"] = page.locator("body").evaluate("(el)=>getComputedStyle(el).backgroundColor")
                 item["overflow"] = page.evaluate("document.documentElement.scrollWidth > innerWidth + 2")
