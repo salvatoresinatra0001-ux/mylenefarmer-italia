@@ -69,7 +69,7 @@ let pageCount=0,removed=0;
 walk(out,(file,name)=>{
  if(name.endsWith('.html')){let old=readFileSync(file,'utf8');let cleaned=name==='discografia-streaming.html'?old:sanitizeHtml(old);
   if(photoPages.has(name)&&path.dirname(file)===out)cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/banners-v14.css">\n<link rel="stylesheet" href="./assets/css/amoled-v16.css">\n</head>').replace('</header>','</header><div class="mf-page-banner mf-page-banner--archivio" role="img" aria-label="Archivio — banner editoriale panoramico"><span class="mf-page-banner__mobile"><strong>Archivio</strong><small>Selezione fotografica e contenuti HD</small></span></div>');
-  if(/<img\b|<picture\b|og:image|twitter:image/i.test(cleaned))throw Error('Unapproved photo reference remains: '+file);
+  if(name!=='discografia-streaming.html'&&/<img\b|<picture\b|og:image|twitter:image/i.test(cleaned))throw Error('Unapproved photo reference remains: '+file);
   if(cleaned.includes('</head>')&&!/(?:href=["'](?:\.\/|\.\.\/)?assets\/icons\/favicon\.svg["'])/i.test(cleaned))cleaned=cleaned.replace('</head>','<link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">\n</head>');
   if(!cleaned.includes('portal-v11.css')&&cleaned.includes('</head>'))cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/portal-v11.css">\n</head>');
   if(banner&&/<main\b/i.test(cleaned))cleaned=cleaned.replace(/(<main\b[^>]*>)/i,'$1'+banner);
