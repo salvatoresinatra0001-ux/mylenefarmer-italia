@@ -1,0 +1,18 @@
+/* Editorial interaction V10: accessible, optional JavaScript */
+(()=>{'use strict';
+function ready(){
+const main=document.querySelector('main');if(!main)return;
+const bar=document.createElement('div');bar.className='v10-progress';bar.setAttribute('aria-hidden','true');document.body.append(bar);
+const jump=document.createElement('button');jump.type='button';jump.className='v10-jump';jump.textContent='↑';jump.setAttribute('aria-label','Torna all’inizio');jump.addEventListener('click',()=>window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}));document.body.append(jump);
+let queued=false;function scroll(){if(queued)return;queued=true;requestAnimationFrame(()=>{const range=document.documentElement.scrollHeight-innerHeight;bar.style.width=(range>0?Math.min(100,100*scrollY/range):0)+'%';jump.classList.toggle('is-visible',scrollY>550);queued=false})}addEventListener('scroll',scroll,{passive:true});addEventListener('resize',scroll,{passive:true});scroll();
+const sections=[...main.querySelectorAll('section')].filter(el=>el.querySelector('h1,h2')).slice(0,18);
+if(sections.length>2){const toc=document.createElement('details');toc.className='v10-contents';const summary=document.createElement('summary');summary.textContent='Esplora le sezioni';toc.append(summary);const nav=document.createElement('nav');nav.setAttribute('aria-label','Indice interattivo della pagina');sections.forEach((section,i)=>{const h=section.querySelector('h1,h2');if(!section.id)section.id='v10-section-'+(i+1);const a=document.createElement('a');a.href='#'+section.id;a.textContent=h.textContent.trim().replace(/\s+/g,' ').slice(0,75);nav.append(a)});toc.append(nav);const hero=main.querySelector('.hero');if(hero)hero.after(toc);else main.prepend(toc)}
+const pending={ 'index.html':'2000ClaudeGassian51.jpg','biografia.html':'2000ClaudeGassian07.jpg','discografia.html':'2000ClaudeGassian21.jpg','concerti.html':'2000ClaudeGassian39.jpg','media.html':'2000ClaudeGassian35.jpg'};
+const page=location.pathname.split('/').pop()||'index.html',file=pending[page];
+if(file){const section=document.createElement('aside');section.className='v10-photo-slot';section.setAttribute('aria-label','Fotografia editoriale in preparazione');const heading=document.createElement('strong');heading.textContent='Archivio fotografico · 2000';const note=document.createElement('p');note.textContent='Fotografia selezionata per questa sezione. Pubblicazione in attesa della verifica dei diritti di utilizzo.';const meta=document.createElement('small');meta.textContent='Selezione: '+file+' · Attribuzione indicata: Claude Gassian';section.append(heading,note,meta);const first=main.querySelector('section');if(first)first.after(section);else main.prepend(section)}
+const dialog=document.createElement('dialog');dialog.className='v10-lightbox';document.body.append(dialog);
+document.querySelectorAll('main img[data-v10-lightbox]').forEach(img=>{img.tabIndex=0;img.setAttribute('role','button');img.setAttribute('aria-label','Apri fotografia a schermo intero');const open=()=>{dialog.replaceChildren();const close=document.createElement('button');close.type='button';close.textContent='Chiudi ×';close.addEventListener('click',()=>dialog.close());const full=document.createElement('img');full.src=img.currentSrc||img.src;full.alt=img.alt;dialog.append(close,full);dialog.showModal();close.focus()};img.addEventListener('click',open);img.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}})});
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready();
+})();
