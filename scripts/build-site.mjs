@@ -67,9 +67,9 @@ function sanitizeHtml(content){
 function walk(dir,fn){for(const ent of readdirSync(dir,{withFileTypes:true})){const abs=path.join(dir,ent.name);if(ent.isDirectory())walk(abs,fn);else fn(abs,ent.name)}}
 let pageCount=0,removed=0;
 walk(out,(file,name)=>{
- if(name.endsWith('.html')){let old=readFileSync(file,'utf8');let cleaned=name==='discografia-streaming.html'?old:sanitizeHtml(old);
+ if(name.endsWith('.html')){let old=readFileSync(file,'utf8');let cleaned=(name==='discografia-streaming.html'||name==='discografia.html')?old:sanitizeHtml(old);
   if(photoPages.has(name)&&path.dirname(file)===out)cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/banners-v14.css">\n<link rel="stylesheet" href="./assets/css/amoled-v16.css">\n</head>').replace('</header>','</header><div class="mf-page-banner mf-page-banner--archivio" role="img" aria-label="Archivio — banner editoriale panoramico"><span class="mf-page-banner__mobile"><strong>Archivio</strong><small>Selezione fotografica e contenuti HD</small></span></div>');
-  if(name!=='discografia-streaming.html'&&/<img\b|<picture\b|og:image|twitter:image/i.test(cleaned))throw Error('Unapproved photo reference remains: '+file);
+  if(!['discografia-streaming.html','discografia.html'].includes(name)&&/<img\b|<picture\b|og:image|twitter:image/i.test(cleaned))throw Error('Unapproved photo reference remains: '+file);
   if(cleaned.includes('</head>')&&!/(?:href=["'](?:\.\/|\.\.\/)?assets\/icons\/favicon\.svg["'])/i.test(cleaned))cleaned=cleaned.replace('</head>','<link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">\n</head>');
   if(!cleaned.includes('portal-v11.css')&&cleaned.includes('</head>'))cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/portal-v11.css">\n</head>');
   if(banner&&/<main\b/i.test(cleaned))cleaned=cleaned.replace(/(<main\b[^>]*>)/i,'$1'+banner);
@@ -82,7 +82,7 @@ walk(out,(file,name)=>{
 let commit=process.env.COMMIT_REF||process.env.GITHUB_SHA||'';
 if(!commit)try{commit=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();}catch{commit='local-preview';}
 walk(out,(file,name)=>{if(!name.endsWith('.html'))return;let s=readFileSync(file,'utf8');if(!s.includes('</head>'))throw Error('No head in '+file);
- const canonicalUrl=base+(name==='index.html'?'':name);
+ const canonicalUrl=base+(name==='index.html'?'':name==='discografia-streaming.html'?'discografia.html':name);
  s=s.replace(/<link\s+rel="canonical"\s+href="[^"]*"[^>]*>/i,'<link rel="canonical" href="'+canonicalUrl+'">');
  s=s.replace(/<meta\s+property="og:url"\s+content="[^"]*"[^>]*>/i,'<meta property="og:url" content="'+canonicalUrl+'">');
  s=s.replace(/(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/gi,(_,a,b,c)=>a+b.replaceAll('https://www.mylenefarmer.it/',base).replaceAll('https://mylenefarmer.it/',base)+c);
@@ -139,8 +139,8 @@ walk(out,(file,name)=>{if(!name.endsWith('.html'))return;let s=readFileSync(file
  if(!s.includes('editorial-unified-v501.css'))s=s.replace('</head>','<link rel="stylesheet" href="'+prefix+'/css/editorial-unified-v501.css">\n<script src="'+prefix+'/js/editorial-unified-v501.js" defer></script>\n<meta name="mf-unified-edition" content="V501.0 — 21:7 original-photo layout">\n</head>');
  
 s=s.replace('</head>','<meta name="mf-build-commit" content="'+esc(commit)+'">\n</head>');writeFileSync(file,s);});
-writeFileSync(path.join(out,'build-info.json'),JSON.stringify({schema:2,commit,artifact:'mylene-farmer-italia-github-pages-interactive-v500',htmlPages:pageCount,imagesPublished:selectedBannerFiles.size+(featureActive?1:0),photoReferencesSanitized:removed},null,2)+'\n');
+writeFileSync(path.join(out,'build-info.json'),JSON.stringify({schema:2,commit,artifact:'mylene-farmer-italia-github-pages-interactive-v500',htmlPages:pageCount,imagesPublished:selectedBannerFiles.size+selectedCoverFiles.size+(featureActive?1:0),photoReferencesSanitized:removed},null,2)+'\n');
 const files=[];walk(out,(file,name)=>{if(['_headers','_redirects','.nojekyll','site-manifest.json'].includes(name))return;const data=readFileSync(file);files.push({path:path.relative(out,file).split(path.sep).join('/'),bytes:data.length,sha256:createHash('sha256').update(data).digest('hex')});});
 files.sort((a,b)=>a.path.localeCompare(b.path,'en'));
 writeFileSync(path.join(out,'site-manifest.json'),JSON.stringify({schema:2,commit,files},null,2)+'\n');
-console.log(JSON.stringify({commit,htmlPages:pageCount,publicFiles:files.length,imagesPublished:selectedBannerFiles.size+(featureActive?1:0),photoReferencesSanitized:removed},null,2));
+console.log(JSON.stringify({commit,htmlPages:pageCount,publicFiles:files.length,imagesPublished:selectedBannerFiles.size+selectedCoverFiles.size+(featureActive?1:0),photoReferencesSanitized:removed},null,2));

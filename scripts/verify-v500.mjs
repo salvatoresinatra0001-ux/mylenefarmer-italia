@@ -10,7 +10,7 @@ for(const filename of html){
  assert.ok(s.includes('interactive-v500.css'),'V500 CSS missing: '+filename);
  assert.ok(s.includes('interactive-v500.js'),'V500 JS missing: '+filename);
  assert.ok(s.includes('mf-edition'),'V500 edition marker missing: '+filename);
-if(filename==='discografia-streaming.html'){
+if(filename==='discografia.html'){
  const covers=[...s.matchAll(/<img\b[^>]*src="([^"]+)"[^>]*>/gi)].map(m=>m[1]);
  assert.equal(covers.length,18,'18 cataloged archive covers required');
  for(const src of covers){

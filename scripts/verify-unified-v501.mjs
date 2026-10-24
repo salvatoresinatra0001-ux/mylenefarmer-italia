@@ -15,11 +15,11 @@ for(const dir of [base,path.join(base,'V500,0')]){
   const p=html.match(/<section class="mf-editorial-banner" data-photo="([^"]+)"/);
   assert.ok(p&&valid.has(p[1]),name+' unauthorized photo key');
   assert.match(html,/aria-label="Navigazione principale"/,name+' nav label');
-if(name==='discografia-streaming.html'&&dir===base){
+if(name==='discografia.html'&&dir===base){
   const covers=[...html.matchAll(/<img\b[^>]*src="([^"]+)"[^>]*>/gi)].map(m=>m[1]);
   assert.equal(covers.length,18,'approved original-cover catalog must have 18 images');
   for(const src of covers)assert.match(src,/^\.\/assets\/covers-originali\/[0-9]{2}-[a-f0-9]{12}\.jpg$/);
- }else assert.ok(!/<img\\b|<picture\\b|og:image|twitter:image/i.test(html),'unapproved image: '+name);
+ }else assert.ok(!/<img\b|<picture\b|og:image|twitter:image/i.test(html),'unapproved image: '+name);
  }
 }
 const css=readFileSync(path.join(base,'assets/css/editorial-unified-v501.css'),'utf8');
