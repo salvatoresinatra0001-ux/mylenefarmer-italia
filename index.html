@@ -32,8 +32,40 @@
   <meta name="twitter:image" content="https://mylenefarmer.it/assets/img/1999MarinoParisottoVay27.jpg">
 <link rel="stylesheet" href="./assets/css/editorial-v10.css">
 <script src="./assets/js/editorial-v10.js" defer></script>
+<style>
+.mf-intro{position:fixed;inset:0;z-index:9999;background:#080808;color:#fff;display:grid;place-items:center;overflow:hidden;isolation:isolate}
+.mf-intro[hidden]{display:none}
+.mf-intro__visual{position:absolute;inset:0;background:#111}
+.mf-intro__visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.1s ease;filter:brightness(.48)}
+.mf-intro__visual img.is-active{opacity:1}
+.mf-intro__shade{position:absolute;inset:0;background:linear-gradient(90deg,#050505dd,#0003 65%),linear-gradient(0deg,#050505c9,transparent 50%)}
+.mf-intro__content{position:relative;width:min(1100px,88vw);z-index:1}
+.mf-intro__eyebrow{font:500 .75rem Archivo,Arial,sans-serif;letter-spacing:.25em;text-transform:uppercase}
+.mf-intro__title{font-family:"Bodoni Moda",Georgia,serif;font-weight:400;font-size:clamp(3.3rem,10vw,9rem);line-height:.95;margin:22px 0}
+.mf-intro__description{max-width:520px;line-height:1.7;color:#eee;font-family:Archivo,Arial,sans-serif}
+.mf-intro__enter,.mf-intro__skip{background:transparent;color:#fff;border:1px solid #fff9;padding:14px 23px;border-radius:2px;cursor:pointer;font:600 .82rem Archivo,Arial,sans-serif;letter-spacing:.09em}
+.mf-intro__enter:hover,.mf-intro__enter:focus-visible,.mf-intro__skip:focus-visible{background:#fff;color:#111}
+.mf-intro__skip{position:absolute;right:24px;top:22px;z-index:2;padding:9px 15px}
+.mf-intro__count{position:absolute;bottom:22px;right:24px;font:500 .8rem Archivo,Arial,sans-serif;letter-spacing:.2em}
+@media(prefers-reduced-motion:reduce){.mf-intro__visual img{transition:none}}
+</style>
 </head>
 <body data-site="mf" data-build="2026-10-18-monochrome-gassian-final">
+<div class="mf-intro" data-mf-intro hidden role="dialog" aria-modal="true" aria-label="Introduzione all'archivio">
+ <div class="mf-intro__visual" aria-hidden="true">
+  <img src="./assets/img/2000ClaudeGassian07.jpg" alt="" decoding="async">
+  <img src="./assets/img/2000ClaudeGassian21.jpg" alt="" decoding="async">
+  <img src="./assets/img/2000ClaudeGassian35.jpg" alt="" decoding="async">
+  <img src="./assets/img/2000ClaudeGassian39.jpg" alt="" decoding="async">
+  <img src="./assets/img/2000ClaudeGassian51.jpg" alt="" decoding="async">
+ </div>
+ <div class="mf-intro__shade" aria-hidden="true"></div>
+ <button class="mf-intro__skip" type="button" data-intro-enter>Salta introduzione ×</button>
+ <div class="mf-intro__content"><p class="mf-intro__eyebrow">Archivio italiano indipendente · 1984—2026</p><h2 class="mf-intro__title">Mylène<br>Farmer</h2><p class="mf-intro__description">Musica, immagini e spettacoli. Un percorso documentato attraverso le opere e la storia artistica di Mylène Farmer.</p><button class="mf-intro__enter" type="button" data-intro-enter>Entra nell'archivio →</button></div>
+ <span class="mf-intro__count" data-intro-count aria-hidden="true">01 / 05</span>
+</div><script>
+(()=>{'use strict';function init(){const root=document.querySelector('[data-mf-intro]');if(!root)return;let visited=false;try{visited=sessionStorage.getItem('mf-intro-seen')==='1'}catch(e){}if(visited||location.hash){return}const images=[...root.querySelectorAll('.mf-intro__visual img')];const count=root.querySelector('[data-intro-count]');let idx=0,timer;let focusBefore=document.activeElement;function render(){images.forEach((img,i)=>img.classList.toggle('is-active',i===idx));count.textContent=String(idx+1).padStart(2,'0')+' / '+String(images.length).padStart(2,'0')}function finish(){clearInterval(timer);root.hidden=true;document.body.style.overflow='';try{sessionStorage.setItem('mf-intro-seen','1')}catch(e){}if(focusBefore&&focusBefore.focus)focusBefore.focus()}root.querySelectorAll('[data-intro-enter]').forEach(b=>b.addEventListener('click',finish));root.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();finish()}if(e.key==='Tab'){const btns=[...root.querySelectorAll('button')];const first=btns[0],last=btns[btns.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});images.forEach(img=>img.addEventListener('error',()=>{img.src='./assets/img/1999MarinoParisottoVay27.jpg'},{once:true}));root.hidden=false;document.body.style.overflow='hidden';render();root.querySelector('.mf-intro__enter').focus();if(!matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setInterval(()=>{idx=(idx+1)%images.length;render()},4300)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
+</script>
 <a class="skip" href="#main">Salta al contenuto</a>
 <header class="site-head">
   <div class="wrap head-row">
