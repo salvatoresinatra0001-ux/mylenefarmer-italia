@@ -2,7 +2,6 @@
   "version": "500.0",
   "folder": "V500,0",
   "date": "2026-10-24",
-  "status": "merged to main",
   "site": "https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/",
   "repository": "https://github.com/salvatoresinatra0001-ux/mylenefarmer-italia",
   "pull_request": 7,
@@ -16,5 +15,14 @@
   "streaming": "authorized embeds; no autoplay",
   "netlify": "excluded",
   "preview_files": "delivered separately as downloadable offline HTML and full-site ZIP",
-  "notes": "This GitHub version folder contains release metadata; the deployed site remains at repository root."
+  "notes": "HTML multipage V500.0 source files physically present under V500,0 in main; only shared asset directory stays at root.",
+  "public_site_url": "https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/V500,0/",
+  "source_pages": 23,
+  "has_html_entrypoint": true,
+  "has_full_multipage_edition": true,
+  "shared_assets": "../assets/",
+  "search_index": "assets/data/search-index.json",
+  "search_entries": 58,
+  "robots": "noindex,follow",
+  "deployment": "GitHub Pages via scripts/build-site.mjs; no Netlify"
 }

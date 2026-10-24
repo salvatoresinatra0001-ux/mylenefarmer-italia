@@ -29,4 +29,30 @@ assert.ok(dis.includes('embed.music.apple.com'),'Apple Music absent');
 assert.ok(ascolta.includes('open.spotify.com/embed/artist'),'Spotify absent');
 const b=JSON.parse(readFileSync(path.join(dir,'build-info.json'),'utf8'));
 assert.equal(b.artifact,'mylene-farmer-italia-github-pages-interactive-v500');
+const folder=path.join(dir,'V500,0');
+assert.ok(existsSync(path.join(folder,'index.html')),'V500.0 homepage missing in deployed site');
+const editionPages=readdirSync(folder).filter(n=>n.endsWith('.html'));
+assert.equal(editionPages.length,html.length,'V500.0 must mirror all public HTML entries');
+for(const filename of editionPages){
+ const content=readFileSync(path.join(folder,filename),'utf8');
+ assert.ok(/noindex\s*,\s*follow/i.test(content),'duplicate indexing is disabled: '+filename);
+ assert.ok(content.includes('interactive-v500.js'),'V500.0 JS absent: '+filename);
+ assert.ok(content.includes('amoled-v16.css'),'AMOLED CSS absent: '+filename);
+ assert.ok(!/(?:href|src)=["']\.\/assets\//i.test(content),'assets incorrectly relative: '+filename);
+ assert.ok(!/<img\b|<picture\b|og:image|twitter:image/i.test(content),'unapproved image in '+filename);
+ const resourceRefs=[...content.matchAll(/(?:href|src)=["'](\.\.\/assets\/[^"']+)["']/g)].map(m=>m[1]);
+ for(const ref of resourceRefs){
+  const target=path.resolve(folder,ref.split('?')[0].split('#')[0]);
+  assert.ok(existsSync(target),'broken versioned asset: '+filename+' -> '+ref);
+ }
+}
+const localIndex=path.join(folder,'assets/data/search-index.json');
+assert.ok(existsSync(localIndex),'V500.0 local search catalog missing');
+const editionData=JSON.parse(readFileSync(localIndex,'utf8'));
+assert.equal(editionData.items.length,data.items.length,'V500.0 search catalog mismatch');
+for(const item of editionData.items){
+ const localFile=item.url.split('#')[0];
+ assert.ok(existsSync(path.join(folder,localFile)),'broken V500.0 search result: '+localFile);
+}
+assert.ok(readFileSync(path.join(dir,'index.html'),'utf8').includes('href="./V500,0/"'),'root navigation missing V500.0');
 console.log(JSON.stringify({ok:true,pages:html.length,indexed:data.items.length,edition:'V500.0'}));

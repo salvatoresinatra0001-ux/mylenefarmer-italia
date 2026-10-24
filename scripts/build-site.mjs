@@ -29,7 +29,7 @@ const permittedAsset=p=>!privateRe.test(p)&&(selectedBannerFiles.has(p)||(!photo
 for(const entry of readdirSync(root,{withFileTypes:true})){
  if(entry.isSymbolicLink())continue;
  if(entry.isFile()&&excludedPages.has(entry.name))continue;
- if(entry.isDirectory()&&!['assets','data'].includes(entry.name))continue;
+ if(entry.isDirectory()&&!['assets','data','V500,0'].includes(entry.name))continue;
  if(!entry.isDirectory()&&!(/\.html$/i.test(entry.name)||rootStatic.has(entry.name)))continue;
  const source=path.join(root,entry.name),dest=path.join(out,entry.name);
  cpSync(source,dest,{recursive:true,filter:src=>{
@@ -65,9 +65,9 @@ function walk(dir,fn){for(const ent of readdirSync(dir,{withFileTypes:true})){co
 let pageCount=0,removed=0;
 walk(out,(file,name)=>{
  if(name.endsWith('.html')){let old=readFileSync(file,'utf8');let cleaned=sanitizeHtml(old);
-  if(photoPages.has(name))cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/banners-v14.css">\n<link rel="stylesheet" href="./assets/css/amoled-v16.css">\n</head>').replace('</header>','</header><div class="mf-page-banner mf-page-banner--archivio" role="img" aria-label="Archivio — banner editoriale panoramico"><span class="mf-page-banner__mobile"><strong>Archivio</strong><small>Selezione fotografica e contenuti HD</small></span></div>');
+  if(photoPages.has(name)&&path.dirname(file)===out)cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/banners-v14.css">\n<link rel="stylesheet" href="./assets/css/amoled-v16.css">\n</head>').replace('</header>','</header><div class="mf-page-banner mf-page-banner--archivio" role="img" aria-label="Archivio — banner editoriale panoramico"><span class="mf-page-banner__mobile"><strong>Archivio</strong><small>Selezione fotografica e contenuti HD</small></span></div>');
   if(/<img\b|<picture\b|og:image|twitter:image/i.test(cleaned))throw Error('Unapproved photo reference remains: '+file);
-  if(cleaned.includes('</head>')&&!cleaned.includes('href="./assets/icons/favicon.svg"'))cleaned=cleaned.replace('</head>','<link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">\n</head>');
+  if(cleaned.includes('</head>')&&!/(?:href=["'](?:\.\/|\.\.\/)?assets\/icons\/favicon\.svg["'])/i.test(cleaned))cleaned=cleaned.replace('</head>','<link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">\n</head>');
   if(!cleaned.includes('portal-v11.css')&&cleaned.includes('</head>'))cleaned=cleaned.replace('</head>','<link rel="stylesheet" href="./assets/css/portal-v11.css">\n</head>');
   if(banner&&/<main\b/i.test(cleaned))cleaned=cleaned.replace(/(<main\b[^>]*>)/i,'$1'+banner);
   if(cleaned!==old)removed++;writeFileSync(file,cleaned);pageCount++;}

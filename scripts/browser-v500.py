@@ -26,6 +26,20 @@ with sync_playwright() as pw:
  assert page.locator("main .tbl-wrap tbody tr:not([hidden])").count()>0,"1990s filter failed"
  page.goto(base+"dossier-storia-poetica.html",wait_until="domcontentloaded")
  assert page.locator(".mf-v500-next").count()>0,"next chapter missing"
- assert not errors,"JavaScript runtime errors: "+repr(errors)
+ # Verify the versioned GitHub Pages edition and the shared assets
+page.goto(base+"V500,0/index.html",wait_until="domcontentloaded")
+assert page.locator('link[href="../assets/css/amoled-v16.css"]').count()>0,"versioned CSS route invalid"
+page.locator("[data-v500-search]").click()
+page.locator("#mf-v500-query").fill("Innamoramento")
+page.wait_for_function("document.querySelectorAll('.mf-v500-hit').length>0")
+assert any("/V500,0/" in u for u in page.locator(".mf-v500-hit").evaluate_all("(els)=>els.map(e=>e.href)")),"search escaped versioned directory"
+page.keyboard.press("Escape")
+page.goto(base+"V500,0/discografia.html",wait_until="domcontentloaded")
+assert page.locator('iframe[src*="embed.music.apple.com"]').count()>=12,"versioned Apple Music missing"
+page.goto(base+"V500,0/ascolta.html",wait_until="domcontentloaded")
+assert page.locator('iframe[src*="open.spotify.com/embed/artist"]').count()>=1,"versioned Spotify missing"
+page.goto(base+"V500,0/dossier-storia-poetica.html",wait_until="domcontentloaded")
+assert page.locator(".mf-v500-next").count()>0,"versioned dossier controls absent"
+assert not errors,"JavaScript runtime errors: "+repr(errors)
  browser.close()
 print("V500 browser smoke: OK")

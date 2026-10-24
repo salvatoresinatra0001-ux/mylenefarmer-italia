@@ -1,28 +1,29 @@
-# Mylène Farmer — Interactive Edition V500.0
+# Mylène Farmer Italia — Interactive Edition V500.0
 
-Cartella di release **V500,0** · 24 ottobre 2026
+Questa cartella nella branch `main` contiene la **versione HTML multipagina navigabile** V500.0.
 
-Questa directory è il registro della **V500.0**, integrata nella branch `main`. La versione operativa del sito non è una copia duplicata dentro questa cartella: è pubblicata da GitHub Pages tramite `scripts/build-site.mjs` e `.github/workflows/deploy-pages.yml`.
+**URL pubblico GitHub Pages:** https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/V500,0/
 
-## Sito e navigazione
+## Struttura editoriale
 
-- [Versione GitHub Pages](https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/)
-- [Biografia](https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/biografia.html)
-- [Discografia con Apple Music](https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/discografia.html)
-- [Ascolta con Spotify](https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/ascolta.html)
-- [Dossier e approfondimenti](https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/approfondimento.html)
-- [Ricerca](https://salvatoresinatra0001-ux.github.io/mylenefarmer-italia/cerca.html)
+- `index.html` — homepage V500.0
+- `biografia.html`, `discografia.html`, `ascolta.html`, `concerti.html`, `media.html`, `news.html`
+- `approfondimento.html` e tre dossier (30 capitoli)
+- `cerca.html` e `assets/data/search-index.json` per la ricerca locale (58 voci)
+- `archivio-testuale.html` e collegamenti di compatibilità delle precedenti sezioni fotografiche
+- `note-legali.html`, `crediti-foto.html`, `404.html`, `speciale-egregore-2026.html`
 
-## Funzioni V500.0
+Le risorse CSS, JavaScript, icone SVG e **sei banner editoriali** restano nella directory principale `assets/`, referenziata con il percorso `../assets/`. Nessuna duplicazione dell'archivio fotografico integrale o delle registrazioni musicali. I player utilizzano embed ufficiali Apple Music e Spotify.
 
-Ricerca globale (Ctrl/⌘+K oppure /), indice di 58 elementi, 30 capitoli ricercabili, filtri per decennio e tipologia discografica, ripresa di lettura in memoria locale del browser, tema AMOLED Black permanente, responsive e accessibilità.
+## Pubblicazione
 
-## Preview HTML e ZIP
+La pipeline `scripts/build-site.mjs` copia e controlla questa cartella nell'artefatto `dist/V500,0/`. La versione è navigabile senza Netlify e mantiene la root originale. Le pagine V500.0 usano `noindex,follow` e canonical alla rispettiva pagina principale per evitare duplicazioni SEO.
 
-La preview offline completa (`ANTEPRIMA_TOTALE_V500,0.html`) e lo ZIP multipagina (`SITO_COMPLETO_V500,0.zip`) sono stati generati come **artefatti di consegna**. Non sono duplicati in questa cartella GitHub per evitare di raddoppiare gli asset e appesantire il repository: i contenuti pubblicabili derivano dalla root del progetto e sono verificati dalla pipeline.
+Validazioni automatiche:
+- `node scripts/build-site.mjs`
+- `node scripts/verify-v500.mjs`
+- `python scripts/browser-v500.py --base http://127.0.0.1:8000/`
 
-## Garanzie editoriali
-
-Progetto fan indipendente, non ufficiale, a cura di **Salvatore Sinatra**. Riproduzione musicale delegata a servizi autorizzati. L'archivio fotografico integrale non è incluso nella pubblicazione; vengono utilizzati soltanto banner editoriali selezionati. **Netlify escluso** da questa release. Il puntamento di `www.mylenefarmer.it` è verificato separatamente e non va presunto dal solo successo GitHub Pages.
+**Versione culturale fan indipendente** a cura di Salvatore Sinatra. Non affiliata all'artista, al management o alle etichette.
 
 © 2026 Salvatore Sinatra.
