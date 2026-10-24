@@ -59,42 +59,6 @@
     </nav>
   </div>
 </header>
-<aside class="reference-rail" data-reference-rail aria-label="Collegamenti di riferimento">
-  <button class="reference-rail__toggle" type="button" aria-expanded="false" aria-controls="reference-rail-links" aria-label="Apri collegamenti di riferimento"><span aria-hidden="true">☷</span><span>LINK</span></button>
-  <nav class="reference-rail__links" id="reference-rail-links" aria-label="Piattaforme e sezioni di riferimento" inert>
-    <a href="https://open.spotify.com/artist/0e04xgVBPU6mE2QkSHlufD" target="_blank" rel="noopener noreferrer" aria-label="Spotify, profilo artista"><img src="https://open.spotify.com/favicon.ico" alt="" loading="lazy"><span>Spotify</span></a>
-    <a href="https://music.apple.com/it/artist/myl%C3%A8ne-farmer/132793877" target="_blank" rel="noopener noreferrer" aria-label="Apple Music, profilo artista"><img src="https://music.apple.com/favicon.ico" alt="" loading="lazy"><span>Apple Music</span></a>
-    <a href="https://www.qobuz.com/it-it/interpreter/mylene-farmer/43325" target="_blank" rel="noopener noreferrer" aria-label="Qobuz, pagina artista"><img src="https://www.qobuz.com/favicon.ico" alt="" loading="lazy"><span>Qobuz</span></a>
-    <a href="./discografia.html" aria-label="Discografia del sito"><img src="./assets/img/favicon.svg" alt="" loading="lazy"><span>Discografia</span></a>
-    <a href="./fotografie.html" aria-label="Archivio fotografico del sito"><img src="./assets/img/favicon.svg" alt="" loading="lazy"><span>Fotografie</span></a>
-    <a href="./fonti.html" aria-label="Fonti e riferimenti"><img src="./assets/img/favicon.svg" alt="" loading="lazy"><span>Fonti</span></a>
-  </nav>
-</aside>
-<style>
-.reference-rail{position:fixed;right:0;top:105px;z-index:1090;display:flex;align-items:flex-start;font-family:Archivo,Arial,sans-serif;color:#fff;filter:drop-shadow(0 6px 18px #0007)}
-.reference-rail__toggle{order:2;background:#141414;color:#fff;border:1px solid #777;border-right:0;border-radius:12px 0 0 12px;padding:10px 9px;cursor:pointer;display:grid;justify-items:center;gap:3px;min-width:43px;font:600 10px Archivo,Arial,sans-serif;letter-spacing:.08em}
-.reference-rail__toggle span:first-child{font-size:22px;line-height:1}
-.reference-rail__links{order:1;display:grid;gap:4px;box-sizing:border-box;width:0;max-height:65vh;overflow:hidden;background:#121212;border-radius:0 0 0 14px;visibility:hidden;transition:width .28s ease,visibility .28s;padding:0}
-.reference-rail.is-open .reference-rail__links{width:175px;visibility:visible;padding:8px;overflow-y:auto;border:1px solid #555;border-right:0}
-.reference-rail__links a{display:flex;align-items:center;gap:10px;padding:9px;color:#fff;text-decoration:none;font-size:12px;white-space:nowrap;border-radius:7px}
-.reference-rail__links a:hover,.reference-rail__links a:focus-visible{background:#353535;outline:2px solid #ddd;outline-offset:-2px}
-.reference-rail__links img{width:22px;height:22px;object-fit:contain;flex:none}
-.reference-rail__glyph{width:22px;text-align:center;font-size:21px}
-.reference-rail.is-open{right:0}
-.reference-rail.is-open .reference-rail__toggle{border-radius:12px 0 0 12px}
-@media(max-width:600px){.reference-rail{top:82px}.reference-rail.is-open .reference-rail__links{width:155px}}
-@media(prefers-reduced-motion:reduce){.reference-rail__links{transition:none}}
-</style>
-<script>
-document.addEventListener('DOMContentLoaded',()=>{
- const rail=document.querySelector('[data-reference-rail]');if(!rail)return;
- const toggle=rail.querySelector('button'),links=rail.querySelector('nav');
- const setOpen=open=>{rail.classList.toggle('is-open',open);toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Chiudi collegamenti di riferimento':'Apri collegamenti di riferimento');links.inert=!open};
- toggle.addEventListener('click',()=>setOpen(!rail.classList.contains('is-open')));
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&rail.classList.contains('is-open')){setOpen(false);toggle.focus()}});
- document.addEventListener('pointerdown',e=>{if(rail.classList.contains('is-open')&&!rail.contains(e.target))setOpen(false)});
-});
-</script>
 <main id="main">
 <section class="hero">
 
