@@ -1,9 +1,1 @@
-/* One theme only: cream / white / red. Interactive dossiers opt out. */
-(()=>{'use strict';
- const root=document.documentElement;
- if(!root.hasAttribute('data-theme-exempt')){root.dataset.theme='light';root.dataset.themeMode='light';root.style.colorScheme='light';}
- try{localStorage.removeItem('mf-theme')}catch{}
- const ico=document.querySelector('link[rel~="icon"]');if(ico)ico.setAttribute('href','./assets/icons/favicon.svg');
- function setup(){document.querySelectorAll('.mf-theme-switcher,.mf-reference-bar,.reference-rail').forEach(el=>el.remove());}
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup,{once:true});else setup();
-})();
+/* Accessible, user-selectable AMOLED Black / Light White. */(()=>{'use strict';const root=document.documentElement;const KEY='mf-color-theme';let chosen='dark';try{const saved=localStorage.getItem(KEY);if(saved==='light'||saved==='dark')chosen=saved}catch{}function apply(v){chosen=v;root.dataset.theme=v;root.dataset.themeMode=v;root.style.colorScheme=v;document.querySelectorAll('[data-theme-choice]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeChoice===v)));try{localStorage.setItem(KEY,v)}catch{}}apply(chosen);function init(){document.querySelectorAll('.mf-reference-bar,.reference-rail').forEach(n=>n.remove());if(!document.querySelector('.mf-theme-controls')){const nav=document.querySelector('.site-head .head-row')||document.querySelector('.dp-top');if(nav){const group=document.createElement('div');group.className='mf-theme-controls';group.setAttribute('role','group');group.setAttribute('aria-label','Tema grafico');group.innerHTML='<button type="button" data-theme-choice="dark" aria-label="Attiva AMOLED Black">AMOLED Black</button><button type="button" data-theme-choice="light" aria-label="Attiva Light White">Light White</button>';nav.append(group)}}document.querySelectorAll('[data-theme-choice]').forEach(b=>b.addEventListener('click',()=>apply(b.dataset.themeChoice)));apply(chosen)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();
