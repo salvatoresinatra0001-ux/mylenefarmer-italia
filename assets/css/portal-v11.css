@@ -105,3 +105,10 @@ html[data-theme="light"] .site-head{background:rgba(250,250,252,.94)!important;c
 .mf-theme-controls button:focus-visible,.site-head a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media(max-width:1120px){.site-head .head-row{gap:8px}.mf-theme-controls{margin-left:0}}
 @media(prefers-reduced-motion:reduce){:where(.card,.mf-resource-card){transition:none!important;transform:none!important}}
+
+/* Binary evidence status: Solido / Non solido */
+.sol.s-one,.sol.s-weak{color:#89540f!important;border-color:#b47b29!important;background:rgba(190,126,28,.10)!important}
+.sol.s-one .sol-dot,.sol.s-weak .sol-dot{background:#b47b29!important}
+.sol.s-solid{color:#196a41!important;border-color:#38845a!important;background:rgba(50,142,88,.09)!important}
+html[data-theme="dark"] .sol.s-one,html[data-theme="dark"] .sol.s-weak{color:#ffcd88!important;border-color:#a67a45!important}
+html[data-theme="dark"] .sol.s-solid{color:#a2efc1!important;border-color:#438f61!important}
