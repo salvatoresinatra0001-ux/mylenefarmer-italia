@@ -6,6 +6,6 @@
  const set=open=>{nav.classList.toggle('open',open);btn.setAttribute('aria-expanded',String(open));btn.textContent=open?'Chiudi':'Menu';};
  btn.addEventListener('click',()=>set(!nav.classList.contains('open')));
  nav.addEventListener('click',e=>{if(e.target.closest('a'))set(false)});
- addEventListener('resize',()=>{if(!matchMedia('(max-width:920px)').matches)set(false)},{passive:true});
+ addEventListener('resize',()=>{if(!matchMedia('(max-width:1120px)').matches)set(false)},{passive:true});
  addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){set(false);btn.focus()}});
 })();
