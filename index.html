@@ -82,6 +82,63 @@
 </div>
 </section>
 
+<section class="sec" id="streaming-ufficiale" aria-labelledby="streaming-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Music experience · Lettori ufficiali</p>
+      <h2 id="streaming-title">Ascolta Mylène Farmer</h2>
+      <p class="sec-intro">La musica, direttamente dall'archivio. Scegli Spotify o Apple Music e avvia l'ascolto attraverso i player ufficiali. La disponibilità delle tracce dipende dal servizio e dal tuo account.</p>
+    </div>
+    <div class="mf-stream" data-music-stream>
+      <div class="mf-stream__tabs" role="group" aria-label="Seleziona piattaforma musicale">
+        <button type="button" class="mf-stream__tab" data-music-provider="spotify" aria-pressed="true">Spotify</button>
+        <button type="button" class="mf-stream__tab" data-music-provider="apple" aria-pressed="false">Apple Music</button>
+      </div>
+      <div class="mf-stream__panel" data-music-panel>
+        <iframe title="Mylène Farmer — Spotify ufficiale" src="https://open.spotify.com/embed/artist/0e04xgVBPU6mE2QkSHlufD?utm_source=generator" width="100%" height="352" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <div class="mf-stream__links">
+        <a href="https://open.spotify.com/artist/0e04xgVBPU6mE2QkSHlufD" target="_blank" rel="noopener noreferrer">Profilo Spotify ↗</a>
+        <a href="https://music.apple.com/it/artist/myl%C3%A8ne-farmer/132793877" target="_blank" rel="noopener noreferrer">Profilo Apple Music ↗</a>
+        <a href="./ascolta.html">Tutti gli ascolti →</a>
+      </div>
+      <p class="mf-stream__note">Player forniti da Spotify e Apple Music. I diritti sulle registrazioni appartengono ai rispettivi titolari. Nessun audio è ospitato da questo archivio indipendente.</p>
+    </div>
+  </div>
+</section>
+<style>
+.mf-stream{border:1px solid rgba(128,128,128,.35);border-radius:16px;padding:clamp(16px,3vw,32px);background:transparent}
+.mf-stream__tabs{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.mf-stream__tab{font:inherit;cursor:pointer;border:1px solid currentColor;border-radius:999px;padding:10px 22px;background:transparent;color:inherit}
+.mf-stream__tab[aria-pressed="true"]{background:currentColor;box-shadow:inset 0 0 0 2px rgba(128,128,128,.25)}
+.mf-stream__tab[aria-pressed="true"]{text-decoration:underline;text-underline-offset:4px}
+.mf-stream__panel iframe{border:0;border-radius:12px;display:block;max-width:100%}
+.mf-stream__links{display:flex;flex-wrap:wrap;gap:12px 24px;margin-top:20px}
+.mf-stream__links a{text-decoration:underline;text-underline-offset:4px}
+.mf-stream__note{font-size:.82rem;opacity:.72;margin-top:18px}
+@media(max-width:600px){.mf-stream__panel iframe{height:380px}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+ const root=document.querySelector('[data-music-stream]');if(!root)return;
+ const panel=root.querySelector('[data-music-panel]');
+ const sources={
+ spotify:{src:'https://open.spotify.com/embed/artist/0e04xgVBPU6mE2QkSHlufD?utm_source=generator',title:'Mylène Farmer — Spotify ufficiale',height:'352'},
+ apple:{src:'https://embed.music.apple.com/it/album/1649963320',title:"Mylène Farmer — L'Emprise su Apple Music",height:'450'}
+ };
+ root.querySelectorAll('[data-music-provider]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+   const key=btn.dataset.musicProvider,source=sources[key];if(!source)return;
+   root.querySelectorAll('[data-music-provider]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+   const iframe=document.createElement('iframe');
+   iframe.src=source.src;iframe.title=source.title;iframe.width='100%';iframe.height=source.height;
+   iframe.loading='lazy';iframe.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+   iframe.referrerPolicy='strict-origin-when-cross-origin';
+   panel.replaceChildren(iframe);
+  });
+ });
+});
+</script>
 <section class="sec home-parisotto" aria-labelledby="home-parisotto-title">
   <div class="wrap home-parisotto__grid">
     <figure class="home-parisotto__figure">
